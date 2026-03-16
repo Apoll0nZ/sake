@@ -171,17 +171,23 @@ hr.div{border:none;border-top:1px solid var(--bd);margin:1.5rem 0;}
 <!-- ════ 画像管理 ════ -->
 <div class="panel" id="p-images">
   <div class="ptitle">🖼 画像管理</div>
-  <div class="psub">ヒーロー背景と商品画像を一括管理します</div>
+  <div class="psub">ヒーロー背景（複数登録・スライドショー）と商品画像を管理します</div>
   <div style="background:rgba(200,146,42,.06);border:1px solid var(--bd);padding:1.2rem 1.5rem;margin-bottom:2rem;font-size:.85rem;line-height:2;color:var(--muted);">
     ⚠ 画像の自動保存にはフォルダ選択が必要です。<br>未設定の場合は手動で <code style="background:rgba(255,255,255,.07);padding:.1rem .4rem;">images/</code> フォルダに置いてください。
   </div>
+
+  <!-- ヒーロー画像（複数） -->
   <div class="card">
-    <div class="ctitle">ヒーロー背景画像</div>
-    <div class="ipick" id="hero-ipick" onclick="document.getElementById('hi').click()">
-      <input type="file" id="hi" accept="image/*" onclick="event.stopPropagation()" onchange="pickImg(this,'hith','hilb','hero')">
-      <img id="hith" class="ith" alt=""><div id="hilb" class="ilb">クリックして背景画像を選択（推奨: 1920×1080px以上）</div>
+    <div class="ctitle">🏞 ヒーロー背景画像（複数登録・スライドショー表示）</div>
+    <div style="font-size:.82rem;color:var(--muted);margin-bottom:1.2rem;line-height:1.8;">
+      画像を複数登録すると、「一杯の酒に—」のセクションでスライドショーとして表示されます。<br>
+      推奨サイズ：<strong>1920×1080px 以上</strong>　対応形式：JPG / PNG / WebP
     </div>
+    <div id="hero-images-list" style="display:flex;flex-direction:column;gap:1rem;"></div>
+    <button class="btn bg" style="margin-top:1rem;" onclick="addHeroImageSlot()">＋ 画像を追加</button>
   </div>
+
+  <!-- 商品画像 -->
   <div class="card">
     <div class="ctitle">商品画像一覧</div>
     <div class="gimg" id="prod-img-grid"></div>
@@ -308,6 +314,11 @@ const S={
     {competition:'全国新酒鑑評会',year:'令和6酒造年度（令和7年5月）',entries:[{award:'金賞',brand:'アルプス正宗',maker:'（株）亀田屋酒造店',division:''},{award:'入賞',brand:'美寿々',maker:'美寿々酒造（株）',division:''},{award:'入賞',brand:'大信州',maker:'大信州酒造（株）',division:''}]},
   ],
   images:{hero:'',products:[]},
+  heroImages:[
+    {file:'',alt:'信州松本の清流'},
+    {file:'',alt:''},
+    {file:'',alt:''},
+  ],
 };
 
 // ── 画像ピック ─────────────────────────────────────────────
@@ -550,7 +561,78 @@ function ST(id,btn){
   btn.closest('.panel').querySelectorAll('[id^="t"]').forEach(p=>{if(['tm','ts','ta'].includes(p.id))p.style.display='none';});
   btn.classList.add('active'); document.getElementById(id).style.display='block';
 }
-function renderAll(){ renderEvents(); renderProducts(); renderProdImgGrid(); renderBreweries(); renderAwardList(); upPrev(); }
+function renderAll(){ renderEvents(); renderProducts(); renderProdImgGrid(); renderBreweries(); renderAwardList(); renderHeroImages(); upPrev(); }
+
+// ── ヒーロー画像（複数）管理 ──────────────────────────────────
+function renderHeroImages(){
+  if(!S.heroImages) S.heroImages=[];
+  const el=document.getElementById('hero-images-list'); if(!el) return;
+  el.innerHTML=S.heroImages.map((img,i)=>{
+    const imgSrc=img.file?`images/${E(img.file)}`:'';
+    return `<div class="card" style="display:flex;align-items:flex-start;gap:1.2rem;padding:1rem;margin:0;" id="hero-slot-${i}">
+      <div style="flex-shrink:0;width:140px;">
+        <div class="ipick ${img.file?'has':''}" style="min-height:90px;" onclick="document.getElementById('hfi-${i}').click()">
+          <input type="file" id="hfi-${i}" accept="image/*" onclick="event.stopPropagation()" onchange="pickHeroImg(this,${i})">
+          <img id="hth-${i}" class="ith ${img.file?'show':''}" alt="" style="max-height:90px;width:100%;object-fit:cover;" ${imgSrc?`src="${imgSrc}"`:''}>
+          <div id="hlb-${i}" class="ilb ${img.file?'named':''}" style="font-size:.72rem;">${img.file?'✓ '+E(img.file):'📷 画像を選択'}</div>
+        </div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:.6rem;">
+        <div style="display:flex;align-items:center;gap:.5rem;">
+          <span style="font-size:.75rem;color:var(--amber);font-weight:700;min-width:2rem;">No.${i+1}</span>
+          <div class="f" style="flex:1;margin:0;">
+            <input type="text" placeholder="alt テキスト（省略可）" value="${E(img.alt||'')}"
+              oninput="S.heroImages[${i}].alt=this.value"
+              style="font-size:.82rem;padding:.4rem .7rem;">
+          </div>
+        </div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+          ${i>0?`<button class="btn bsm" style="background:rgba(255,255,255,.08);" onclick="moveHeroImg(${i},-1)">↑ 上へ</button>`:''}
+          ${i<S.heroImages.length-1?`<button class="btn bsm" style="background:rgba(255,255,255,.08);" onclick="moveHeroImg(${i},1)">↓ 下へ</button>`:''}
+          <button class="btn bd bsm" onclick="removeHeroImg(${i})">🗑 削除</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function pickHeroImg(input,idx){
+  const file=input.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const th=document.getElementById('hth-'+idx);
+    if(th){th.src=e.target.result;th.classList.add('show');}
+    const lb=document.getElementById('hlb-'+idx);
+    if(lb){lb.textContent='✓ '+file.name;lb.classList.add('named');}
+  };
+  reader.readAsDataURL(file);
+  const ok=imgH?await saveImg(file,file.name):false;
+  if(!S.heroImages[idx]) S.heroImages[idx]={file:'',alt:''};
+  S.heroImages[idx].file=file.name;
+  if(ok) toast('✓ images/'+file.name+' に保存しました');
+  else toast(file.name+' を記録。imagesフォルダに手動で置いてください');
+}
+
+function addHeroImageSlot(){
+  if(!S.heroImages) S.heroImages=[];
+  S.heroImages.push({file:'',alt:''});
+  renderHeroImages();
+}
+
+function removeHeroImg(idx){
+  if(!confirm('この画像スロットを削除しますか？')) return;
+  S.heroImages.splice(idx,1);
+  renderHeroImages();
+  toast('削除しました');
+}
+
+function moveHeroImg(idx,dir){
+  const arr=S.heroImages;
+  const target=idx+dir;
+  if(target<0||target>=arr.length) return;
+  [arr[idx],arr[target]]=[arr[target],arr[idx]];
+  renderHeroImages();
+}
 
 document.addEventListener('DOMContentLoaded',()=>{
   if(!('showDirectoryPicker' in window)){

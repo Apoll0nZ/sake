@@ -47,12 +47,10 @@
   <!-- ヒーロービジュアル -->
   <div id="nav-slideshow">
     <div class="nss-slides" id="nsSlides">
+      <!-- 初期表示：1枚目（画像なし時はグラデーション） -->
       <div class="nss-slide active">
-        <!-- 写真プレースホルダー（実際の画像をここに差し替え） -->
-        <div class="nss-slide-img"></div>
-        <!-- 右端・縦書き副テキスト -->
+        <div class="nss-slide-img" id="heroSlide0"></div>
         <div class="nss-slide-sub">長野県松本市の地酒</div>
-        <!-- メインテキスト -->
         <div class="nss-content">
           <div class="nss-quote-wrap">
             <p class="nss-quote-main">「一杯の酒に、<br><em>山と里の物語</em>が宿る」</p>
@@ -61,7 +59,13 @@
         </div>
       </div>
     </div>
-    <!-- プログレスバー非表示 -->
+    <!-- 複数画像時のみ表示されるコントロール -->
+    <div class="nss-controls" id="heroControls" style="display:none;">
+      <button id="nssPrev" class="nss-btn" aria-label="前へ">&#8592;</button>
+      <div class="nss-dots" id="nssDots"></div>
+      <button id="nssNext" class="nss-btn" aria-label="次へ">&#8594;</button>
+    </div>
+    <div class="nss-progress" id="nssProgress"></div>
   </div>
 
   <!-- イベントバナー（直近イベント複数対応） -->

@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   /* ③ 取得できたらレンダリング */
   if (d) {
     renderHeroBg(d.images);
-    renderNavCarousel(d.events, d.products);
+    renderNavCarousel(d.events, d.products, d.heroImages);
     renderEventBanners(d.events);
     renderBreweries(d.breweries);
     renderMarquee(d.breweries);
@@ -60,10 +60,50 @@ function renderHeroBg(images) {
 }
 
 /* ── ナビスライドショー ─────────────────────────────────────── */
-function renderNavCarousel(events, products) {
-  // ヒーローは固定の名言表示のため、JSによる上書きは行わない
-  // （HTMLに直接記述済み）
+function renderNavCarousel(events, products, heroImages) {
   const ss = $('nav-slideshow');
+
+  // ── heroImages が登録されていれば複数スライドを生成 ──
+  const imgs = (heroImages || []).filter(h => h.file);
+  const slidesWrap = $('nsSlides');
+  const controls   = $('heroControls');
+  const dotsWrap   = $('nssDots');
+
+  if (imgs.length > 0 && slidesWrap) {
+    // スライドをDOMに生成（テキストは全スライド共通）
+    slidesWrap.innerHTML = imgs.map((img, i) => `
+      <div class="nss-slide${i === 0 ? ' active' : ''}">
+        <div class="nss-slide-img" style="background-image:url('images/${esc(img.file)}');background-size:cover;background-position:center;">
+        </div>
+        <div class="nss-slide-sub">長野県松本市の地酒</div>
+        <div class="nss-content">
+          <div class="nss-quote-wrap">
+            <p class="nss-quote-main">「一杯の酒に、<br><em>山と里の物語</em>が宿る」</p>
+            <p class="nss-quote-attr">— 信州松本の地酒職人より —</p>
+          </div>
+        </div>
+      </div>`).join('');
+
+    // 複数枚ならコントロール表示＋スライドショー起動
+    if (imgs.length > 1) {
+      if (controls) controls.style.display = '';
+      if (dotsWrap) {
+        dotsWrap.innerHTML = imgs.map((_, i) =>
+          `<div class="nss-dot${i === 0 ? ' active' : ''}" data-idx="${i}"></div>`
+        ).join('');
+        dotsWrap.querySelectorAll('.nss-dot').forEach(dot => {
+          dot.addEventListener('click', () => {
+            clearTimeout(window._heroTimer);
+            heroGoTo(parseInt(dot.dataset.idx));
+            heroSchedule(imgs.length);
+          });
+        });
+      }
+      heroSchedule(imgs.length);
+    }
+  }
+
+  // プログレスバー追加
   if (ss && !$('nssProgress')) {
     const bar = document.createElement('div');
     bar.id = 'nssProgress'; bar.className = 'nss-progress';
@@ -74,93 +114,53 @@ function renderNavCarousel(events, products) {
   // initSlideshow(1); ← 不要
 }
 
-function initSlideshow(total) {
-  let current = 0;
-  let timer, progTimer;
-  const DURATION = 18000; // 1枚あたりの表示時間(ms)
-  const TRANSITION = 900; // CSSのtransition時間と合わせる
+let _heroCurrent = 0;
 
-  function getSlides() { return document.querySelectorAll('.nss-slide'); }
-  function getDots()   { return document.querySelectorAll('.nss-dot'); }
-
-  function goTo(next, dir) {
-    const slides = getSlides();
-    const dots   = getDots();
-    if (!slides.length) return;
-
-    // 移動方向によってexit方向を変える
-    const isForward = (dir === undefined) ? true : dir > 0;
-    const exitClass = isForward ? 'exit-left' : 'exit-right';
-
-    // 現在スライドをexitアニメーション
-    slides[current].classList.remove('active');
-    slides[current].classList.add(exitClass);
-
-    // 次スライドのスタート位置を設定してからactiveに
-    slides[next].style.transform = isForward ? 'translateX(60px)' : 'translateX(-60px)';
-    slides[next].offsetHeight; // reflow
-    slides[next].classList.add('active');
-
-    // ドット更新
-    dots[current]?.classList.remove('active');
-    dots[next]?.classList.add('active');
-
-    // exitクラスをクリーンアップ
-    const exiting = slides[current];
-    setTimeout(() => { exiting.classList.remove(exitClass); }, TRANSITION + 50);
-
-    current = next;
-    startProgress();
+function heroGoTo(next) {
+  const slides = document.querySelectorAll('.nss-slide');
+  const dots   = document.querySelectorAll('.nss-dot');
+  if (!slides.length) return;
+  slides[_heroCurrent].classList.remove('active');
+  slides[_heroCurrent].classList.add('exit-left');
+  const exiting = slides[_heroCurrent];
+  setTimeout(() => exiting.classList.remove('exit-left'), 950);
+  slides[next].classList.add('active');
+  dots[_heroCurrent]?.classList.remove('active');
+  dots[next]?.classList.add('active');
+  _heroCurrent = next;
+  // プログレスバーリセット
+  const bar = $('nssProgress');
+  if (bar) {
+    bar.style.transition = 'none'; bar.style.width = '0%';
+    bar.offsetHeight;
+    bar.style.transition = 'width 6000ms linear'; bar.style.width = '100%';
   }
-
-  // グローバルに公開（ボタン・ドットから呼べるように）
-  window.nsGoTo = (idx) => {
-    clearTimeout(timer);
-    const dir = idx > current ? 1 : -1;
-    goTo(idx, dir);
-    scheduleNext();
-  };
-
-  function scheduleNext() {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      const next = (current + 1) % total;
-      goTo(next, 1);
-      scheduleNext();
-    }, DURATION);
-  }
-
-  function startProgress() {
-    const bar = $('nssProgress');
-    if (!bar) return;
-    bar.style.transition = 'none';
-    bar.style.width = '0%';
-    bar.offsetHeight; // reflow
-    bar.style.transition = `width ${DURATION}ms linear`;
-    bar.style.width = '100%';
-  }
-
-  // ボタン
-  $('nssPrev')?.addEventListener('click', () => {
-    clearTimeout(timer);
-    goTo((current - 1 + total) % total, -1);
-    scheduleNext();
-  });
-  $('nssNext')?.addEventListener('click', () => {
-    clearTimeout(timer);
-    goTo((current + 1) % total, 1);
-    scheduleNext();
-  });
-
-  // ホバーで一時停止
-  const ss = $('nav-slideshow');
-  ss?.addEventListener('mouseenter', () => { clearTimeout(timer); $('nssProgress')?.style && ($('nssProgress').style.animationPlayState='paused'); });
-  ss?.addEventListener('mouseleave', () => scheduleNext());
-
-  // 開始
-  startProgress();
-  scheduleNext();
 }
+
+function heroSchedule(total) {
+  clearTimeout(window._heroTimer);
+  window._heroTimer = setTimeout(() => {
+    heroGoTo((_heroCurrent + 1) % total);
+    heroSchedule(total);
+  }, 6000);
+}
+
+// ── prev/next ボタンを heroGoTo に接続 ─────────────────────────
+document.addEventListener('click', e => {
+  const total = document.querySelectorAll('.nss-slide').length;
+  if (total < 2) return;
+  if (e.target.closest('#nssPrev')) {
+    clearTimeout(window._heroTimer);
+    heroGoTo((_heroCurrent - 1 + total) % total);
+    heroSchedule(total);
+  }
+  if (e.target.closest('#nssNext')) {
+    clearTimeout(window._heroTimer);
+    heroGoTo((_heroCurrent + 1) % total);
+    heroSchedule(total);
+  }
+});
+
 
 /* ── イベントバナー（複数対応） ─────────────────────────────── */
 function renderEventBanners(events) {

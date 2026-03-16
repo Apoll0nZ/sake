@@ -882,18 +882,28 @@ footer {
 /* ── RESPONSIVE ────────────────────────────────────────────── */
 @media (max-width: 960px) {
   section { padding: 6rem 1.8rem; }
-  #navbar { padding: 1.2rem 1.8rem; }
+  #navbar { padding: 0 0 0 1.4rem; }
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
   .hero-ribbon { display: none; }
 
-  .event-inner { grid-template-columns: 1fr; gap: 3rem; }
-  .event-poster { max-width: 260px; }
+  /* ── イベントバナー ── */
+  .event-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .event-poster { max-width: 100%; }
+  .event-banner-item { padding: 2.5rem 1.4rem; }
+  .event-title { font-size: clamp(1.4rem, 5vw, 2.2rem); }
+  .event-meta { gap: 1rem; }
+  .event-meta-item { font-size: 0.88rem; }
+
+  /* ── 蔵元グリッド ── */
+  .brewery-grid { grid-template-columns: 1fr; gap: 0; }
+  .brewery-card { padding: 2rem 1.4rem; }
+  .bc-name { font-size: 1.5rem; }
+  .bc-info { font-size: 0.82rem; line-height: 2; }
+  .region-tab { font-size: clamp(0.9rem, 3.5vw, 1.2rem); padding: 1.1rem 0.5rem; }
 
   .about-grid { grid-template-columns: 1fr; gap: 3rem; }
   .about-visual { max-width: 320px; }
-
-  .brewery-grid { grid-template-columns: 1fr; }
 
   .seasons-header { padding: 0 1.8rem; }
   .seasons-track { padding: 0 1.8rem 2rem; }
@@ -918,6 +928,27 @@ footer {
   .season-card { flex: 0 0 220px; }
   .season-card:hover { flex: 0 0 280px; }
   .award-table th:nth-child(3), .award-table td:nth-child(3) { display: none; }
+
+  /* ── イベントバナー さらに小さい ── */
+  .event-banner-item { padding: 2rem 1rem; }
+  .event-title { font-size: 1.4rem; }
+  .event-meta { flex-direction: column; gap: 0.6rem; }
+  .btn-primary { padding: 0.8rem 1.8rem; font-size: 0.78rem; }
+
+  /* ── 蔵元カード さらに小さい ── */
+  .brewery-card { padding: 1.6rem 1.2rem; }
+  .bc-name { font-size: 1.35rem; }
+  .region-tab { font-size: 0.88rem; padding: 1rem 0.4rem; letter-spacing: 0.04em; }
+  .region-tabs { margin-bottom: 2rem; }
+
+  /* ── セクション共通 ── */
+  section { padding: 4.5rem 1.2rem; }
+  .section-heading { font-size: clamp(1.6rem, 6vw, 2.4rem); }
+
+  /* ── about動画 ── */
+  .about-overlay { padding: 4rem 1.4rem 5rem; min-height: 400px; }
+  .about-heading { font-size: clamp(1.5rem, 5.5vw, 2.2rem); }
+  .about-body { font-size: 0.9rem; }
 }
 
 /* ── PRODUCT CAROUSEL (四季置き換え) ───────────────────────── */
@@ -1208,7 +1239,7 @@ footer {
 
 /* ── EVENT BANNERS（複数対応） ──────────────────────────────── */
 #event-banners-wrap { background: #FFFFFF; border-bottom: 1px solid var(--border); margin: 0 !important; padding: 0 !important; }
-.event-banner-item { padding: 1.5rem 4rem 3rem; border-bottom: 1px solid var(--border); }
+.event-banner-item { padding: 1.5rem 4rem 3rem; border-bottom: 1px solid var(--border); overflow: hidden; }
 .event-banner-item:last-child { border-bottom: none; }
 .event-banner-item .event-inner { max-width: 1120px; margin: 0 auto; }
 
@@ -1228,7 +1259,7 @@ footer {
 @media (max-width: 960px) {
   .nav-card { flex: 0 0 220px; height: 180px; }
   .nav-card:hover { flex: 0 0 280px; }
-  .event-banner-item { padding: 3.5rem 1.8rem; }
+  /* event-banner-item のpadding は上の960pxブロックで制御 */
 }
 
 #event-banners-wrap:empty { display: none; }
@@ -1453,3 +1484,57 @@ footer {
 }
 
 
+
+/* ── スマホ追加レスポンシブ（イベント・蔵元） ────────────────── */
+
+/* イベントバナー：スマホでは縦積み・ポスターを適切サイズに */
+@media (max-width: 768px) {
+  .event-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+  }
+  /* ポスターをスマホでは横幅いっぱい・高さ制限 */
+  .event-poster {
+    max-width: 100%;
+    aspect-ratio: 3/2;   /* 縦長→横長に変更 */
+  }
+  .event-poster-img {
+    aspect-ratio: 3/2;
+  }
+  /* テキスト列の順序：スマホではテキスト先・ポスター後 */
+  .event-inner > div:first-child { order: 1; }
+  .event-inner > .event-poster   { order: 2; }
+
+  /* メタ情報を折り返し */
+  .event-meta { flex-wrap: wrap; gap: 0.7rem; }
+  .event-meta-item { font-size: 0.85rem; }
+}
+
+/* 蔵元：スマホでカード間に区切り線 */
+@media (max-width: 768px) {
+  .brewery-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+    border: 1.5px solid var(--border);
+  }
+  .brewery-card {
+    border-bottom: 1.5px solid var(--border);
+    padding: 1.8rem 1.2rem;
+  }
+  .brewery-card:last-child { border-bottom: none; }
+
+  /* カード内フォント調整 */
+  .bc-name   { font-size: 1.45rem; }
+  .bc-maker  { font-size: 0.82rem; }
+  .bc-info   { font-size: 0.8rem; line-height: 1.9; }
+  .bc-region { font-size: 0.65rem; }
+
+  /* タブを等幅・文字小さく */
+  .region-tabs { margin-bottom: 1.8rem; }
+  .region-tab  { font-size: 0.9rem; padding: 1rem 0.3rem; letter-spacing: 0.06em; }
+
+  /* #breweries のセクション左右余白 */
+  #breweries .section-inner { padding: 0 1.2rem; }
+  .marquee-wrap { margin: 2rem 0 3rem; }
+}
