@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="松本地酒家 — 信州松本の地酒を紹介・販売。長野県酒造組合松本支部・松本地酒振興協同組合">
+  <title>松本地酒家 — 信州松本の地酒を紹介・販売</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="loader">
+  <div class="loader-kanji">地酒</div>
+  <div class="loader-en">Matsumoto Jizake</div>
+  <div class="loader-bar"></div>
+</div>
+
+<nav id="navbar">
+  <a href="#" data-page="page-main" class="nav-logo">
+    <span class="nav-logo-main">松本地酒家</span>
+    <span class="nav-logo-sub">信州の大地が育む、純粋な旨み</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" data-page="page-main">TOP</a></li>
+    <li><a href="#" data-page="page-event">イベント</a></li>
+    <li><a href="#" data-page="page-awards">酒類鑑評会</a></li>
+    <li><a href="#" data-page="page-research">研究会</a></li>
+    <li><a href="#" data-page="page-shrine">松尾神社</a></li>
+    <li><a href="#" data-page="page-purchase">ご購入</a></li>
+  </ul>
+  <div class="nav-hamburger" id="navHamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="#" data-page="page-main">TOP</a>
+  <a href="#" data-page="page-event">イベント</a>
+  <a href="#" data-page="page-awards">酒類鑑評会</a>
+  <a href="#" data-page="page-research">研究会</a>
+  <a href="#" data-page="page-shrine">松尾神社</a>
+  <a href="#" data-page="page-purchase">ご購入</a>
+</div>
+
+<!-- ════ PAGE: MAIN ════ -->
+<div class="page active" id="page-main">
+
+  <!-- ヒーロービジュアル -->
+  <div id="nav-slideshow">
+    <div class="nss-slides" id="nsSlides">
+      <div class="nss-slide active">
+        <!-- 写真プレースホルダー（実際の画像をここに差し替え） -->
+        <div class="nss-slide-img"></div>
+        <!-- 右端・縦書き副テキスト -->
+        <div class="nss-slide-sub">長野県松本市の地酒</div>
+        <!-- メインテキスト -->
+        <div class="nss-content">
+          <div class="nss-quote-wrap">
+            <p class="nss-quote-main">「一杯の酒に、<br><em>山と里の物語</em>が宿る」</p>
+            <p class="nss-quote-attr">— 信州松本の地酒職人より —</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- プログレスバー非表示 -->
+  </div>
+
+  <!-- イベントバナー（直近イベント複数対応） -->
+  <div id="event-banners-wrap"></div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <!-- 動画背景（全幅） -->
+    <video
+      class="about-video-bg"
+      autoplay muted loop playsinline
+      poster="images/river.png"
+    >
+      <source src="images/river.mp4" type="video/mp4">
+      <source src="images/river.webm" type="video/webm">
+    </video>
+    <!-- 動画の上に載せるコンテンツ -->
+    <div class="about-overlay">
+      <div class="about-overlay-inner">
+        <p class="about-tag reveal">About Us</p>
+        <h2 class="about-heading reveal">山と清流が<br>育てた一杯</h2>
+        <div class="about-rule reveal"></div>
+        <p class="about-body reveal">清澄な空気と日本の屋根・北アルプスを源とする豊富な伏流水。<br>恵まれた松本平の穀倉地帯。酒蔵は心をこめた酒造りに励んでおります。</p>
+        <ul class="about-list reveal">
+          <li><span class="about-list-mark">○</span>清酒の共同開発</li>
+          <li><span class="about-list-mark">○</span>品質向上のための研修会及び研究会</li>
+          <li><span class="about-list-mark">○</span>地酒の振興協同ＰＲ</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 蔵元 -->
+  <section id="breweries">
+    <div class="section-inner">
+      <p class="section-tag reveal">Breweries</p>
+      <h2 class="section-heading reveal">取扱い蔵元</h2>
+      <p class="section-body reveal" style="max-width:520px;margin-bottom:0;">松本・塩尻・安曇野に点在する個性豊かな蔵元10社を厳選。</p>
+    </div>
+    <div class="marquee-wrap"><div class="marquee-track">
+      <span>深志鶴</span><span>·</span><span>善哉</span><span>·</span><span>岩波</span><span>·</span><span>笹の誉</span><span>·</span><span>大信州</span><span>·</span><span>アルプス正宗</span><span>·</span><span>高波</span><span>·</span><span>和饗</span><span>·</span><span>美寿々</span><span>·</span><span>酔園</span><span>·</span>
+      <span>深志鶴</span><span>·</span><span>善哉</span><span>·</span><span>岩波</span><span>·</span><span>笹の誉</span><span>·</span><span>大信州</span><span>·</span><span>アルプス正宗</span><span>·</span><span>高波</span><span>·</span><span>和饗</span><span>·</span><span>美寿々</span><span>·</span><span>酔園</span><span>·</span>
+    </div></div>
+    <div class="section-inner">
+      <div class="region-tabs reveal">
+        <button class="region-tab active" data-panel="panel-matsumoto">松本市</button>
+        <button class="region-tab" data-panel="panel-shiojiri">塩尻市</button>
+        <button class="region-tab" data-panel="panel-azumino">安曇野市</button>
+      </div>
+      <div class="region-panel active" id="panel-matsumoto"><div class="brewery-grid" id="grid-matsumoto">
+        <div class="brewery-card" data-num="01"><div class="bc-region">Matsumoto</div><div class="bc-name">深志鶴</div><div class="bc-maker">（名）奥沢商会</div><div class="bc-info">〒390-0811 松本市中央2-1-20<br>TEL：0263(32)0734 ／ FAX：0263(32)9054<br><a href="/cdn-cgi/l/email-protection#e1988e888a808f80a1918ecf8c828288cf8e93cf8b91"><span class="__cf_email__" data-cfemail="ea938583818b848baa9a85c487898983c48598c4809a">[email&#160;protected]</span></a></div></div>
+        <div class="brewery-card" data-num="02"><div class="bc-region">Matsumoto</div><div class="bc-name">善哉</div><div class="bc-maker">善哉酒造（株）</div><div class="bc-info">〒390-0874 松本市大手5-4-24<br>TEL：0263(32)0734 ／ FAX：0263(32)9054</div></div>
+        <div class="brewery-card" data-num="03"><div class="bc-region">Matsumoto</div><div class="bc-name">岩波</div><div class="bc-maker">岩波酒造（資）</div><div class="bc-info">〒390-0221 松本市里山辺5159<br>TEL：0263(25)1300 ／ FAX：0263(25)6300<br><a href="/cdn-cgi/l/email-protection#016876606f606c6841716e2f6c6262682f6e732f6b71"><span class="__cf_email__" data-cfemail="a8c1dfc9c6c9c5c1e8d8c786c5cbcbc186c7da86c2d8">[email&#160;protected]</span></a></div></div>
+        <div class="brewery-card" data-num="04"><div class="bc-region">Matsumoto</div><div class="bc-name">笹の誉</div><div class="bc-maker">笹井酒造（株）</div><div class="bc-info">〒390-0851 松本市島内3682<br>TEL：0263(47)0762 ／ FAX：0263(47)1421<br><a href="/cdn-cgi/l/email-protection#f88b99939db88b998b999697909795998a9dd69b97d69288"><span class="__cf_email__" data-cfemail="027163696742716371636c6d6a6d6f6370672c616d2c6872">[email&#160;protected]</span></a></div></div>
+        <div class="brewery-card" data-num="05"><div class="bc-region">Matsumoto</div><div class="bc-name">大信州</div><div class="bc-maker">大信州酒造（株）</div><div class="bc-info">〒390-0852 松本市島立2380<br>TEL：0263(47)0895 ／ FAX：0263(47)8007<br><a href="/cdn-cgi/l/email-protection#b8d1d6ded7f8dcd9d1cbd0d1d6cbc1cd96dbd7d5"><span class="__cf_email__" data-cfemail="4f262129200f2b2e263c2726213c363a612c2022">[email&#160;protected]</span></a></div></div>
+        <div class="brewery-card" data-num="06"><div class="bc-region">Matsumoto</div><div class="bc-name">アルプス正宗</div><div class="bc-maker">（株）亀田屋酒造店</div><div class="bc-info">〒390-0852 松本市島立2748<br>TEL：0263(47)1320 ／ FAX：0263(47)7056<br><a href="/cdn-cgi/l/email-protection#096268646c7d687068496a61607f6c27666a6727676c276379"><span class="__cf_email__" data-cfemail="adc6ccc0c8d9ccd4ccedcec5c4dbc883c2cec383c3c883c7dd">[email&#160;protected]</span></a></div></div>
+      </div></div>
+      <div class="region-panel" id="panel-shiojiri"><div class="brewery-grid" id="grid-shiojiri">
+        <div class="brewery-card" data-num="07"><div class="bc-region">Shiojiri</div><div class="bc-name">高波</div><div class="bc-maker">（資）丸永酒造場</div><div class="bc-info">〒399-0703 塩尻市広丘高出840<br>TEL：0263(52)2633 ／ FAX：0263(54)4749<br><a href="/cdn-cgi/l/email-protection#1e737f77725e6a7f757f707f7377336d7f757b307d7130746e"><span class="__cf_email__" data-cfemail="f499959d98b480959f959a95999dd987959f91da979bda9e84">[email&#160;protected]</span></a></div></div>
+        <div class="brewery-card" data-num="08"><div class="bc-region">Shiojiri</div><div class="bc-name">和饗</div><div class="bc-maker">和饗酒造（株）</div><div class="bc-info">〒399-0700 塩尻市塩尻町140<br>TEL：0263(52)0302 ／ FAX：0263(52)3410</div></div>
+        <div class="brewery-card" data-num="09"><div class="bc-region">Shiojiri</div><div class="bc-name">美寿々</div><div class="bc-maker">美寿々酒造（株）</div><div class="bc-info">〒399-6462 塩尻市洗馬2402<br>TEL：0263(52)0013 ／ FAX：0263(54)3581<br><a href="/cdn-cgi/l/email-protection#c1a8afa7ae81aca8b2b4bbb4b2a9b4bbaeefa2aeac"><span class="__cf_email__" data-cfemail="533a3d353c133e3a20262926203b26293c7d303c3e">[email&#160;protected]</span></a></div></div>
+      </div></div>
+      <div class="region-panel" id="panel-azumino"><div class="brewery-grid" id="grid-azumino">
+        <div class="brewery-card" data-num="10"><div class="bc-region">Azumino</div><div class="bc-name">酔園</div><div class="bc-maker">ＥＨ酒造（株）</div><div class="bc-info">〒399-8204 安曇野市豊科高家1090-1<br>TEL：0263(72)2828 ／ FAX：0263(72)6268<br><a href="/cdn-cgi/l/email-protection#c3aea2aaaf83b0b6aaa6adeda0aceda9b3"><span class="__cf_email__" data-cfemail="3e535f57527e4d4b575b50105d5110544e">[email&#160;protected]</span></a></div></div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- 商品カルーセル -->
+  <section id="product-carousel">
+    <div class="carousel-header">
+      <p class="section-tag reveal">Products</p>
+      <h2 class="section-heading reveal">取扱い商品</h2>
+      <p class="section-body reveal" style="max-width:460px;">クリックで購入ページへ。信州の旨みをそのままお届けします。</p>
+    </div>
+    <div class="carousel-track-wrap reveal">
+      <div class="carousel-track" id="carousel-track"></div>
+    </div>
+  </section>
+
+  <!-- 統計 -->
+  <section id="stats"><div class="stats-grid">
+    <div class="stat-item reveal"><div class="stat-num" data-target="10" data-suffix="蔵">0</div><div class="stat-label">取扱い蔵元数</div></div>
+    <div class="stat-item reveal" style="transition-delay:.1s"><div class="stat-num" data-target="3" data-suffix="市">0</div><div class="stat-label">対応地域</div></div>
+    <div class="stat-item reveal" style="transition-delay:.2s"><div class="stat-num" data-target="27" data-suffix="種+">0</div><div class="stat-label">イベント出品銘柄</div></div>
+    <div class="stat-item reveal" style="transition-delay:.3s"><div class="stat-num" data-target="96" data-suffix="回">0</div><div class="stat-label">国税局鑑評会最新回</div></div>
+  </div></section>
+
+  <!-- 和紙セクション -->
+  <section id="washi-section">
+    <div class="washi-layout">
+      <div class="washi-image-side">
+        <div class="washi-image-frame">
+          <div class="washi-image-placeholder">
+            <span class="washi-img-kanji">酒</span>
+          </div>
+        </div>
+      </div>
+      <div class="washi-text-side">
+        <p class="washi-en-tag reveal">— A story in every cup —</p>
+        <blockquote class="washi-quote reveal">
+          「一杯の酒に、<br><em>山と里の物語</em>が宿る」
+        </blockquote>
+        <p class="washi-attr reveal">— 信州松本の地酒職人より —</p>
+        <div class="washi-rule reveal"></div>
+        <p class="washi-caption reveal">北アルプスを源とする清冽な伏流水と、豊かな松本平の穀倉地帯。その恵みを受けて醸された地酒には、この土地ならではの物語が宿っています。</p>
+      </div>
+    </div>
+  </section>
+
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand">松本地酒家</div>
+          <p class="footer-desc">信州松本の地酒を紹介・販売する専門窓口。地元蔵元と連携し、本物の地酒文化を次代に伝えます。</p>
+          <address class="footer-address" style="font-style:normal;">松本地酒振興協同組合<br>〒390-0837 長野県松本市鎌田2-3-65 長野県酒類販売（株）1階<br>TEL：0263-24-3606 ／ FAX：0263-24-3607<br><a href="/cdn-cgi/l/email-protection#1c6675667d77795c6c7332717f7f7532736e32766c" style="color:var(--amber);opacity:.7;"><span class="__cf_email__" data-cfemail="cab0a3b0aba1af8abaa5e4a7a9a9a3e4a5b8e4a0ba">[email&#160;protected]</span></a></address>
+        </div>
+        <div class="footer-col"><div class="footer-col-title">Menu</div><ul>
+          <li><a href="#" data-page="page-main">TOP</a></li>
+          <li><a href="#" data-page="page-event">イベント情報</a></li>
+          <li><a href="#" data-page="page-awards">酒類鑑評会</a></li>
+          <li><a href="#" data-page="page-research">研究会</a></li>
+          <li><a href="#" data-page="page-shrine">松尾神社</a></li>
+        </ul></div>
+        <div class="footer-col"><div class="footer-col-title">Purchase</div><ul>
+          <li><a href="#" data-page="page-purchase">商品一覧・価格</a></li>
+          <li><a href="#" data-page="page-purchase">ご注文方法</a></li>
+          <li><a href="#" data-page="page-purchase">特定商取引法</a></li>
+        </ul></div>
+        <div class="footer-col"><div class="footer-col-title">Organization</div><ul>
+          <li><a href="#">長野県酒造組合 松本支部</a></li>
+          <li><a href="#">松本地酒振興協同組合</a></li>
+        </ul></div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 松本地酒家 ／ 松本地酒振興協同組合. All rights reserved.</span>
+        <span class="footer-age">※ 20歳未満の方への酒類の販売はいたしておりません</span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ════ PAGE: EVENT ════ -->
+<div class="page" id="page-event">
+  <div class="page-hero"><div class="page-hero-inner">
+    <p class="page-hero-tag reveal">Event</p>
+    <h1 class="page-hero-title reveal">イベント情報</h1>
+    <p class="page-hero-sub reveal">松本地酒振興協同組合 主催イベント</p>
+  </div></div>
+  <div style="padding:6rem 4rem;background:var(--ink);"><div style="max-width:1120px;margin:0 auto;">
+    <div id="event-upcoming-block"></div>
+    <h3 style="font-family:var(--serif);font-size:1.4rem;letter-spacing:.1em;margin:4rem 0 2rem;" class="reveal">★ 蔵ブースのお酒 ★</h3>
+    <div id="sake-booth-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5px;background:var(--border);border:1.5px solid var(--border);"></div>
+    <h3 style="font-family:var(--serif);font-size:1.2rem;letter-spacing:.1em;margin:5rem 0 1rem;opacity:.5;" class="reveal">過去のイベント</h3>
+    <div class="event-archive-grid" id="event-archive-grid"></div>
+  </div></div>
+  <footer><div class="footer-inner"><div class="footer-bottom"><span class="footer-copy">© 松本地酒家 ／ 松本地酒振興協同組合</span><span class="footer-age">※ 20歳未満の方への酒類の販売はいたしておりません</span></div></div></footer>
+</div>
+
+<!-- ════ PAGE: AWARDS ════ -->
+<div class="page" id="page-awards">
+  <div class="page-hero"><div class="page-hero-inner">
+    <p class="page-hero-tag reveal">Awards</p>
+    <h1 class="page-hero-title reveal">酒類鑑評会</h1>
+    <p class="page-hero-sub reveal">全国新酒鑑評会 ／ 関東信越国税局酒類鑑評会</p>
+  </div></div>
+  <div class="awards-section"><div class="awards-inner">
+    <div class="awards-filter reveal">
+      <button class="filter-btn active" data-filter="all">すべて</button>
+      <button class="filter-btn" data-filter="national">全国新酒鑑評会</button>
+      <button class="filter-btn" data-filter="kanto">関東信越国税局</button>
+    </div>
+    <div id="awards-dynamic-list"></div>
+  </div></div>
+  <footer><div class="footer-inner"><div class="footer-bottom"><span class="footer-copy">© 松本地酒家 ／ 松本地酒振興協同組合</span><span class="footer-age">※ 20歳未満の方への酒類の販売はいたしておりません</span></div></div></footer>
+</div>
+
+<!-- ════ PAGE: RESEARCH ════ -->
+<div class="page" id="page-research">
+  <div class="page-hero"><div class="page-hero-inner">
+    <p class="page-hero-tag reveal">Research</p>
+    <h1 class="page-hero-title reveal">研究会</h1>
+    <p class="page-hero-sub reveal">品質向上のための研修・研究活動</p>
+  </div></div>
+  <div class="research-section"><div class="research-inner">
+    <div class="research-card reveal" data-month="３月">
+      <div class="rc-tag">March — Spring</div>
+      <h2 class="rc-title">新酒研究会</h2>
+      <p class="rc-body">日本酒は11月頃から翌年の3月頃にかけて製造します。出来上がった新酒を3月に持ち寄り、「酒質・出来栄え」等を関東信越国税局の鑑定官、長野県工業技術総合センターの研究員に審査していただきます。先生からいただいた講評などをもとに、全国や県の鑑評会へ出品します。</p>
+      <div class="rc-label">○ 毎年3月開催</div>
+    </div>
+    <div class="research-card reveal" data-month="７月">
+      <div class="rc-tag">July — Summer</div>
+      <h2 class="rc-title">初のみきり研究会</h2>
+      <p class="rc-body">酒造が終了すると「澱引き」「濾過」をして生酒以外は「火入れ」をしタンクに低温貯蔵されます。タンクに金属製の呑み口をつけ少量の酒を採取することを「呑み切り」といいます。気温が上昇して酒質が変化しがちな6月〜7月にかけて貯蔵酒の保存状態や出荷について、関東信越国税局の鑑定官、長野県工業技術総合センターの研究員に審査していただきます。</p>
+      <div class="rc-label">○ 毎年7月開催</div>
+    </div>
+  </div></div>
+  <footer><div class="footer-inner"><div class="footer-bottom"><span class="footer-copy">© 松本地酒家 ／ 松本地酒振興協同組合</span><span class="footer-age">※ 20歳未満の方への酒類の販売はいたしておりません</span></div></div></footer>
+</div>
+
+<!-- ════ PAGE: SHRINE ════ -->
+<div class="page" id="page-shrine">
+  <div class="page-hero"><div class="page-hero-inner">
+    <p class="page-hero-tag reveal">Shrine</p>
+    <h1 class="page-hero-title reveal">松尾神社</h1>
+    <p class="page-hero-sub reveal">松本市 深志神社境内</p>
+  </div></div>
+  <div class="shrine-section"><div class="shrine-inner">
+    <div class="shrine-visual reveal"><div class="shrine-visual-text">松尾</div><div class="shrine-visual-sub">Matsunoo Shrine — Matsumoto</div></div>
+    <div class="shrine-body">
+      <p class="reveal">松尾神社は、大山咋神（おおやまくいのかみ）・市杵島姫命（いちきしまひめのみこと）を祭神に祀る、日本酒の神様として全国各地にある神社です。</p>
+      <p class="reveal">江戸時代（1710年頃）、町ごと城下ごとの酒造仲間が、京都から松尾大社の分神を勧請して、それぞれに社を建て、それを拠りどころにして酒造の繁栄を祈っていました。</p>
+      <p class="reveal">松本市の深志神社境内にある松尾神社は天保8年に奉られ、酒造りの季節が来ると毎年松尾神社の例祭を斎行し、酒造りの安全祈願を行っております。</p>
+    </div>
+    <div class="shrine-info reveal">
+      <strong style="color:var(--amber-lt);font-weight:400;">所在地</strong>　長野県松本市深志3丁目 深志神社境内<br>
+      <strong style="color:var(--amber-lt);font-weight:400;">祭神</strong>　大山咋神 ／ 市杵島姫命<br>
+      <strong style="color:var(--amber-lt);font-weight:400;">奉納年</strong>　天保8年（1837年）<br>
+      <strong style="color:var(--amber-lt);font-weight:400;">例祭</strong>　酒造りの季節ごとに安全祈願を斎行
+    </div>
+  </div></div>
+  <footer><div class="footer-inner"><div class="footer-bottom"><span class="footer-copy">© 松本地酒家 ／ 松本地酒振興協同組合</span><span class="footer-age">※ 20歳未満の方への酒類の販売はいたしておりません</span></div></div></footer>
+</div>
+
+<!-- ════ PAGE: PURCHASE ════ -->
+<div class="page" id="page-purchase">
+  <div class="page-hero"><div class="page-hero-inner">
+    <p class="page-hero-tag reveal">Purchase</p>
+    <h1 class="page-hero-title reveal">商品一覧・ご購入</h1>
+    <p class="page-hero-sub reveal">毎度ご来店ありがとうございます</p>
+  </div></div>
+  <div class="products-section"><div class="products-inner">
+    <div class="products-intro reveal">当店は信州・松本平の地酒を取り扱っています。信州の爽やかな空気と清冽な水で醸された清酒を一度ご賞味ください。<br><strong style="color:var(--amber-lt);font-weight:400;">２０歳未満の方の飲酒は法律で禁止されています。２０歳未満の方への酒類の販売はいたしておりません。</strong></div>
+    <h2 class="section-heading reveal" style="font-size:1.6rem;margin-bottom:2.5rem;">商品ラインナップ</h2>
+    <div class="products-grid" id="products-dynamic-grid"></div>
+    <p style="font-size:.75rem;opacity:.35;margin-top:1rem;">※ 商品価格には送料は含まれておりません</p>
+  </div></div>
+  <div class="order-section"><div class="order-inner"><div class="order-grid">
+    <div>
+      <p class="section-tag reveal">How to Order</p>
+      <h2 class="section-heading reveal" style="font-size:1.8rem;">ご注文方法</h2>
+      <div class="order-steps reveal">
+        <div class="order-step"><span class="order-step-icon">✉</span><div><strong style="color:var(--amber-lt);font-weight:400;">メール</strong> または <strong style="color:var(--amber-lt);font-weight:400;">FAX</strong> にて①〜⑨をご記入の上お申込みください。</div></div>
+        <div class="order-step"><span class="order-step-icon">○</span><div>① 注文者氏名</div></div>
+        <div class="order-step"><span class="order-step-icon">○</span><div>② 年齢（20歳未満への販売不可）</div></div>
+        <div class="order-step"><span class="order-step-icon">○</span><div>③ 注文者 郵便番号・住所</div></div>
+        <div class="order-step"><span class="order-step-icon">○</span><div>④ 電話番号</div></div>
+        <div class="order-step"><span class="order-step-icon">○</span><div>⑤ メールアドレス</div></div>
+        <div class="order-step"><span class="order-step-icon">○</span><div>⑥ 送り先（注文者と異なる場合）</div></div>
+        <div class="order-step"><span class="order-step-icon">○</span><div>⑧ ご注文商品番号と本数</div></div>
+        <div class="order-step"><span class="order-step-icon">○</span><div>⑨ お振込予定日</div></div>
+      </div>
+      <div class="order-info-box reveal"><strong>メール：</strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="403a293a212b2500302f6e2d2323296e2f326e2a30">[email&#160;protected]</a><br><strong>FAX：</strong>0263-24-3607<br><strong>休日：</strong>土・日・祝日・年末年始・夏季休暇等<br><br>確認メール受領後、5日以内にお振込ください。入金確認後5日以内に発送いたします。</div>
+      <div class="bank-box reveal"><strong style="color:var(--amber-lt);font-weight:400;">振込口座</strong><br>八十二長野銀行 0143 松本営業部<br>口座番号：1032707（普通口座）<br>口座名義：松本地酒振興協同組合</div>
+    </div>
+    <div class="contact-form reveal-right">
+      <div class="form-title">お問い合わせ・ご注文フォーム</div>
+      <div class="form-group"><label for="fName">お名前</label><input type="text" id="fName" placeholder="山田 太郎"></div>
+      <div class="form-group"><label for="fEmail">メールアドレス</label><input type="email" id="fEmail" placeholder="taro@example.com"></div>
+      <div class="form-group"><label for="fType">お問い合わせ種別</label>
+        <select id="fType"><option value="">選択してください</option><option>地酒のご注文・在庫確認</option><option>イベント参加申込み</option><option>酒類審評会について</option><option>研究会・勉強会について</option><option>その他</option></select>
+      </div>
+      <div class="form-group"><label for="fProduct">ご希望商品（任意）</label>
+        <select id="fProduct"><option value="">指定なし／おすすめをお任せ</option></select>
+      </div>
+      <div class="form-group"><label for="fMsg">メッセージ・本数など</label><textarea id="fMsg" rows="4" placeholder="ご質問・ご要望をお気軽にどうぞ..."></textarea></div>
+      <p class="form-note">※ 送料は別途ご案内します ／ 20歳未満の方への販売不可</p><br>
+      <button class="btn-submit" id="formSubmit">送信する</button>
+    </div>
+  </div></div></div>
+
+  <div class="legal-section"><div class="legal-inner">
+    <div class="legal-title">通信販売の法規（特定商取引法）に基づく表示 ／ 酒類販売管理者標識</div>
+    <table class="legal-table">
+      <tr><td>販売場の名称及び所在地</td><td>松本市鎌田２－３－６５ 松本地酒振興協同組合</td></tr>
+      <tr><td>酒類販売管理者の氏名</td><td>花岡　佳子</td></tr>
+      <tr><td>酒類販売管理研修受講年月日</td><td>令和6年3月4日</td></tr>
+      <tr><td>次回研修の受講期限</td><td>令和9年3月3日</td></tr>
+      <tr><td>研修実施団体名</td><td>中信小売酒販組合</td></tr>
+      <tr><td>電話・FAX・E-mail</td><td>TEL 0263-24-3606 ／ FAX 0263-24-3607 ／ zizake@po.mcci.or.jp</td></tr>
+      <tr><td>返品・交換</td><td>不良品などの場合を除いて返品はご容赦願います。不良品は着払いにてご返品後、交換いたします。</td></tr>
+    </table>
+  </div></div>
+  <footer><div class="footer-inner"><div class="footer-bottom">
+    <span class="footer-copy">© 松本地酒家 ／ 松本地酒振興協同組合</span>
+    <span class="footer-age">※ 20歳未満の方への酒類の販売はいたしておりません</span>
+  </div></div></footer>
+</div><!-- /page-purchase -->
+
+<script src="script.js"></script>
+</body>
+</html>

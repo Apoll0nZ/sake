@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>松本地酒家 — 管理画面</title>
+<style>
+:root{--amber:#C8922A;--amber-lt:#E8B04A;--bg:#1a1510;--sf:#2b1f0e;--sf2:#221a0e;--bd:rgba(200,146,42,0.25);--text:#f0ebe0;--muted:rgba(240,235,224,0.5);--ok:#4a7c4a;--ng:#8b3333;--serif:'Georgia',serif;--sans:'Hiragino Kaku Gothic ProN','Meiryo',sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;}
+#app{display:flex;min-height:100vh;}
+#sidebar{width:230px;flex-shrink:0;background:var(--sf);border-right:1px solid var(--bd);padding:1.5rem 0;position:sticky;top:0;height:100vh;overflow-y:auto;}
+.s-logo{font-family:var(--serif);font-size:1.1rem;letter-spacing:.15em;padding:0 1.5rem 1.5rem;border-bottom:1px solid var(--bd);margin-bottom:1rem;}
+.s-label{font-size:.65rem;letter-spacing:.4em;color:var(--amber);text-transform:uppercase;padding:.5rem 1.5rem;margin-top:1rem;}
+.nb{display:block;width:100%;text-align:left;padding:.85rem 1.5rem;background:transparent;border:none;color:var(--text);font-family:var(--sans);font-size:1rem;cursor:pointer;transition:background .2s;border-left:3px solid transparent;}
+.nb:hover{background:rgba(200,146,42,.08);}.nb.active{background:rgba(200,146,42,.12);border-left-color:var(--amber);color:var(--amber-lt);}
+#main{flex:1;padding:2.5rem 3rem;max-width:1000px;}
+.panel{display:none;}.panel.active{display:block;}
+.ptitle{font-family:var(--serif);font-size:1.8rem;letter-spacing:.08em;margin-bottom:.4rem;}
+.psub{font-size:.85rem;color:var(--muted);margin-bottom:2rem;}
+/* setup */
+#setup{background:rgba(200,146,42,.08);border:1px solid var(--bd);padding:1.5rem 2rem;margin-bottom:2rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;}
+#setup.ok{background:rgba(74,124,74,.1);border-color:rgba(74,124,74,.3);}
+.sst{font-size:.88rem;flex:1;}
+.sst strong{display:block;font-size:1rem;margin-bottom:.25rem;}
+/* card */
+.card{background:var(--sf2);border:1px solid var(--bd);padding:2rem;margin-bottom:1.5rem;}
+.ctitle{font-size:1.1rem;font-weight:bold;color:var(--amber-lt);margin-bottom:1.5rem;padding-bottom:.8rem;border-bottom:1px solid var(--bd);}
+/* field */
+.f{margin-bottom:1.2rem;}
+.f label{display:block;font-size:.78rem;letter-spacing:.25em;color:var(--amber);margin-bottom:.45rem;text-transform:uppercase;}
+.f input,.f select,.f textarea{width:100%;padding:.85rem 1rem;background:rgba(255,255,255,.05);border:1px solid rgba(240,235,224,.15);color:var(--text);font-family:var(--sans);font-size:.95rem;outline:none;transition:border-color .2s;-webkit-appearance:none;border-radius:0;}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--amber);}
+.f textarea{resize:vertical;min-height:80px;}
+.f select option{background:#2b1f0e;}
+.hint{font-size:.73rem;color:var(--muted);margin-top:.35rem;}
+/* image pick */
+.ipick{border:2px dashed rgba(200,146,42,.3);padding:1.2rem;text-align:center;cursor:pointer;transition:border-color .2s;background:rgba(200,146,42,.03);position:relative;}
+.ipick:hover{border-color:var(--amber);}
+.ipick.has{border-style:solid;border-color:rgba(200,146,42,.5);}
+.ipick input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.ith{width:100%;max-height:160px;object-fit:cover;display:none;margin-bottom:.5rem;}
+.ith.show{display:block;}
+.ilb{font-size:.78rem;color:var(--muted);}
+.ilb.named{color:var(--amber-lt);}
+/* grid */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.9rem;}
+.gimg{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:1rem;}
+/* btn */
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.6rem;font-family:var(--sans);font-size:.95rem;cursor:pointer;border:none;transition:opacity .2s,transform .1s;letter-spacing:.04em;font-weight:bold;border-radius:0;}
+.btn:active{transform:scale(.98);}
+.bp{background:var(--amber);color:#1a1510;}.bp:hover{opacity:.88;}
+.bs{background:var(--ok);color:#fff;}
+.bd{background:var(--ng);color:#fff;font-size:.82rem;padding:.45rem .9rem;}
+.bg{background:transparent;border:1px solid var(--bd);color:var(--text);}.bg:hover{border-color:var(--amber);color:var(--amber-lt);}
+.bsm{padding:.45rem .9rem;font-size:.85rem;}
+.bbl{width:100%;justify-content:center;}
+/* list */
+.li{background:rgba(255,255,255,.03);border:1px solid var(--bd);padding:1.1rem 1.4rem;margin-bottom:.7rem;display:flex;align-items:center;gap:1rem;}
+.lim{flex:1;}.lin{font-size:.97rem;font-weight:bold;margin-bottom:.18rem;}.lis{font-size:.8rem;color:var(--muted);}
+.btag{font-size:.68rem;letter-spacing:.18em;padding:.18rem .65rem;background:rgba(200,146,42,.15);color:var(--amber-lt);border:1px solid rgba(200,146,42,.25);}
+/* award row */
+.ar{display:grid;grid-template-columns:110px 1fr 1fr 1fr auto;gap:.7rem;align-items:center;padding:.75rem 0;border-bottom:1px solid rgba(240,235,224,.06);}
+.ar:last-child{border-bottom:none;}
+.ar input,.ar select{width:100%;padding:.55rem .75rem;background:rgba(255,255,255,.05);border:1px solid rgba(240,235,224,.12);color:var(--text);font-family:var(--sans);font-size:.88rem;outline:none;}
+.ar input:focus,.ar select:focus{border-color:var(--amber);}
+/* tabs */
+.tabs{display:flex;border-bottom:1px solid var(--bd);margin-bottom:2rem;}
+.tb{padding:.65rem 1.4rem;background:transparent;border:none;color:var(--muted);font-family:var(--sans);font-size:.93rem;cursor:pointer;border-bottom:2px solid transparent;position:relative;top:1px;transition:color .2s;}
+.tb.active{color:var(--amber-lt);border-bottom-color:var(--amber);}
+/* event item */
+.ev-item{background:var(--sf2);border:1px solid var(--bd);padding:2rem;margin-bottom:1.2rem;position:relative;}
+.ev-status-badge{display:inline-block;font-size:.65rem;letter-spacing:.3em;padding:.2rem .7rem;text-transform:uppercase;margin-bottom:1rem;}
+.ev-status-badge.upcoming{background:rgba(200,146,42,.2);color:var(--amber-lt);border:1px solid var(--bd);}
+.ev-status-badge.ended{background:rgba(100,100,100,.15);color:var(--muted);border:1px solid rgba(240,235,224,.1);}
+.ev-move-btn{font-size:.75rem;padding:.35rem .8rem;}
+hr.div{border:none;border-top:1px solid var(--bd);margin:1.5rem 0;}
+/* export */
+.exbox{background:rgba(200,146,42,.05);border:1px solid var(--bd);padding:2rem;text-align:center;margin-top:2rem;}
+.steps{display:flex;gap:1rem;justify-content:center;margin:1.5rem 0;flex-wrap:wrap;}
+.stp{text-align:center;flex:1;min-width:110px;max-width:145px;}
+.stn{width:34px;height:34px;border-radius:50%;background:var(--amber);color:#1a1510;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:.95rem;margin:0 auto .45rem;}
+.stt{font-size:.78rem;color:var(--muted);line-height:1.6;}
+/* toast */
+#toast{position:fixed;bottom:2rem;right:2rem;padding:.9rem 1.6rem;background:var(--ok);color:#fff;font-size:.95rem;font-weight:bold;z-index:9999;transform:translateY(100px);opacity:0;transition:all .35s ease;pointer-events:none;}
+#toast.show{transform:translateY(0);opacity:1;}#toast.err{background:var(--ng);}
+@media(max-width:700px){#sidebar{display:none;}#main{padding:1.5rem;}.g2,.g3{grid-template-columns:1fr;}.ar{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<div id="app">
+
+<aside id="sidebar">
+  <div class="s-logo">松本地酒家<br><span style="font-size:.68rem;opacity:.4;letter-spacing:.2em;">管理画面</span></div>
+  <div class="s-label">コンテンツ</div>
+  <button class="nb active" onclick="SP('p-event',this)">📅 イベント情報</button>
+  <button class="nb" onclick="SP('p-products',this)">🍶 商品・価格</button>
+  <button class="nb" onclick="SP('p-breweries',this)">🏭 蔵元情報</button>
+  <button class="nb" onclick="SP('p-awards',this)">🏆 酒類鑑評会</button>
+  <div class="s-label">ビジュアル</div>
+  <button class="nb" onclick="SP('p-images',this)">🖼 画像管理</button>
+  <hr style="border:none;border-top:1px solid var(--bd);margin:1rem 0;">
+  <button class="nb" onclick="SP('p-export',this)" style="color:var(--amber-lt);">💾 保存・書き出し</button>
+</aside>
+
+<main id="main">
+
+<div id="setup">
+  <div class="sst" id="sst">
+    <strong>⚠ 作業フォルダが未設定です</strong>
+    「フォルダを選択」でサイトのフォルダ（index.htmlがある場所）を選んでください。画像の自動保存とdata.jsonの直接書き出しが有効になります。
+  </div>
+  <button class="btn bp" onclick="selRoot()">📁 フォルダを選択</button>
+</div>
+
+<!-- ════ イベント ════ -->
+<div class="panel active" id="p-event">
+  <div class="ptitle">📅 イベント情報</div>
+  <div class="psub">直近イベントを複数登録できます。終了後はアーカイブに移動してください。</div>
+  <div id="event-items"></div>
+  <button class="btn bg" onclick="addEvent()" style="margin-bottom:2rem;">＋ 新しいイベントを追加</button>
+  <br><button class="btn bp bbl" onclick="saveAll()">✓ 保存する</button>
+</div>
+
+<!-- ════ 商品 ════ -->
+<div class="panel" id="p-products">
+  <div class="ptitle">🍶 商品・価格</div>
+  <div class="psub">商品情報と画像を登録します</div>
+  <div id="product-list"></div>
+  <button class="btn bg" onclick="addProduct()" style="margin-bottom:1.5rem;">＋ 商品を追加</button>
+  <br><button class="btn bp bbl" onclick="saveAll()">✓ 保存する</button>
+</div>
+
+<!-- ════ 蔵元 ════ -->
+<div class="panel" id="p-breweries">
+  <div class="ptitle">🏭 蔵元情報</div>
+  <div class="psub">住所・連絡先・背景画像を編集します</div>
+  <div class="tabs">
+    <button class="tb active" onclick="ST('tm',this)">松本市</button>
+    <button class="tb" onclick="ST('ts',this)">塩尻市</button>
+    <button class="tb" onclick="ST('ta',this)">安曇野市</button>
+  </div>
+  <div id="tm"></div>
+  <div id="ts" style="display:none;"></div>
+  <div id="ta" style="display:none;"></div>
+  <button class="btn bp bbl" style="margin-top:2rem;" onclick="saveAll()">✓ 保存する</button>
+</div>
+
+<!-- ════ 酒類鑑評会 ════ -->
+<div class="panel" id="p-awards">
+  <div class="ptitle">🏆 酒類鑑評会</div>
+  <div class="psub">受賞記録を追加・削除します</div>
+  <div class="card">
+    <div class="ctitle">新しい受賞記録を追加</div>
+    <div class="g2">
+      <div class="f"><label>鑑評会名</label><select id="awc"><option>全国新酒鑑評会</option><option>関東信越国税局酒類鑑評会</option></select></div>
+      <div class="f"><label>年度・回数</label><input type="text" id="awy" placeholder="例: 令和7年5月 / 第96回"></div>
+    </div>
+    <div style="font-size:.85rem;color:var(--muted);margin-bottom:.8rem;">受賞内容</div>
+    <div id="award-entries">
+      <div class="ar"><select><option>金賞</option><option>最優秀賞</option><option>優秀賞</option><option>入賞</option></select><input type="text" placeholder="銘柄名"><input type="text" placeholder="製造者"><input type="text" placeholder="部門"><button class="btn bd bsm" onclick="this.closest('.ar').remove()">削除</button></div>
+    </div>
+    <button class="btn bg bsm" onclick="addAR()" style="margin-top:1rem;">＋ 受賞を追加</button>
+    <hr class="div">
+    <button class="btn bs" onclick="saveAward()">✓ この年度を追加する</button>
+  </div>
+  <div class="card"><div class="ctitle">登録済み</div><div id="award-list"></div></div>
+</div>
+
+<!-- ════ 画像管理 ════ -->
+<div class="panel" id="p-images">
+  <div class="ptitle">🖼 画像管理</div>
+  <div class="psub">ヒーロー背景と商品画像を一括管理します</div>
+  <div style="background:rgba(200,146,42,.06);border:1px solid var(--bd);padding:1.2rem 1.5rem;margin-bottom:2rem;font-size:.85rem;line-height:2;color:var(--muted);">
+    ⚠ 画像の自動保存にはフォルダ選択が必要です。<br>未設定の場合は手動で <code style="background:rgba(255,255,255,.07);padding:.1rem .4rem;">images/</code> フォルダに置いてください。
+  </div>
+  <div class="card">
+    <div class="ctitle">ヒーロー背景画像</div>
+    <div class="ipick" id="hero-ipick" onclick="document.getElementById('hi').click()">
+      <input type="file" id="hi" accept="image/*" onclick="event.stopPropagation()" onchange="pickImg(this,'hith','hilb','hero')">
+      <img id="hith" class="ith" alt=""><div id="hilb" class="ilb">クリックして背景画像を選択（推奨: 1920×1080px以上）</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ctitle">商品画像一覧</div>
+    <div class="gimg" id="prod-img-grid"></div>
+  </div>
+</div>
+
+<!-- ════ 保存・書き出し ════ -->
+<div class="panel" id="p-export">
+  <div class="ptitle">💾 保存・書き出し</div>
+  <div class="psub">編集内容をdata.jsonに書き出します</div>
+  <div class="exbox">
+    <div style="font-size:1.05rem;font-weight:bold;margin-bottom:.5rem;">更新手順</div>
+    <div style="font-size:.85rem;color:var(--muted);margin-bottom:1.5rem;">フォルダ選択済みなら「書き出し」ボタンで直接上書き保存されます</div>
+    <div class="steps">
+      <div class="stp"><div class="stn">1</div><div class="stt">各ページで入力して「保存」</div></div>
+      <div class="stp"><div class="stn">2</div><div class="stt">「書き出し」ボタンを押す</div></div>
+      <div class="stp"><div class="stn">3</div><div class="stt">フォルダ選択済→自動保存<br>未選択→ダウンロード</div></div>
+      <div class="stp"><div class="stn">4</div><div class="stt">ブラウザで確認</div></div>
+    </div>
+    <button class="btn bp" style="font-size:1.05rem;padding:1rem 3rem;" onclick="exportData()">📥 data.json を書き出す</button>
+  </div>
+  <div class="card" style="margin-top:2rem;">
+    <div class="ctitle">現在のデータ（確認用）</div>
+    <pre id="jprev" style="font-size:.71rem;background:rgba(0,0,0,.3);padding:1.1rem;overflow:auto;line-height:1.7;max-height:380px;color:rgba(240,235,224,.65);"></pre>
+  </div>
+</div>
+
+</main>
+</div>
+<div id="toast"></div>
+
+<script>
+// ── File System Access API ─────────────────────────────────
+let rootH=null, imgH=null;
+
+async function selRoot(){
+  try {
+    rootH=await window.showDirectoryPicker({mode:'readwrite'});
+    imgH=await rootH.getDirectoryHandle('images',{create:true});
+    document.getElementById('setup').classList.add('ok');
+    document.getElementById('sst').innerHTML=`<strong>✓ フォルダ接続済み: ${rootH.name}</strong>画像はimages/へ自動保存、data.jsonも直接書き出せます。`;
+    await loadJSON();
+    toast('フォルダを選択しました: '+rootH.name);
+  } catch(e){ if(e.name!=='AbortError') toast('フォルダ選択に失敗しました',true); }
+}
+async function loadJSON(){
+  if(!rootH) return;
+  try{
+    const fh=await rootH.getFileHandle('data.json');
+    const text=await (await fh.getFile()).text();
+    Object.assign(S,JSON.parse(text));
+    if(!S.events){ S.events=[]; }
+    renderAll(); toast('data.jsonを読み込みました');
+  }catch(e){ console.info('data.json未存在。新規作成します。'); }
+}
+async function saveImg(file,name){
+  if(!imgH) return false;
+  try{
+    const fh=await imgH.getFileHandle(name,{create:true});
+    const w=await fh.createWritable();
+    await w.write(file); await w.close(); return true;
+  }catch(e){ return false; }
+}
+async function saveJSON(str){
+  if(!rootH) return false;
+  try{
+    const fh=await rootH.getFileHandle('data.json',{create:true});
+    const w=await fh.createWritable();
+    await w.write(str); await w.close(); return true;
+  }catch(e){ return false; }
+}
+
+// ── STATE ──────────────────────────────────────────────────
+const S={
+  events:[
+    {id:'2026-spring',status:'upcoming',title:'松本平の地酒を味わう会',date:'2026-04-11',dateLabel:'2026年4月11日（土）',time1:'14:00〜15:30',time2:'16:00〜17:30',venue:'信毎メディアガーデン 1階ホール（松本市）',fee:'3,000円',feeAdvance:'2,500円',ticketShops:'相澤酒店・中島酒店・米田屋・三代澤酒店・穂高酒店',desc:'地域を代表する銘柄が多数揃うほか、大好評のお惣菜やM\'s Factoryのスイーツも並びます。',image:''},
+    {id:'2025-kanko',status:'ended',title:'信州の観光と物産展',dateLabel:'2025年秋',desc:'',image:''},
+    {id:'2025-marche',status:'ended',title:'美ケ原温泉マルシェ',dateLabel:'2025年',desc:'',image:''},
+    {id:'2025-kikou',status:'ended',title:'美ケ原温泉 松本平地酒紀行',dateLabel:'2025年',desc:'',image:''},
+    {id:'2025-kabuki',status:'ended',title:'信州松本大歌舞伎',dateLabel:'2025年',desc:'',image:''},
+  ],
+  sakes:[
+    {brewery:'深志鶴 ／ 奥沢商会',name:'本醸造',desc:'すっきりした中に味わいがあるバランスの良いお酒です。'},
+    {brewery:'善哉 ／ 善哉酒造',name:'純米大吟醸 金紋錦',desc:'おだやかな香りと、スッキリとした旨味の飲みやすい純米大吟醸です。'},
+    {brewery:'岩波 ／ 岩波酒造',name:'純米吟醸 無濾過生原酒',desc:'原酒ならではの深い味わいの生原酒です。'},
+    {brewery:'笹の誉 ／ 笹井酒造',name:'純米大吟醸 しずく採り 花酵母',desc:'秋田流花酵母AK-1を使用した新しい笹の誉。'},
+    {brewery:'大信州 ／ 大信州酒造',name:'GI NAGANO 金紋錦',desc:'飲酒適温15℃。金目鯛の煮つけに相性よし。'},
+    {brewery:'アルプス正宗 ／ 亀田屋酒造店',name:'純米吟醸 美山錦',desc:'スッキリとした辛口。優しい香りと口当たり。'},
+    {brewery:'高波 ／ 丸永酒造場',name:'大吟醸',desc:'華やかな吟醸香で雑味が少ないきれいな甘味。'},
+    {brewery:'和饗 ／ 和饗酒造',name:'純米吟醸',desc:'さわやかな口当たりと豊かな米の味わい。'},
+    {brewery:'美寿々 ／ 美寿々酒造',name:'純米吟醸 美山錦 無濾過生',desc:'軽快でさわやかな香りとバランスのとれた旨味。'},
+    {brewery:'酔園 ／ EH酒造',name:'幻の酒 ブルー 純米吟醸',desc:'芳醇でキレのある味わいの純米吟醸です。'},
+  ],
+  products:[
+    {num:1,brewery:'合名会社奥沢商会',name:'深志鶴 本醸造',type:'本醸造',desc:'すっきりとした味の本醸造',al:'15',volume:'720',price:'1,045',image:''},
+    {num:2,brewery:'岩波酒造合資会社',name:'鏡花水月 純米吟醸',type:'純米吟醸',desc:'まろやかでコクのある味',al:'15',volume:'720',price:'1,760',image:''},
+    {num:3,brewery:'笹井酒造株式会社',name:'笹の誉 風穴貯蔵 純米吟醸',type:'純米吟醸',desc:'稲核の風穴で一定期間貯蔵',al:'16',volume:'720',price:'1,980',image:''},
+    {num:4,brewery:'株式会社亀田屋酒造店',name:'亀乃世 大吟醸',type:'大吟醸',desc:'香りが高くきれいな味わい',al:'15',volume:'720',price:'3,850',image:''},
+    {num:5,brewery:'合資会社丸永酒造場',name:'高波 大吟醸',type:'大吟醸',desc:'山田錦39%使用',al:'15',volume:'720',price:'3,300',image:''},
+    {num:6,brewery:'和饗酒造株式会社',name:'和饗 純米吟醸酒',type:'純米吟醸',desc:'なつかしい味わいのお酒',al:'15',volume:'720',price:'2,090',image:''},
+    {num:7,brewery:'美寿々酒造株式会社',name:'美寿々 純米吟醸原酒',type:'純米吟醸原酒',desc:'長野県産美山錦49%精米使用',al:'15',volume:'720',price:'1,650',image:''},
+    {num:8,brewery:'ＥＨ酒造株式会社',name:'酔園 幻の酒ブルー',type:'純米吟醸',desc:'おしゃれなコルクラベル',al:'15',volume:'720',price:'1,600',image:''},
+  ],
+  breweries:{
+    matsumoto:[
+      {name:'深志鶴',maker:'（名）奥沢商会',zip:'390-0811',address:'松本市中央2-1-20',tel:'0263(32)0734',fax:'0263(32)9054',email:'yoikana@po.mcci.or.jp',image:''},
+      {name:'善哉',maker:'善哉酒造（株）',zip:'390-0874',address:'松本市大手5-4-24',tel:'0263(32)0734',fax:'0263(32)9054',email:'yoikana@po.mcci.or.jp',image:''},
+      {name:'岩波',maker:'岩波酒造（資）',zip:'390-0221',address:'松本市里山辺5159',tel:'0263(25)1300',fax:'0263(25)6300',email:'iwanami@po.mcci.or.jp',image:''},
+      {name:'笹の誉',maker:'笹井酒造（株）',zip:'390-0851',address:'松本市島内3682',tel:'0263(47)0762',fax:'0263(47)1421',email:'sake@sasanohomare.co.jp',image:''},
+      {name:'大信州',maker:'大信州酒造（株）',zip:'390-0852',address:'松本市島立2380',tel:'0263(47)0895',fax:'0263(47)8007',email:'info@daishinsyu.com',image:''},
+      {name:'アルプス正宗',maker:'（株）亀田屋酒造店',zip:'390-0852',address:'松本市島立2748',tel:'0263(47)1320',fax:'0263(47)7056',email:'kametaya@chive.ocn.ne.jp',image:''},
+    ],
+    shiojiri:[
+      {name:'高波',maker:'（資）丸永酒造場',zip:'399-0703',address:'塩尻市広丘高出840',tel:'0263(52)2633',fax:'0263(54)4749',email:'mail@takanami-sake.co.jp',image:''},
+      {name:'和饗',maker:'和饗酒造（株）',zip:'399-0700',address:'塩尻市塩尻町140',tel:'0263(52)0302',fax:'0263(52)3410',email:'',image:''},
+      {name:'美寿々',maker:'美寿々酒造（株）',zip:'399-6462',address:'塩尻市洗馬2402',tel:'0263(52)0013',fax:'0263(54)3581',email:'info@misuzushuzo.com',image:''},
+    ],
+    azumino:[
+      {name:'酔園',maker:'ＥＨ酒造（株）',zip:'399-8204',address:'安曇野市豊科高家1090-1',tel:'0263(72)2828',fax:'0263(72)6268',email:'mail@suien.co.jp',image:''},
+    ],
+  },
+  awards:[
+    {competition:'関東信越国税局酒類鑑評会',year:'第96回（令和7年11月）',entries:[{award:'優秀賞',brand:'アルプス正宗',maker:'（株）亀田屋酒造店',division:'純米吟醸の部'},{award:'優秀賞',brand:'アルプス正宗',maker:'（株）亀田屋酒造店',division:'純米の部'}]},
+    {competition:'全国新酒鑑評会',year:'令和6酒造年度（令和7年5月）',entries:[{award:'金賞',brand:'アルプス正宗',maker:'（株）亀田屋酒造店',division:''},{award:'入賞',brand:'美寿々',maker:'美寿々酒造（株）',division:''},{award:'入賞',brand:'大信州',maker:'大信州酒造（株）',division:''}]},
+  ],
+  images:{hero:'',products:[]},
+};
+
+// ── 画像ピック ─────────────────────────────────────────────
+async function pickImg(input,thumbId,lblId,role){
+  const file=input.files[0]; if(!file) return;
+  // プレビュー
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const th=document.getElementById(thumbId);
+    if(th){th.src=e.target.result;th.classList.add('show');}
+    const lb=document.getElementById(lblId);
+    if(lb){lb.textContent='✓ '+file.name;lb.classList.add('named');}
+  };
+  reader.readAsDataURL(file);
+  // images/へ保存
+  const ok=imgH?await saveImg(file,file.name):false;
+  // state更新
+  if(role==='hero') S.images.hero=file.name;
+  else if(typeof role==='number'&&S.products[role]) S.products[role].image=file.name;
+  else if(typeof role==='string'&&role.startsWith('ev:')){
+    const idx=parseInt(role.slice(3));
+    if(S.events[idx]) S.events[idx].image=file.name;
+  } else if(typeof role==='string'&&role.startsWith('br:')){
+    const [,reg,idx]=role.split(':');
+    if(S.breweries[reg]&&S.breweries[reg][parseInt(idx)]) S.breweries[reg][parseInt(idx)].image=file.name;
+  }
+  if(ok) toast('✓ images/'+file.name+' に保存しました');
+  else if(imgH) toast('画像保存に失敗しました',true);
+  else toast(file.name+'を記録。imagesフォルダに手動で置いてください');
+}
+
+// ── イベント ───────────────────────────────────────────────
+function renderEvents(){
+  const el=document.getElementById('event-items');
+  el.innerHTML=S.events.map((ev,i)=>{
+    const isUp=ev.status==='upcoming';
+    const imgSrc=ev.image?`images/${E(ev.image)}`:'';
+    return `<div class="ev-item">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;">
+        <span class="ev-status-badge ${isUp?'upcoming':'ended'}">${isUp?'▶ 直近イベント':'✓ 終了済み'}</span>
+        <strong style="flex:1;font-size:1rem;">${E(ev.title||'（未入力）')}</strong>
+        ${isUp
+          ?`<button class="btn bd bsm ev-move-btn" onclick="moveToArchive(${i})" title="終了済みに移動">アーカイブへ移動 →</button>`
+          :`<button class="btn bg bsm ev-move-btn" onclick="moveToUpcoming(${i})" title="直近イベントに戻す">← 直近に戻す</button>`
+        }
+        <button class="btn bd bsm" onclick="deleteEvent(${i})">削除</button>
+      </div>
+      <div class="g2">
+        <div class="f"><label>イベント名</label><input type="text" value="${E(ev.title||'')}" oninput="S.events[${i}].title=this.value;S.events[${i}].id='ev-'+Date.now()"></div>
+        <div class="f"><label>開催日</label><input type="date" value="${E(ev.date||'')}" oninput="S.events[${i}].date=this.value;S.events[${i}].dateLabel=fmtDate(this.value)"></div>
+      </div>
+      ${isUp?`
+      <div class="g2">
+        <div class="f"><label>第1部</label><input type="text" value="${E(ev.time1||'')}" oninput="S.events[${i}].time1=this.value"></div>
+        <div class="f"><label>第2部</label><input type="text" value="${E(ev.time2||'')}" oninput="S.events[${i}].time2=this.value"></div>
+      </div>
+      <div class="f"><label>会場</label><input type="text" value="${E(ev.venue||'')}" oninput="S.events[${i}].venue=this.value"></div>
+      <div class="g2">
+        <div class="f"><label>会費（当日）</label><input type="text" value="${E(ev.fee||'')}" oninput="S.events[${i}].fee=this.value"></div>
+        <div class="f"><label>会費（前売り）</label><input type="text" value="${E(ev.feeAdvance||'')}" oninput="S.events[${i}].feeAdvance=this.value"></div>
+      </div>
+      <div class="f"><label>前売りチケット販売店</label><input type="text" value="${E(ev.ticketShops||'')}" oninput="S.events[${i}].ticketShops=this.value"></div>`:''}
+      <div class="f"><label>説明文</label><textarea rows="2" oninput="S.events[${i}].desc=this.value">${E(ev.desc||'')}</textarea></div>
+      <div class="f">
+        <label>ポスター・イメージ画像</label>
+        <div class="ipick ${ev.image?'has':''}" onclick="document.getElementById('ev-fi-${i}').click()">
+          <input type="file" id="ev-fi-${i}" accept="image/*" onclick="event.stopPropagation()" onchange="pickImg(this,'ev-th-${i}','ev-lb-${i}','ev:${i}')">
+          <img id="ev-th-${i}" class="ith ${ev.image?'show':''}" alt="" ${imgSrc?`src="${imgSrc}"`:''}>
+          <div id="ev-lb-${i}" class="ilb ${ev.image?'named':''}">${ev.image?'✓ '+E(ev.image):'クリックして画像を選択'}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function addEvent(){
+  S.events.unshift({id:'ev-'+Date.now(),status:'upcoming',title:'',date:'',dateLabel:'',time1:'',time2:'',venue:'',fee:'',feeAdvance:'',ticketShops:'',desc:'',image:''});
+  renderEvents(); document.getElementById('event-items').firstElementChild?.scrollIntoView({behavior:'smooth'});
+}
+function deleteEvent(i){ if(!confirm('削除しますか？')) return; S.events.splice(i,1); renderEvents(); }
+function moveToArchive(i){ S.events[i].status='ended'; renderEvents(); toast('アーカイブに移動しました'); }
+function moveToUpcoming(i){ S.events[i].status='upcoming'; renderEvents(); toast('直近イベントに戻しました'); }
+
+// ── 商品 ───────────────────────────────────────────────────
+function renderProducts(){
+  const el=document.getElementById('product-list');
+  el.innerHTML=S.products.map((p,i)=>{
+    const imgSrc=p.image?`images/${E(p.image)}`:'';
+    return `<div class="card" style="margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+        <span style="font-size:1.4rem;font-family:serif;color:var(--amber);opacity:.5;">No.${p.num}</span>
+        <div style="font-size:1rem;font-weight:bold;">${E(p.name||'（未設定）')}</div>
+        <div style="margin-left:auto;"><button class="btn bd bsm" onclick="delProd(${i})">削除</button></div>
+      </div>
+      <div class="g2">
+        <div class="f"><label>蔵元・製造場</label><input type="text" value="${E(p.brewery||'')}" oninput="S.products[${i}].brewery=this.value"></div>
+        <div class="f"><label>銘柄名</label><input type="text" value="${E(p.name||'')}" oninput="S.products[${i}].name=this.value"></div>
+      </div>
+      <div class="g3">
+        <div class="f"><label>種別</label><input type="text" value="${E(p.type||'')}" oninput="S.products[${i}].type=this.value"></div>
+        <div class="f"><label>AL(%)</label><input type="number" value="${p.al||''}" oninput="S.products[${i}].al=this.value"></div>
+        <div class="f"><label>容量(ml)</label><input type="number" value="${p.volume||''}" oninput="S.products[${i}].volume=this.value"></div>
+      </div>
+      <div class="g2">
+        <div class="f"><label>価格（税込・円）</label><input type="text" value="${E(p.price||'')}" oninput="S.products[${i}].price=this.value"></div>
+        <div class="f"><label>特徴</label><input type="text" value="${E(p.desc||'')}" oninput="S.products[${i}].desc=this.value"></div>
+      </div>
+      <div class="f">
+        <label>商品画像</label>
+        <div class="ipick ${p.image?'has':''}" onclick="document.getElementById('pi-${i}').click()">
+          <input type="file" id="pi-${i}" accept="image/*" onclick="event.stopPropagation()" onchange="pickImg(this,'pth-${i}','plb-${i}',${i})">
+          <img id="pth-${i}" class="ith ${p.image?'show':''}" alt="" ${imgSrc?`src="${imgSrc}"`:''}>
+          <div id="plb-${i}" class="ilb ${p.image?'named':''}">${p.image?'✓ '+E(p.image):'🍶 クリックして商品画像を選択'}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function delProd(i){ if(!confirm('削除しますか？')) return; S.products.splice(i,1); renderProducts(); }
+function addProduct(){
+  S.products.push({num:S.products.length+1,brewery:'',name:'',type:'',al:'15',volume:'720',price:'',desc:'',image:''});
+  renderProducts(); document.getElementById('product-list').lastElementChild?.scrollIntoView({behavior:'smooth'});
+}
+
+// ── 商品画像グリッド ────────────────────────────────────────
+function renderProdImgGrid(){
+  const el=document.getElementById('prod-img-grid'); if(!el) return;
+  el.innerHTML=S.products.map((p,i)=>{
+    const imgSrc=p.image?`images/${E(p.image)}`:'';
+    return `<div>
+      <div style="font-size:.73rem;color:var(--amber);margin-bottom:.4rem;">No.${p.num} ${E(p.name||'商品'+(i+1))}</div>
+      <div class="ipick ${p.image?'has':''}" onclick="document.getElementById('pig-${i}').click()">
+        <input type="file" id="pig-${i}" accept="image/*" onclick="event.stopPropagation()" onchange="pickImg(this,'pigt-${i}','pigl-${i}',${i})">
+        <img id="pigt-${i}" class="ith ${p.image?'show':''}" alt="" ${imgSrc?`src="${imgSrc}"`:''}>
+        <div id="pigl-${i}" class="ilb ${p.image?'named':''}">${p.image?'✓ '+E(p.image):'🍶 画像を選択'}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── 蔵元（画像登録付き） ────────────────────────────────────
+function renderBreweries(){
+  const map={matsumoto:'tm',shiojiri:'ts',azumino:'ta'};
+  Object.entries(map).forEach(([region,tabId])=>{
+    const el=document.getElementById(tabId); if(!el) return;
+    el.innerHTML=(S.breweries[region]||[]).map((b,i)=>{
+      const imgSrc=b.image?`images/${E(b.image)}`:'';
+      return `<div class="card" style="margin-bottom:1rem;">
+        <div class="ctitle">${E(b.name)} ／ ${E(b.maker)}</div>
+        <div class="g2">
+          <div class="f"><label>銘柄名</label><input type="text" value="${E(b.name||'')}" oninput="S.breweries['${region}'][${i}].name=this.value"></div>
+          <div class="f"><label>製造場名</label><input type="text" value="${E(b.maker||'')}" oninput="S.breweries['${region}'][${i}].maker=this.value"></div>
+        </div>
+        <div class="g2">
+          <div class="f"><label>郵便番号</label><input type="text" value="${E(b.zip||'')}" oninput="S.breweries['${region}'][${i}].zip=this.value"></div>
+          <div class="f"><label>住所</label><input type="text" value="${E(b.address||'')}" oninput="S.breweries['${region}'][${i}].address=this.value"></div>
+        </div>
+        <div class="g2">
+          <div class="f"><label>電話番号</label><input type="tel" value="${E(b.tel||'')}" oninput="S.breweries['${region}'][${i}].tel=this.value"></div>
+          <div class="f"><label>FAX</label><input type="tel" value="${E(b.fax||'')}" oninput="S.breweries['${region}'][${i}].fax=this.value"></div>
+        </div>
+        <div class="f"><label>メールアドレス</label><input type="email" value="${E(b.email||'')}" oninput="S.breweries['${region}'][${i}].email=this.value"></div>
+        <div class="f">
+          <label>蔵元カード 背景画像</label>
+          <div class="ipick ${b.image?'has':''}" onclick="document.getElementById('bri-${region}-${i}').click()">
+            <input type="file" id="bri-${region}-${i}" accept="image/*" onclick="event.stopPropagation()" onchange="pickImg(this,'brth-${region}-${i}','brlb-${region}-${i}','br:${region}:${i}')">
+            <img id="brth-${region}-${i}" class="ith ${b.image?'show':''}" alt="" ${imgSrc?`src="${imgSrc}"`:''}>
+            <div id="brlb-${region}-${i}" class="ilb ${b.image?'named':''}">${b.image?'✓ '+E(b.image):'クリックして背景画像を選択（蔵の外観や風景など）'}</div>
+          </div>
+          <div class="hint">選択した画像が蔵元カードの背景に半透明で表示されます</div>
+        </div>
+      </div>`;
+    }).join('');
+  });
+}
+
+// ── 受賞 ───────────────────────────────────────────────────
+function addAR(){
+  const row=document.createElement('div'); row.className='ar';
+  row.innerHTML=`<select><option>金賞</option><option>最優秀賞</option><option>優秀賞</option><option>入賞</option></select><input type="text" placeholder="銘柄名"><input type="text" placeholder="製造者"><input type="text" placeholder="部門"><button class="btn bd bsm" onclick="this.closest('.ar').remove()">削除</button>`;
+  document.getElementById('award-entries').appendChild(row);
+}
+function saveAward(){
+  const comp=G('awc'),year=G('awy'); if(!year.trim()){alert('年度を入力してください');return;}
+  const entries=[];
+  document.querySelectorAll('#award-entries .ar').forEach(row=>{
+    const [sel,b1,b2,b3]=row.querySelectorAll('select,input');
+    if(b1.value.trim()) entries.push({award:sel.value,brand:b1.value,maker:b2.value,division:b3.value});
+  });
+  S.awards.unshift({competition:comp,year,entries});
+  renderAwardList(); toast('受賞記録を追加しました');
+}
+function renderAwardList(){
+  const el=document.getElementById('award-list');
+  if(!S.awards.length){el.innerHTML='<p style="color:var(--muted);font-size:.9rem;padding:1rem 0;">まだ記録がありません</p>';return;}
+  el.innerHTML=S.awards.map((a,i)=>`
+    <div class="li">
+      <div class="lim"><div class="lin">${a.year}</div><div class="lis">${a.competition} — ${a.entries.length}件</div></div>
+      <span class="btag">${a.entries.some(e=>e.award==='金賞')?'金賞':a.entries.some(e=>e.award==='最優秀賞')?'最優秀賞':'優秀賞等'}</span>
+      <button class="btn bd bsm" onclick="delAward(${i})">削除</button>
+    </div>`).join('');
+}
+function delAward(i){ if(!confirm('削除しますか？')) return; S.awards.splice(i,1); renderAwardList(); }
+
+// ── 保存・書き出し ─────────────────────────────────────────
+function saveAll(){ upPrev(); toast('保存しました ✓'); }
+async function exportData(){
+  const str=JSON.stringify(S,null,2); upPrev();
+  if(rootH){ const ok=await saveJSON(str); if(ok){toast('✓ data.jsonをフォルダに保存しました');return;} }
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([str],{type:'application/json'}));
+  a.download='data.json'; a.click();
+  toast('data.jsonをダウンロードしました（フォルダに置いてください）');
+}
+function upPrev(){ const el=document.getElementById('jprev'); if(el) el.textContent=JSON.stringify(S,null,2); }
+
+// ── UTILS ──────────────────────────────────────────────────
+function G(id){return (document.getElementById(id)||{}).value||'';}
+function E(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function fmtDate(iso){
+  if(!iso) return '';
+  const [y,m,d]=iso.split('-');
+  return `${y}年${parseInt(m)}月${parseInt(d)}日（${'日月火水木金土'[new Date(iso).getDay()]}）`;
+}
+function toast(msg,isErr=false){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.remove('show','err');
+  if(isErr) el.classList.add('err');
+  void el.offsetWidth; el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),3200);
+}
+function SP(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id)?.classList.add('active');
+  btn?.classList.add('active'); upPrev();
+}
+function ST(id,btn){
+  btn.closest('.panel').querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
+  btn.closest('.panel').querySelectorAll('[id^="t"]').forEach(p=>{if(['tm','ts','ta'].includes(p.id))p.style.display='none';});
+  btn.classList.add('active'); document.getElementById(id).style.display='block';
+}
+function renderAll(){ renderEvents(); renderProducts(); renderProdImgGrid(); renderBreweries(); renderAwardList(); upPrev(); }
+
+document.addEventListener('DOMContentLoaded',()=>{
+  if(!('showDirectoryPicker' in window)){
+    document.getElementById('sst').innerHTML='<strong>⚠ このブラウザは非対応です</strong>Chrome または Edge をご使用ください。';
+    document.querySelector('#setup button').disabled=true;
+  }
+  renderAll();
+});
+</script>
+</body>
+</html>
