@@ -216,8 +216,23 @@ function renderBreweries(breweries) {
       const emailHtml = b.email ? `<a href="mailto:${esc(b.email)}">${esc(b.email)}</a>` : '';
       const faxHtml   = b.fax   ? ` ／ FAX：${esc(b.fax)}` : '';
       const bgHtml    = b.image ? `<img class="brewery-card-bg" src="images/${esc(b.image)}" alt="">` : '';
+      // スマホ用アコーディオン要素
+      const mobileDetail = `
+        <div class="bc-mobile-detail">
+          〒${esc(b.zip)} ${esc(b.address)}<br>
+          TEL：<a href="tel:${esc(b.tel)}">${esc(b.tel)}</a>${faxHtml ? '<br>FAX：'+esc(b.fax) : ''}<br>
+          ${emailHtml}
+        </div>`;
       return `<div class="brewery-card" data-num="${String(i+1).padStart(2,'0')}">
         ${bgHtml}
+        <!-- スマホ専用アコーディオン -->
+        <div class="bc-mobile-summary">
+          <span class="bc-mobile-name">${esc(b.name)}</span>
+          <span class="bc-mobile-maker">${esc(b.maker)}</span>
+          <span class="bc-mobile-chevron">▼</span>
+        </div>
+        ${mobileDetail}
+        <!-- PC表示用 -->
         <div class="bc-region">${esc(cfg.label)}</div>
         <div class="bc-name">${esc(b.name)}</div>
         <div class="bc-maker">${esc(b.maker)}</div>
@@ -225,6 +240,14 @@ function renderBreweries(breweries) {
         <span class="bc-arrow">詳しく見る →</span>
       </div>`;
     }).join('');
+  });
+
+  // スマホ用アコーディオン動作
+  document.querySelectorAll('.bc-mobile-summary').forEach(summary => {
+    summary.addEventListener('click', () => {
+      const card = summary.closest('.brewery-card');
+      card.classList.toggle('bc-open');
+    });
   });
 }
 
@@ -274,7 +297,7 @@ function renderEventPage(events, sakes) {
         </div>
         ${imgHtml}
         <h2 style="font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:1.5rem;line-height:1.3;">${esc(ev.title)}</h2>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;">
+        <div class="event-detail-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;">
           <table style="font-size:.88rem;width:100%;border-collapse:collapse;">
             <tr style="border-bottom:1px solid rgba(245,240,232,.07);"><td style="padding:.8rem 1rem .8rem 0;opacity:.4;width:80px;vertical-align:top;">日時</td>
               <td style="padding:.8rem 0;line-height:2;">${esc(dateLabel)}

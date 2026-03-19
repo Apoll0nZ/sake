@@ -140,13 +140,46 @@ ul { list-style: none; }
 .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
 .nav-mobile {
-  display: none; position: fixed; inset: 0; z-index: 190;
-  background: rgba(14,11,8,0.97);
-  flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+  display: none;
+  position: fixed;
+  top: 72px; left: 0; right: 0;
+  z-index: 190;
+  background: #0E0B08F5;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
   backdrop-filter: blur(16px);
+  max-height: calc(100vh - 72px);
+  overflow-y: auto;
+  border-top: 1px solid rgba(200,146,42,0.2);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  transform: translateY(-8px);
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
 }
-.nav-mobile.open { display: flex; }
-.nav-mobile a { font-family: var(--serif); font-size: 1.8rem; letter-spacing: 0.2em; }
+.nav-mobile.open {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.nav-mobile a {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  letter-spacing: 0.15em;
+  padding: 1.1rem 2rem;
+  border-bottom: 1px solid rgba(200,146,42,0.1);
+  color: rgba(240,235,224,0.9);
+  display: block;
+  transition: background 0.2s, color 0.2s;
+}
+.nav-mobile a:first-child { border-top: none; }
+.nav-mobile a:last-child { border-bottom: none; }
+.nav-mobile a:hover, .nav-mobile a:active {
+  background: rgba(200,146,42,0.1);
+  color: var(--amber-lt);
+}
 
 /* ── HERO ──────────────────────────────────────────────────── */
 #hero {
@@ -714,13 +747,13 @@ footer {
 /* ── INNER PAGE HERO ───────────────────────────────────────── */
 .page-hero {
   padding: 12rem 4rem 5rem;
-  background: var(--deep);
-  border-bottom: 1px solid var(--border);
+  background: #EAF3FA;
+  border-bottom: 3px solid var(--amber);
 }
 .page-hero-inner { max-width: 1120px; margin: 0 auto; }
-.page-hero-tag { font-size: 0.68rem; letter-spacing: 0.5em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.8rem; }
-.page-hero-title { font-family: var(--serif); font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.1; color: #FFFFFF; font-weight: 700; }
-.page-hero-sub { font-size: 0.88rem; opacity: 0.5; letter-spacing: 0.2em; margin-top: 0.8rem; }
+.page-hero-tag { font-size: 0.68rem; letter-spacing: 0.5em; color: var(--amber); text-transform: uppercase; margin-bottom: 0.8rem; }
+.page-hero-title { font-family: var(--serif); font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.1; color: #1A2B3A; font-weight: 700; }
+.page-hero-sub { font-size: 0.88rem; opacity: 0.65; letter-spacing: 0.2em; margin-top: 0.8rem; color: #1A2B3A; }
 
 /* ── PRODUCTS PAGE ─────────────────────────────────────────── */
 .products-section { padding: 6rem 4rem; background: var(--ink); }
@@ -737,25 +770,60 @@ footer {
   gap: 1.5px; background: var(--border);
   border: 1.5px solid var(--border); margin-bottom: 5rem;
 }
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+  }
+}
+@media (max-width: 400px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+}
 .product-card {
   background: var(--ink); padding: 2.5rem 2.2rem;
   position: relative; transition: background 0.3s; cursor: default;
 }
 .product-card:hover { background: #1E180F; }
+@media (max-width: 768px) {
+  .product-card { padding: 1rem 0.85rem; }
+}
 .product-num {
   font-family: var(--serif); font-size: 3.5rem;
   color: rgba(200,146,42,0.07); position: absolute;
   top: 1rem; right: 1.5rem; line-height: 1;
 }
+@media (max-width: 768px) {
+  .product-num { font-size: 2rem; top: 0.5rem; right: 0.6rem; }
+}
 .product-brewery { font-size: 0.72rem; letter-spacing: 0.4em; color: var(--amber); text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 600; }
+@media (max-width: 768px) {
+  .product-brewery { font-size: 0.6rem; letter-spacing: 0.15em; margin-bottom: 0.25rem; }
+}
 .product-name { font-family: var(--serif); font-size: 1.3rem; letter-spacing: 0.06em; margin-bottom: 0.3rem; line-height: 1.35; }
+@media (max-width: 768px) {
+  .product-name { font-size: 0.92rem; margin-bottom: 0.15rem; line-height: 1.4; }
+}
 .product-type { font-size: 0.75rem; opacity: 0.45; letter-spacing: 0.15em; margin-bottom: 1.2rem; }
+@media (max-width: 768px) {
+  .product-type { font-size: 0.65rem; margin-bottom: 0.5rem; }
+}
 .product-desc { font-size: 0.9rem; line-height: 1.9; color: var(--text-sub); margin-bottom: 1.5rem; }
+@media (max-width: 768px) {
+  .product-desc { font-size: 0.75rem; line-height: 1.7; margin-bottom: 0.7rem; }
+}
 .product-meta {
   display: flex; gap: 1rem; flex-wrap: wrap;
   border-top: 1px solid rgba(245,240,232,0.07); padding-top: 1.2rem;
 }
+@media (max-width: 768px) {
+  .product-meta { gap: 0.35rem; padding-top: 0.6rem; flex-direction: column; }
+}
 .product-meta-item { font-size: 0.82rem; color: var(--text-sub); letter-spacing: 0.1em; }
+@media (max-width: 768px) {
+  .product-meta-item { font-size: 0.68rem; }
+}
 .product-meta-item span { color: var(--amber-lt); }
 
 /* Order section */
@@ -1494,47 +1562,105 @@ footer {
     flex-direction: column;
     gap: 1.8rem;
   }
-  /* ポスターをスマホでは横幅いっぱい・高さ制限 */
   .event-poster {
     max-width: 100%;
-    aspect-ratio: 3/2;   /* 縦長→横長に変更 */
+    aspect-ratio: 3/2;
   }
   .event-poster-img {
     aspect-ratio: 3/2;
   }
-  /* テキスト列の順序：スマホではテキスト先・ポスター後 */
   .event-inner > div:first-child { order: 1; }
   .event-inner > .event-poster   { order: 2; }
-
-  /* メタ情報を折り返し */
   .event-meta { flex-wrap: wrap; gap: 0.7rem; }
   .event-meta-item { font-size: 0.85rem; }
+
+  /* イベントページ内の詳細グリッドを縦積みに */
+  .event-detail-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
 }
 
-/* 蔵元：スマホでカード間に区切り線 */
+/* 蔵元：スマホでコンパクトなアコーディオンリスト */
 @media (max-width: 768px) {
   .brewery-grid {
-    grid-template-columns: 1fr;
+    display: flex !important;
+    flex-direction: column;
     gap: 0;
     border: 1.5px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--border);
   }
   .brewery-card {
-    border-bottom: 1.5px solid var(--border);
-    padding: 1.8rem 1.2rem;
+    border-bottom: 1.5px solid var(--border) !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    display: flex;
+    flex-direction: column;
   }
-  .brewery-card:last-child { border-bottom: none; }
+  .brewery-card:last-child { border-bottom: none !important; }
+  .brewery-card:hover { background: #FFFFFF !important; box-shadow: none !important; }
 
-  /* カード内フォント調整 */
-  .bc-name   { font-size: 1.45rem; }
-  .bc-maker  { font-size: 0.82rem; }
-  .bc-info   { font-size: 0.8rem; line-height: 1.9; }
-  .bc-region { font-size: 0.65rem; }
+  /* PC用要素をスマホで非表示 */
+  .bc-region, .bc-name, .bc-maker, .bc-info, .bc-arrow,
+  .brewery-card::before { display: none !important; }
 
-  /* タブを等幅・文字小さく */
+  /* スマホ専用：サマリー行 */
+  .bc-mobile-summary {
+    display: flex;
+    align-items: center;
+    padding: 0.95rem 1.1rem;
+    gap: 0.75rem;
+    cursor: pointer;
+    background: #FFFFFF;
+    transition: background 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+  .bc-mobile-summary:active { background: #EAF3FA; }
+  .bc-mobile-name {
+    flex: 1;
+    font-family: var(--serif);
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.06em;
+  }
+  .bc-mobile-maker {
+    font-size: 0.73rem;
+    color: var(--text-sub);
+    white-space: nowrap;
+    flex-shrink: 0;
+    letter-spacing: 0.04em;
+  }
+  .bc-mobile-chevron {
+    font-size: 0.78rem;
+    color: var(--amber);
+    transition: transform 0.22s;
+    flex-shrink: 0;
+    margin-left: 0.1rem;
+  }
+  .brewery-card.bc-open .bc-mobile-chevron { transform: rotate(180deg); }
+
+  /* スマホ専用：詳細パネル */
+  .bc-mobile-detail {
+    display: none;
+    padding: 0.7rem 1.1rem 1rem;
+    background: #F4F9FC;
+    border-top: 1px solid var(--border);
+    font-size: 0.82rem;
+    line-height: 2;
+    color: var(--text-sub);
+  }
+  .brewery-card.bc-open .bc-mobile-detail { display: block; }
+  .bc-mobile-detail a { color: var(--amber); font-weight: 500; word-break: break-all; }
+
+  /* タブ */
   .region-tabs { margin-bottom: 1.8rem; }
-  .region-tab  { font-size: 0.9rem; padding: 1rem 0.3rem; letter-spacing: 0.06em; }
+  .region-tab  { font-size: 0.88rem; padding: 0.9rem 0.3rem; letter-spacing: 0.05em; }
 
-  /* #breweries のセクション左右余白 */
   #breweries .section-inner { padding: 0 1.2rem; }
   .marquee-wrap { margin: 2rem 0 3rem; }
 }
+
