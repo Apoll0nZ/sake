@@ -717,9 +717,9 @@ footer {
   border-bottom: 1px solid var(--border);
 }
 .page-hero-inner { max-width: 1120px; margin: 0 auto; }
-.page-hero-tag { font-size: 0.68rem; letter-spacing: 0.5em; color: var(--amber); text-transform: uppercase; margin-bottom: 0.8rem; }
-.page-hero-title { font-family: var(--serif); font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.1; color: var(--text); font-weight: 700; }
-.page-hero-sub { font-size: 0.88rem; color: var(--text-sub); letter-spacing: 0.2em; margin-top: 0.8rem; }
+.page-hero-tag { font-size: 0.68rem; letter-spacing: 0.5em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.8rem; }
+.page-hero-title { font-family: var(--serif); font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.1; color: #FFFFFF; font-weight: 700; letter-spacing: 0.05em; }
+.page-hero-sub { font-size: 0.88rem; color: rgba(255,255,255,0.55); letter-spacing: 0.2em; margin-top: 0.8rem; }
 
 /* ── PRODUCTS PAGE ─────────────────────────────────────────── */
 .products-section { padding: 6rem 4rem; background: var(--ink); }
@@ -1452,20 +1452,22 @@ footer {
 /* 商品ページの縦長画像対応 */
 .product-img-wrap {
   width: 100%;
-  aspect-ratio: 3 / 4;            /* 縦長瓶が全部入る比率 */
+  aspect-ratio: 3 / 4;
   overflow: hidden;
   background: linear-gradient(170deg, #1C1208 0%, #0A0704 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0;               /* カード上部から隙間なく */
+  margin-bottom: 0;
 }
 .product-img-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;            /* 瓶全体が切れずに表示 */
-  object-position: center bottom; /* 瓶の底を基準に表示 */
-  padding: 1rem 1.5rem 0;        /* 左右に少し余白 */
+  /* 縦長瓶が全体収まるよう contain、サイズ制限なし */
+  max-width: 85%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
 }
 .product-img-placeholder {
   font-family: var(--serif);

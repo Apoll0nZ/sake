@@ -391,7 +391,7 @@ function renderProductsPage(products) {
   if (!grid || !products?.length) return;
   grid.innerHTML = products.map(p => {
     const imgHtml = p.image
-      ? `<div class="product-img-wrap"><img src="images/${esc(p.image)}" alt="${esc(p.name)}"></div>`
+      ? `<div class="product-img-wrap"><img src="images/${esc(p.image)}" alt="${esc(p.name)}" style="max-width:85%;max-height:100%;width:auto;height:auto;object-fit:contain;display:block;"></div>`
       : `<div class="product-img-wrap"><div class="product-img-placeholder">酒</div></div>`;
     return `<div class="product-card">
       <div class="product-num">${esc(p.num)}</div>
@@ -487,7 +487,8 @@ function initPageSystem() {
     const target=$(id);
     if (!target) return;
     target.classList.add('active');
-    window.scrollTo({top:0,behavior:'smooth'});
+    // smoothだとスクロール中に干渉するため instant に変更
+    window.scrollTo({top:0,behavior:'instant'});
     setTimeout(()=>{
       target.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stat-item').forEach(el=>revealObs?.observe(el));
     },80);
