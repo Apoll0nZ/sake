@@ -1015,7 +1015,7 @@ footer {
 .carousel-item:hover { transform: translateY(-6px); }
 .carousel-img {
   width: 180px;
-  aspect-ratio: 3 / 4;
+  height: 240px;                   /* 固定高さで全商品統一 */
   background: #fff;
   margin-bottom: 1rem;
   display: flex; align-items: center; justify-content: center;
@@ -1023,10 +1023,11 @@ footer {
   color: rgba(200,146,42,0.25); overflow: hidden;
 }
 .carousel-img img {
-  width: 100%; height: 100%;
-  object-fit: contain;
-  mix-blend-mode: multiply;
-  padding: 0.5rem;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;             /* 比率を保ちつつ枠に収める（拡大・縮小両対応） */
+  mix-blend-mode: multiply;        /* 黒背景を白と合成して消去 */
+  padding: 0.4rem;
 }
 .carousel-item-brewery { font-size: 0.65rem; letter-spacing: 0.3em; color: var(--amber); margin-bottom: 0.3rem; }
 .carousel-item-name { font-family: var(--serif); font-size: 1rem; letter-spacing: 0.05em; line-height: 1.4; margin-bottom: 0.3rem; }

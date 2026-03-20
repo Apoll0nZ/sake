@@ -482,12 +482,14 @@ function initNavbar() {
 
 /* ── PAGE SYSTEM ────────────────────────────────────────────── */
 function initPageSystem() {
+  let _currentPage = 'page-main';
   function showPage(id) {
+    if (id === _currentPage) return; // 同じページなら何もしない
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     const target=$(id);
     if (!target) return;
     target.classList.add('active');
-    // smoothだとスクロール中に干渉するため instant に変更
+    _currentPage = id;
     window.scrollTo({top:0,behavior:'instant'});
     setTimeout(()=>{
       target.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stat-item').forEach(el=>revealObs?.observe(el));
