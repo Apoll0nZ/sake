@@ -187,12 +187,6 @@ hr.div{border:none;border-top:1px solid var(--bd);margin:1.5rem 0;}
     <button class="btn bg" style="margin-top:1rem;" onclick="addHeroImageSlot()">＋ 画像を追加</button>
   </div>
 
-  <!-- 商品画像 -->
-  <div class="card">
-    <div class="ctitle">商品画像一覧</div>
-    <div class="gimg" id="prod-img-grid"></div>
-  </div>
-
   <!-- 研究会写真（各2枚） -->
   <div class="card">
     <div class="ctitle">🔬 研究会 写真（各カード2枚まで）</div>
@@ -589,7 +583,7 @@ function ST(id,btn){
   btn.closest('.panel').querySelectorAll('[id^="t"]').forEach(p=>{if(['tm','ts','ta'].includes(p.id))p.style.display='none';});
   btn.classList.add('active'); document.getElementById(id).style.display='block';
 }
-function renderAll(){ renderEvents(); renderProducts(); renderProdImgGrid(); renderBreweries(); renderAwardList(); renderHeroImages(); renderPagePhotosAdmin(); upPrev(); }
+function renderAll(){ renderEvents(); renderProducts(); renderBreweries(); renderAwardList(); renderHeroImages(); renderPagePhotosAdmin(); upPrev(); }
 
 // ── ページ写真（研究会・神社）管理 ───────────────────────────
 function renderPagePhotosAdmin(){
@@ -610,6 +604,7 @@ function renderPagePhotosAdmin(){
         <input type="text" value="${E(p.alt||'')}" placeholder="alt（省略可）"
           oninput="S.pagePhotos['research_${idx}'][${i}].alt=this.value"
           style="flex:1;font-size:.78rem;padding:.3rem .5rem;">
+        ${p.file?`<button class="btn bd bsm" onclick="clearPagePhoto('research_${idx}',${i})" title="削除">✕</button>`:''}
       </div>`;
     }).join('');
   });
@@ -625,9 +620,12 @@ function renderPagePhotosAdmin(){
         <img id="spth-${i}" class="ith ${p.file?'show':''}" alt="" style="max-height:80px;width:100%;object-fit:cover;" ${src?`src="${src}"`:''}>
         <div id="splb-${i}" class="ilb ${p.file?'named':''}" style="font-size:.68rem;">${p.file?'✓ '+E(p.file):'📷 '+(i+1)+'枚目'}</div>
       </div>
-      <input type="text" value="${E(p.alt||'')}" placeholder="alt（省略可）"
-        oninput="S.pagePhotos.shrine[${i}].alt=this.value"
-        style="width:100%;font-size:.75rem;padding:.3rem .5rem;margin-top:.3rem;background:rgba(255,255,255,.06);border:1px solid var(--bd);color:var(--fg);">
+      <div style="display:flex;gap:.4rem;margin-top:.3rem;">
+        <input type="text" value="${E(p.alt||'')}" placeholder="alt（省略可）"
+          oninput="S.pagePhotos.shrine[${i}].alt=this.value"
+          style="flex:1;font-size:.75rem;padding:.3rem .5rem;background:rgba(255,255,255,.06);border:1px solid var(--bd);color:var(--fg);">
+        ${p.file?`<button class="btn bd bsm" onclick="clearPagePhoto('shrine',${i})" title="削除">✕</button>`:''}
+      </div>
     </div>`;
   }).join('');
 }
@@ -652,6 +650,16 @@ async function pickPagePhoto(input, key, idx){
   S.pagePhotos[key][idx].file=file.name;
   if(ok) toast('✓ images/'+file.name+' に保存しました');
   else toast(file.name+' を記録。imagesフォルダに手動で置いてください');
+}
+
+function clearPagePhoto(key, idx){
+  if(!confirm('この画像を削除しますか？')) return;
+  if(S.pagePhotos[key] && S.pagePhotos[key][idx]){
+    S.pagePhotos[key][idx].file='';
+    S.pagePhotos[key][idx].alt='';
+  }
+  renderPagePhotosAdmin();
+  toast('画像を削除しました');
 }
 
 // ── ヒーロー画像（複数）管理 ──────────────────────────────────

@@ -717,9 +717,9 @@ footer {
   border-bottom: 1px solid var(--border);
 }
 .page-hero-inner { max-width: 1120px; margin: 0 auto; }
-.page-hero-tag { font-size: 0.68rem; letter-spacing: 0.5em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.8rem; }
-.page-hero-title { font-family: var(--serif); font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.1; color: #FFFFFF; font-weight: 700; }
-.page-hero-sub { font-size: 0.88rem; opacity: 0.5; letter-spacing: 0.2em; margin-top: 0.8rem; }
+.page-hero-tag { font-size: 0.68rem; letter-spacing: 0.5em; color: var(--amber); text-transform: uppercase; margin-bottom: 0.8rem; }
+.page-hero-title { font-family: var(--serif); font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.1; color: var(--text); font-weight: 700; }
+.page-hero-sub { font-size: 0.88rem; color: var(--text-sub); letter-spacing: 0.2em; margin-top: 0.8rem; }
 
 /* ── PRODUCTS PAGE ─────────────────────────────────────────── */
 .products-section { padding: 6rem 4rem; background: var(--ink); }
@@ -864,27 +864,51 @@ footer {
 }
 
 /* ── SHRINE PAGE ───────────────────────────────────────────── */
-.shrine-section { padding: 6rem 4rem; background: var(--ink); }
-.shrine-inner { max-width: 900px; margin: 0 auto; }
-.shrine-visual {
-  width: 100%; aspect-ratio: 16/7; max-height: 360px;
+.shrine-section { padding: 0 0 6rem; background: var(--ink); }
+.shrine-inner { max-width: 1000px; margin: 0 auto; padding: 0 4rem; }
+
+/* 画像ヒーローエリア（「松尾」グラデを置き換え） */
+.shrine-hero-img {
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  max-height: 500px;
+  overflow: hidden;
+  margin-bottom: 5rem;
   background: linear-gradient(155deg, #3D0F0F 0%, #2B1F0E 50%, #1A1510 100%);
-  margin-bottom: 4rem; display: flex; align-items: center; justify-content: center;
-  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
 }
-.shrine-visual-text {
-  font-family: var(--serif); font-size: 5rem; letter-spacing: 0.3em;
-  color: rgba(200,146,42,0.25); writing-mode: vertical-rl;
+.shrine-hero-img img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  display: block;
 }
-.shrine-visual-sub {
-  position: absolute; bottom: 2rem; right: 3rem;
-  font-size: 0.7rem; letter-spacing: 0.4em; color: var(--amber); opacity: 0.5;
+/* 画像未登録時の装飾テキスト */
+.shrine-hero-placeholder {
+  font-family: var(--serif);
+  font-size: clamp(4rem, 10vw, 8rem);
+  color: rgba(200,146,42,0.18);
+  writing-mode: vertical-rl;
+  letter-spacing: 0.3em;
 }
-.shrine-body { font-size: 0.92rem; line-height: 2.3; opacity: 0.65; }
-.shrine-body p { margin-bottom: 1.8rem; }
+
+.shrine-body {
+  font-size: 1rem;
+  line-height: 2.4;
+  color: var(--text-sub);
+}
+.shrine-body p { margin-bottom: 2rem; }
 .shrine-info {
-  margin-top: 3rem; padding: 2rem;
-  border: 1px solid var(--border); font-size: 0.82rem; opacity: 0.55; line-height: 2.2;
+  margin-top: 3rem; padding: 2rem 2.5rem;
+  border: 1px solid var(--border);
+  font-size: 0.9rem;
+  color: var(--text-sub);
+  line-height: 2.4;
+}
+
+@media (max-width: 768px) {
+  .shrine-inner { padding: 0 1.4rem; }
+  .shrine-hero-img { aspect-ratio: 4/3; max-height: 320px; margin-bottom: 3rem; }
 }
 
 /* ── RESPONSIVE ────────────────────────────────────────────── */

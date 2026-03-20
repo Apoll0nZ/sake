@@ -435,14 +435,28 @@ function renderPagePhotos(pagePhotos) {
     ).join('');
   });
 
-  // 松尾神社（3枚）
+  // 松尾神社（ヒーロー画像 + 3枚グリッド）
   const shrineEl = $('shrine-photos');
+  const shrineHero = $('shrineHeroImg');
+  const shrineHeroPlaceholder = $('shrineHeroPlaceholder');
+  const photos = (pagePhotos.shrine || []).filter(p => p.file);
+
+  // 1枚目をヒーロー画像として表示
+  if (shrineHero && photos.length > 0) {
+    if (shrineHeroPlaceholder) shrineHeroPlaceholder.style.display = 'none';
+    const heroImg = document.createElement('img');
+    heroImg.src = `images/${esc(photos[0].file)}`;
+    heroImg.alt = photos[0].alt || '松尾神社';
+    shrineHero.appendChild(heroImg);
+  }
+
+  // 2枚目以降をグリッドに表示
   if (shrineEl) {
-    const photos = (pagePhotos.shrine || []).filter(p => p.file);
-    if (!photos.length) { shrineEl.style.display = 'none'; }
+    const gridPhotos = photos.slice(1);
+    if (!gridPhotos.length) { shrineEl.style.display = 'none'; }
     else {
       shrineEl.style.display = '';
-      shrineEl.innerHTML = photos.map(p =>
+      shrineEl.innerHTML = gridPhotos.map(p =>
         `<div class="page-photo-item reveal">
           <img src="images/${esc(p.file)}" alt="${esc(p.alt||'松尾神社')}">
         </div>`
