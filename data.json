@@ -160,7 +160,7 @@
       "al": "15",
       "volume": "720",
       "price": "1,045",
-      "image": "sakefukashi.jpg"
+      "image": "sake1.jpg"
     },
     {
       "num": 2,
@@ -171,7 +171,7 @@
       "al": "15",
       "volume": "720",
       "price": "1,760",
-      "image": "sakeiwanami.jpg"
+      "image": "sake2.jpg"
     },
     {
       "num": 3,
@@ -182,7 +182,7 @@
       "al": "16",
       "volume": "720",
       "price": "1,980",
-      "image": "sakesasai720.jpg"
+      "image": "sake3.png"
     },
     {
       "num": 4,
@@ -193,7 +193,7 @@
       "al": "15",
       "volume": "720",
       "price": "3,850",
-      "image": "sakekametaya1.jpg"
+      "image": "sake4.jpg"
     },
     {
       "num": 5,
@@ -204,7 +204,7 @@
       "al": "15",
       "volume": "720",
       "price": "3,300",
-      "image": "saketakanami.jpg"
+      "image": "sake5.png"
     },
     {
       "num": 6,
@@ -215,7 +215,7 @@
       "al": "15",
       "volume": "720",
       "price": "2,090",
-      "image": "sakewakyou.jpg"
+      "image": "sake6.png"
     },
     {
       "num": 7,
@@ -226,7 +226,7 @@
       "al": "15",
       "volume": "720",
       "price": "1,650",
-      "image": "sakemisuzu.jpg"
+      "image": "sake7.jpeg"
     },
     {
       "num": 8,
@@ -237,7 +237,7 @@
       "al": "15",
       "volume": "720",
       "price": "1,600",
-      "image": "sakesuien.jpg"
+      "image": "sake8.jpg"
     }
   ],
   "breweries": {
