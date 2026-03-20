@@ -38,8 +38,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderEventPage(d.events, d.sakes);
     renderAwardsPage(d.awards);
     renderProductsPage(d.products);
-    renderResearchImages(d.researchImages);
-    renderShrineImages(d.shrineImages);
   }
 
   /* ④ 描画完了後に RevealObserver 起動 */
@@ -48,10 +46,28 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 /* ── LOADER ────────────────────────────────────────────────── */
 function initLoader() {
-  const hide = () => setTimeout(() => { const l=$('loader'); if(l) l.classList.add('hide'); }, 2000);
+  // ローダー表示中はスクロール禁止
+  document.body.style.overflow = 'hidden';
+
+  const unlock = () => {
+    document.body.style.overflow = '';
+  };
+
+  const hide = () => setTimeout(() => {
+    const l = $('loader');
+    if (l) l.classList.add('hide');
+    unlock();
+  }, 2000);
+
   if (document.readyState === 'complete') hide();
   else window.addEventListener('load', hide, { once: true });
-  setTimeout(() => { const l=$('loader'); if(l) l.classList.add('hide'); }, 4500);
+
+  // 最大4.5秒で強制解除
+  setTimeout(() => {
+    const l = $('loader');
+    if (l) l.classList.add('hide');
+    unlock();
+  }, 4500);
 }
 
 /* ── ヒーロー背景 ───────────────────────────────────────────── */
@@ -218,23 +234,8 @@ function renderBreweries(breweries) {
       const emailHtml = b.email ? `<a href="mailto:${esc(b.email)}">${esc(b.email)}</a>` : '';
       const faxHtml   = b.fax   ? ` ／ FAX：${esc(b.fax)}` : '';
       const bgHtml    = b.image ? `<img class="brewery-card-bg" src="images/${esc(b.image)}" alt="">` : '';
-      // スマホ用アコーディオン要素
-      const mobileDetail = `
-        <div class="bc-mobile-detail">
-          〒${esc(b.zip)} ${esc(b.address)}<br>
-          TEL：<a href="tel:${esc(b.tel)}">${esc(b.tel)}</a>${faxHtml ? '<br>FAX：'+esc(b.fax) : ''}<br>
-          ${emailHtml}
-        </div>`;
       return `<div class="brewery-card" data-num="${String(i+1).padStart(2,'0')}">
         ${bgHtml}
-        <!-- スマホ専用アコーディオン -->
-        <div class="bc-mobile-summary">
-          <span class="bc-mobile-name">${esc(b.name)}</span>
-          <span class="bc-mobile-maker">${esc(b.maker)}</span>
-          <span class="bc-mobile-chevron">▼</span>
-        </div>
-        ${mobileDetail}
-        <!-- PC表示用 -->
         <div class="bc-region">${esc(cfg.label)}</div>
         <div class="bc-name">${esc(b.name)}</div>
         <div class="bc-maker">${esc(b.maker)}</div>
@@ -242,14 +243,6 @@ function renderBreweries(breweries) {
         <span class="bc-arrow">詳しく見る →</span>
       </div>`;
     }).join('');
-  });
-
-  // スマホ用アコーディオン動作
-  document.querySelectorAll('.bc-mobile-summary').forEach(summary => {
-    summary.addEventListener('click', () => {
-      const card = summary.closest('.brewery-card');
-      card.classList.toggle('bc-open');
-    });
   });
 }
 
@@ -299,7 +292,7 @@ function renderEventPage(events, sakes) {
         </div>
         ${imgHtml}
         <h2 style="font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:1.5rem;line-height:1.3;">${esc(ev.title)}</h2>
-        <div class="event-detail-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;">
           <table style="font-size:.88rem;width:100%;border-collapse:collapse;">
             <tr style="border-bottom:1px solid rgba(245,240,232,.07);"><td style="padding:.8rem 1rem .8rem 0;opacity:.4;width:80px;vertical-align:top;">日時</td>
               <td style="padding:.8rem 0;line-height:2;">${esc(dateLabel)}
@@ -402,40 +395,6 @@ function renderProductsPage(products) {
   }
 }
 
-/* ── 研究会 画像 ─────────────────────────────────────────── */
-function renderResearchImages(images) {
-  const wrap = $('research-images-wrap');
-  if (!wrap) return;
-  const imgs = (images || []).filter(img => img.file);
-  if (!imgs.length) { wrap.style.display = 'none'; return; }
-  wrap.innerHTML = imgs.map(img =>
-    `<div class="research-img-item">
-      <img src="images/${esc(img.file)}" alt="${esc(img.alt || '')}" loading="lazy">
-    </div>`
-  ).join('');
-}
-
-/* ── 松尾神社 画像ギャラリー ─────────────────────────────── */
-function renderShrineImages(images) {
-  const wrap = $('shrine-images-wrap');
-  if (!wrap) return;
-  const imgs = (images || []).filter(img => img.file);
-  if (!imgs.length) { wrap.style.display = 'none'; return; }
-  // 1枚目を大きく、残りをサイド
-  const [first, ...rest] = imgs;
-  wrap.innerHTML = `
-    <div class="shrine-gallery">
-      <div class="shrine-gallery-main">
-        <img src="images/${esc(first.file)}" alt="${esc(first.alt || '')}" loading="lazy">
-      </div>
-      ${rest.length ? `<div class="shrine-gallery-sub">
-        ${rest.map(img => `<div class="shrine-gallery-sub-item">
-          <img src="images/${esc(img.file)}" alt="${esc(img.alt || '')}" loading="lazy">
-        </div>`).join('')}
-      </div>` : ''}
-    </div>`;
-}
-
 /* ── HELPERS ────────────────────────────────────────────────── */
 function formatDate(iso) {
   if (!iso) return '';
@@ -511,17 +470,20 @@ function animateCounter(el){
 function initParallax(){
   // 旧 parallaxStrip は削除済みのためスキップ
 
-  // 川動画の再生速度を 1/3 に設定
+  // 川動画（about）の再生速度を 1/3 に設定
   const riverVideo = document.querySelector('.about-video-bg');
   if (riverVideo) {
-    // 読み込み前でも設定できるよう両方に仕掛ける
     riverVideo.playbackRate = 0.333;
-    riverVideo.addEventListener('loadedmetadata', () => {
-      riverVideo.playbackRate = 0.333;
-    });
-    riverVideo.addEventListener('play', () => {
-      riverVideo.playbackRate = 0.333;
-    });
+    riverVideo.addEventListener('loadedmetadata', () => { riverVideo.playbackRate = 0.333; });
+    riverVideo.addEventListener('play', () => { riverVideo.playbackRate = 0.333; });
+  }
+
+  // saketitle動画（washi）の再生速度も 1/3 に設定
+  const washiVideo = document.querySelector('.washi-video-bg');
+  if (washiVideo) {
+    washiVideo.playbackRate = 0.333;
+    washiVideo.addEventListener('loadedmetadata', () => { washiVideo.playbackRate = 0.333; });
+    washiVideo.addEventListener('play', () => { washiVideo.playbackRate = 0.333; });
   }
 }
 
