@@ -1015,7 +1015,7 @@ footer {
 .carousel-item:hover { transform: translateY(-6px); }
 .carousel-img {
   width: 180px;
-  height: 240px;                   /* 固定高さで統一 */
+  height: 240px;
   background: #fff;
   margin-bottom: 1rem;
   display: flex; align-items: center; justify-content: center;
@@ -1024,8 +1024,8 @@ footer {
 }
 .carousel-img img {
   width: 100%; height: 100%;
-  object-fit: contain;
-  padding: 0.6rem;
+  object-fit: cover;
+  mix-blend-mode: multiply;
 }
 .carousel-item-brewery { font-size: 0.65rem; letter-spacing: 0.3em; color: var(--amber); margin-bottom: 0.3rem; }
 .carousel-item-name { font-family: var(--serif); font-size: 1rem; letter-spacing: 0.05em; line-height: 1.4; margin-bottom: 0.3rem; }
@@ -1456,7 +1456,7 @@ footer {
 /* 商品ページの縦長画像対応 */
 .product-img-wrap {
   width: 100%;
-  height: 320px;          /* 全商品共通の固定高さ */
+  height: 320px;
   overflow: hidden;
   background: #fff;
   display: flex;
@@ -1467,8 +1467,8 @@ footer {
 .product-img-wrap img {
   width: 100%;
   height: 100%;
-  object-fit: contain;    /* 比率を保ちつつ枠内に収める */
-  padding: 1rem;
+  object-fit: cover;
+  mix-blend-mode: multiply;
   display: block;
 }
 .product-img-placeholder {

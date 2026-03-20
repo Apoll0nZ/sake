@@ -160,7 +160,7 @@
       "al": "15",
       "volume": "720",
       "price": "1,045",
-      "image": "sake1.jpg"
+      "image": "sake1.png"
     },
     {
       "num": 2,
@@ -171,7 +171,7 @@
       "al": "15",
       "volume": "720",
       "price": "1,760",
-      "image": "sake2.jpg"
+      "image": "sake2.png"
     },
     {
       "num": 3,
@@ -193,7 +193,7 @@
       "al": "15",
       "volume": "720",
       "price": "3,850",
-      "image": "sake4.jpg"
+      "image": "sake4.png"
     },
     {
       "num": 5,
@@ -226,7 +226,7 @@
       "al": "15",
       "volume": "720",
       "price": "1,650",
-      "image": "sake7.jpeg"
+      "image": "sake7.png"
     },
     {
       "num": 8,
@@ -237,7 +237,7 @@
       "al": "15",
       "volume": "720",
       "price": "1,600",
-      "image": "sake8.jpg"
+      "image": "sake8.png"
     }
   ],
   "breweries": {
