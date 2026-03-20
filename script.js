@@ -46,17 +46,35 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 /* ── LOADER ────────────────────────────────────────────────── */
 function initLoader() {
-  // ローダー表示中はスクロール禁止
-  document.body.style.overflow = 'hidden';
+  // ── スクロールロック（全ブラウザ対応）──
+  // position:fixed で現在のスクロール位置を保持したまま完全にロック
+  let scrollY = 0;
 
-  const unlock = () => {
-    document.body.style.overflow = '';
+  const lockScroll = () => {
+    scrollY = window.scrollY;
+    document.body.style.position   = 'fixed';
+    document.body.style.top        = `-${scrollY}px`;
+    document.body.style.left       = '0';
+    document.body.style.right      = '0';
+    document.body.style.overflowY  = 'scroll'; // スクロールバー幅を確保
   };
+
+  const unlockScroll = () => {
+    document.body.style.position  = '';
+    document.body.style.top       = '';
+    document.body.style.left      = '';
+    document.body.style.right     = '';
+    document.body.style.overflowY = '';
+    // ロック前の位置に戻す（常に最上部）
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  lockScroll();
 
   const hide = () => setTimeout(() => {
     const l = $('loader');
     if (l) l.classList.add('hide');
-    unlock();
+    unlockScroll();
   }, 2000);
 
   if (document.readyState === 'complete') hide();
@@ -66,7 +84,7 @@ function initLoader() {
   setTimeout(() => {
     const l = $('loader');
     if (l) l.classList.add('hide');
-    unlock();
+    unlockScroll();
   }, 4500);
 }
 

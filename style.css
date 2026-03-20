@@ -1276,14 +1276,19 @@ footer {
 
 
 /* ── WASHI SECTION（動画背景＋テキストオーバーレイ） ─────── */
+/* ── WASHI SECTION（aboutと同じ全幅動画背景） */
 #washi-section {
   position: relative;
   overflow: hidden;
   padding: 0 !important;
-  background-color: #1A1A2E;  /* 動画読み込み前フォールバック */
+  margin: 0 !important;
+  /* 動画読み込み前フォールバック */
+  background-color: #1A1A2E;
+  /* ← aboutと同じく section に明示的な高さを持たせる */
+  min-height: 520px;
 }
 
-/* 動画背景（aboutと同じ仕様） */
+/* 動画：position:absolute で親全体を埋める */
 .washi-video-bg {
   position: absolute;
   inset: 0;
@@ -1292,12 +1297,14 @@ footer {
   object-fit: cover;
   object-position: center center;
   display: block;
+  z-index: 0;
 }
 
-/* テキストを読みやすくするオーバーレイ */
+/* オーバーレイ：position:relative + z-index で動画の上に乗る */
 .washi-overlay {
   position: relative;
   z-index: 2;
+  /* aboutと同じ白半透明グラデーション */
   background:
     linear-gradient(
       to bottom,
@@ -1317,7 +1324,8 @@ footer {
 }
 
 @media (max-width: 768px) {
-  .washi-overlay { padding: 5rem 1.4rem 6rem; min-height: 400px; }
+  #washi-section { min-height: 420px; }
+  .washi-overlay { padding: 5rem 1.4rem 6rem; min-height: 420px; }
   .washi-overlay-inner { max-width: 100%; }
 }
 
