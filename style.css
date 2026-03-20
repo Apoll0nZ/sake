@@ -737,14 +737,23 @@ footer {
   border: 1.5px solid var(--border); margin-bottom: 5rem;
 }
 .product-card {
-  background: var(--ink); padding: 2.5rem 2.2rem;
-  position: relative; transition: background 0.3s; cursor: default;
+  background: var(--ink);
+  padding: 0;                      /* 画像がカード端まで届くようpaddingをゼロに */
+  position: relative;
+  transition: background 0.3s;
+  cursor: default;
+  overflow: hidden;
 }
 .product-card:hover { background: #1E180F; }
+/* テキスト部分だけpadding */
+.product-card-body {
+  padding: 1.4rem 1.6rem 1.8rem;
+}
 .product-num {
   font-family: var(--serif); font-size: 3.5rem;
-  color: rgba(200,146,42,0.07); position: absolute;
-  top: 1rem; right: 1.5rem; line-height: 1;
+  color: rgba(200,146,42,0.12); position: absolute;
+  top: 0.5rem; right: 1rem; line-height: 1;
+  z-index: 2;
 }
 .product-brewery { font-size: 0.72rem; letter-spacing: 0.4em; color: var(--amber); text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 600; }
 .product-name { font-family: var(--serif); font-size: 1.3rem; letter-spacing: 0.06em; margin-bottom: 0.3rem; line-height: 1.35; }
@@ -976,16 +985,20 @@ footer {
 }
 .carousel-item:hover { transform: translateY(-6px); }
 .carousel-img {
-  width: 220px;
-  aspect-ratio: 2 / 3;
-  height: auto;
-  background: linear-gradient(155deg, #3D2A10, #1A1510);
+  width: 180px;
+  aspect-ratio: 3 / 4;            /* 縦長瓶に合わせた比率 */
+  background: linear-gradient(170deg, #1C1208, #0A0704);
   margin-bottom: 1rem;
-  display: flex; align-items: center; justify-content: center;
+  display: flex; align-items: flex-end; justify-content: center;
   font-family: var(--serif); font-size: 3rem;
   color: rgba(200,146,42,0.25); overflow: hidden;
 }
-.carousel-img img { width: 100%; height: 100%; object-fit: contain; background: #0E0A06; }
+.carousel-img img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  padding: 0.8rem 1rem 0;
+}
 .carousel-item-brewery { font-size: 0.65rem; letter-spacing: 0.3em; color: var(--amber); margin-bottom: 0.3rem; }
 .carousel-item-name { font-family: var(--serif); font-size: 1rem; letter-spacing: 0.05em; line-height: 1.4; margin-bottom: 0.3rem; }
 .carousel-item-price { font-size: 0.78rem; opacity: 0.5; }
@@ -1415,20 +1428,25 @@ footer {
 /* 商品ページの縦長画像対応 */
 .product-img-wrap {
   width: 100%;
-  aspect-ratio: 2 / 3;
+  aspect-ratio: 3 / 4;            /* 縦長瓶が全部入る比率 */
   overflow: hidden;
-  background: linear-gradient(155deg,#2A1A08,#0E0A06);
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 1.2rem;
+  background: linear-gradient(170deg, #1C1208 0%, #0A0704 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0;               /* カード上部から隙間なく */
 }
 .product-img-wrap img {
-  width: 100%; height: 100%;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;            /* 瓶全体が切れずに表示 */
+  object-position: center bottom; /* 瓶の底を基準に表示 */
+  padding: 1rem 1.5rem 0;        /* 左右に少し余白 */
 }
 .product-img-placeholder {
   font-family: var(--serif);
-  font-size: 2.5rem;
-  color: rgba(200,146,42,0.15);
+  font-size: 3rem;
+  color: rgba(200,146,42,0.12);
   letter-spacing: 0.1em;
 }
 

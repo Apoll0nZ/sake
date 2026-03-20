@@ -396,14 +396,16 @@ function renderProductsPage(products) {
     return `<div class="product-card">
       <div class="product-num">${esc(p.num)}</div>
       ${imgHtml}
-      <div class="product-brewery">${esc(p.brewery)}</div>
-      <div class="product-name">${esc(p.name)}</div>
-      <div class="product-type">${esc(p.type)}</div>
-      <p class="product-desc">${esc(p.desc)}</p>
-      <div class="product-meta">
-        <div class="product-meta-item">AL <span>${esc(p.al)}%</span></div>
-        <div class="product-meta-item">容量 <span>${esc(p.volume)}ml</span></div>
-        <div class="product-meta-item">価格 <span>${esc(p.price)}円（税込）</span></div>
+      <div class="product-card-body">
+        <div class="product-brewery">${esc(p.brewery)}</div>
+        <div class="product-name">${esc(p.name)}</div>
+        <div class="product-type">${esc(p.type)}</div>
+        <p class="product-desc">${esc(p.desc)}</p>
+        <div class="product-meta">
+          <div class="product-meta-item">AL <span>${esc(p.al)}%</span></div>
+          <div class="product-meta-item">容量 <span>${esc(p.volume)}ml</span></div>
+          <div class="product-meta-item">価格 <span>${esc(p.price)}円（税込）</span></div>
+        </div>
       </div>
     </div>`;
   }).join('');
