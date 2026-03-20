@@ -47,48 +47,50 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 /* ── LOADER ────────────────────────────────────────────────── */
 function initLoader() {
-  // ── スクロールロック（全ブラウザ対応）──
-  // position:fixed で現在のスクロール位置を保持したまま完全にロック
-  let scrollY = 0;
+  // ローダー表示中はスクロールをロック
+  // position:fixed にするとスクロール位置が失われるため top に記録して復元する
+  let _unlocked = false;
 
   const lockScroll = () => {
-    scrollY = window.scrollY;
-    document.body.style.position   = 'fixed';
-    document.body.style.top        = `-${scrollY}px`;
-    document.body.style.left       = '0';
-    document.body.style.right      = '0';
-    document.body.style.overflowY  = 'scroll'; // スクロールバー幅を確保
+    const y = window.scrollY;
+    document.body.dataset.scrollY = y;
+    document.body.style.position  = 'fixed';
+    document.body.style.top       = `-${y}px`;
+    document.body.style.left      = '0';
+    document.body.style.right     = '0';
+    document.body.style.overflowY = 'scroll';
   };
 
   const unlockScroll = () => {
-    const restoredY = parseInt(document.body.style.top || '0') * -1;
+    if (_unlocked) return; // 二重実行を防ぐ
+    _unlocked = true;
+    const y = parseInt(document.body.dataset.scrollY || '0', 10);
     document.body.style.position  = '';
     document.body.style.top       = '';
     document.body.style.left      = '';
     document.body.style.right     = '';
     document.body.style.overflowY = '';
-    window.scrollTo({ top: restoredY, behavior: 'instant' });
+    // ロック前のスクロール位置を復元（トップに戻さない）
+    window.scrollTo({ top: y, behavior: 'instant' });
   };
 
   lockScroll();
 
-  const hide = () => setTimeout(() => {
+  const hideLoader = () => {
     const l = $('loader');
     if (l) l.classList.add('hide');
     unlockScroll();
-  }, 2000);
+  };
 
-  if (document.readyState === 'complete') hide();
-  else window.addEventListener('load', hide, { once: true });
+  // window.load（全リソース読み込み完了）後2秒でローダーを隠す
+  if (document.readyState === 'complete') {
+    setTimeout(hideLoader, 2000);
+  } else {
+    window.addEventListener('load', () => setTimeout(hideLoader, 2000), { once: true });
+  }
 
-  // 最大4.5秒で強制解除
-  setTimeout(() => {
-    const l = $('loader');
-    if (l && !l.classList.contains('hide')) {
-      l.classList.add('hide');
-      unlockScroll();
-    }
-  }, 4500);
+  // 最大6秒で強制解除（動画等が重い場合のフォールバック）
+  setTimeout(hideLoader, 6000);
 }
 
 /* ── ヒーロー背景 ───────────────────────────────────────────── */
@@ -393,7 +395,7 @@ function renderProductsPage(products) {
   if (!grid || !products?.length) return;
   grid.innerHTML = products.map(p => {
     const imgHtml = p.image
-      ? `<div class="product-img-wrap"><img src="images/${esc(p.image)}" alt="${esc(p.name)}"></div>`
+      ? `<div class="product-img-wrap"><img src="images/${esc(p.image)}" alt="${esc(p.name)}" ></div>`
       : `<div class="product-img-wrap"><div class="product-img-placeholder">酒</div></div>`;
     return `<div class="product-card">
       <div class="product-num">${esc(p.num)}</div>
@@ -486,13 +488,13 @@ function initNavbar() {
 function initPageSystem() {
   let _currentPage = 'page-main';
   function showPage(id) {
-    const isSamePage = (id === _currentPage);
+    const isSame = (id === _currentPage);
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     const target=$(id);
     if (!target) return;
     target.classList.add('active');
     _currentPage = id;
-    if (!isSamePage) window.scrollTo({top:0,behavior:'instant'});
+    if (!isSame) window.scrollTo({top:0,behavior:'instant'});
     setTimeout(()=>{
       target.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stat-item').forEach(el=>revealObs?.observe(el));
     },80);
