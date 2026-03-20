@@ -61,14 +61,13 @@ function initLoader() {
   };
 
   const unlockScroll = () => {
-    // position:fixed 解除前のスクロール位置を復元
-    const y = parseInt(document.body.style.top || '0') * -1;
+    const restoredY = parseInt(document.body.style.top || '0') * -1;
     document.body.style.position  = '';
     document.body.style.top       = '';
     document.body.style.left      = '';
     document.body.style.right     = '';
     document.body.style.overflowY = '';
-    window.scrollTo({ top: y, behavior: 'instant' });
+    window.scrollTo({ top: restoredY, behavior: 'instant' });
   };
 
   lockScroll();
@@ -85,8 +84,10 @@ function initLoader() {
   // 最大4.5秒で強制解除
   setTimeout(() => {
     const l = $('loader');
-    if (l) l.classList.add('hide');
-    unlockScroll();
+    if (l && !l.classList.contains('hide')) {
+      l.classList.add('hide');
+      unlockScroll();
+    }
   }, 4500);
 }
 
@@ -392,7 +393,7 @@ function renderProductsPage(products) {
   if (!grid || !products?.length) return;
   grid.innerHTML = products.map(p => {
     const imgHtml = p.image
-      ? `<div class="product-img-wrap"><img src="images/${esc(p.image)}" alt="${esc(p.name)}" style="max-width:85%;max-height:100%;width:auto;height:auto;object-fit:contain;display:block;"></div>`
+      ? `<div class="product-img-wrap"><img src="images/${esc(p.image)}" alt="${esc(p.name)}"></div>`
       : `<div class="product-img-wrap"><div class="product-img-placeholder">酒</div></div>`;
     return `<div class="product-card">
       <div class="product-num">${esc(p.num)}</div>
@@ -485,13 +486,13 @@ function initNavbar() {
 function initPageSystem() {
   let _currentPage = 'page-main';
   function showPage(id) {
-    if (id === _currentPage) return;
+    const isSamePage = (id === _currentPage);
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     const target=$(id);
     if (!target) return;
     target.classList.add('active');
     _currentPage = id;
-    window.scrollTo({top:0,behavior:'instant'});
+    if (!isSamePage) window.scrollTo({top:0,behavior:'instant'});
     setTimeout(()=>{
       target.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stat-item').forEach(el=>revealObs?.observe(el));
     },80);
