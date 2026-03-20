@@ -47,31 +47,27 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 /* ── LOADER ────────────────────────────────────────────────── */
 function initLoader() {
-  // ローダー表示中はスクロールをロック
-  // position:fixed にするとスクロール位置が失われるため top に記録して復元する
-  let _unlocked = false;
+  let _done = false;
 
   const lockScroll = () => {
-    const y = window.scrollY;
-    document.body.dataset.scrollY = y;
+    document.body.dataset.lockedY = window.scrollY;
     document.body.style.position  = 'fixed';
-    document.body.style.top       = `-${y}px`;
+    document.body.style.top       = `-${window.scrollY}px`;
     document.body.style.left      = '0';
     document.body.style.right     = '0';
     document.body.style.overflowY = 'scroll';
   };
 
   const unlockScroll = () => {
-    if (_unlocked) return; // 二重実行を防ぐ
-    _unlocked = true;
-    const y = parseInt(document.body.dataset.scrollY || '0', 10);
+    if (_done) return; // 二重実行防止
+    _done = true;
+    const y = parseInt(document.body.dataset.lockedY || '0', 10);
     document.body.style.position  = '';
     document.body.style.top       = '';
     document.body.style.left      = '';
     document.body.style.right     = '';
     document.body.style.overflowY = '';
-    // ロック前のスクロール位置を復元（トップに戻さない）
-    window.scrollTo({ top: y, behavior: 'instant' });
+    window.scrollTo({ top: y, behavior: 'instant' }); // ロック前の位置を復元
   };
 
   lockScroll();
@@ -82,15 +78,12 @@ function initLoader() {
     unlockScroll();
   };
 
-  // window.load（全リソース読み込み完了）後2秒でローダーを隠す
-  if (document.readyState === 'complete') {
-    setTimeout(hideLoader, 2000);
-  } else {
-    window.addEventListener('load', () => setTimeout(hideLoader, 2000), { once: true });
-  }
+  // DOMContentLoaded直後なので readyState は loading のはず
+  // window load（全リソース）完了後にローダーを隠す
+  window.addEventListener('load', () => setTimeout(hideLoader, 1500), { once: true });
 
-  // 最大6秒で強制解除（動画等が重い場合のフォールバック）
-  setTimeout(hideLoader, 6000);
+  // 最大5秒で強制解除（動画等が重い場合のフォールバック、一度だけ）
+  setTimeout(hideLoader, 5000);
 }
 
 /* ── ヒーロー背景 ───────────────────────────────────────────── */
@@ -395,7 +388,7 @@ function renderProductsPage(products) {
   if (!grid || !products?.length) return;
   grid.innerHTML = products.map(p => {
     const imgHtml = p.image
-      ? `<div class="product-img-wrap"><img src="images/${esc(p.image)}" alt="${esc(p.name)}" ></div>`
+      ? `<div class="product-img-wrap"><img src="images/${esc(p.image)}" alt="${esc(p.name)}"></div>`
       : `<div class="product-img-wrap"><div class="product-img-placeholder">酒</div></div>`;
     return `<div class="product-card">
       <div class="product-num">${esc(p.num)}</div>
