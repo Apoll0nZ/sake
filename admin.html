@@ -100,7 +100,6 @@ hr.div{border:none;border-top:1px solid var(--bd);margin:1.5rem 0;}
   <button class="nb" onclick="SP('p-awards',this)">🏆 酒類鑑評会</button>
   <div class="s-label">ビジュアル</div>
   <button class="nb" onclick="SP('p-images',this)">🖼 画像管理</button>
-  <button class="nb" onclick="SP('p-page-images',this)">📸 各ページ画像</button>
   <hr style="border:none;border-top:1px solid var(--bd);margin:1rem 0;">
   <button class="nb" onclick="SP('p-export',this)" style="color:var(--amber-lt);">💾 保存・書き出し</button>
 </aside>
@@ -110,7 +109,7 @@ hr.div{border:none;border-top:1px solid var(--bd);margin:1.5rem 0;}
 <div id="setup">
   <div class="sst" id="sst">
     <strong>⚠ 作業フォルダが未設定です</strong>
-    「フォルダを選択」でサイトのフォルダ（index.htmlがある場所）を選んでください。<br>選択すると <strong>「保存する」ボタンで直接 data.json を上書き保存</strong>できます。<br>未選択のままでも「保存する」を押すと data.json がダウンロードされます。ダウンロードしたファイルをサイトフォルダに上書きしてください。
+    「フォルダを選択」でサイトのフォルダ（index.htmlがある場所）を選んでください。画像の自動保存とdata.jsonの直接書き出しが有効になります。
   </div>
   <button class="btn bp" onclick="selRoot()">📁 フォルダを選択</button>
 </div>
@@ -121,7 +120,7 @@ hr.div{border:none;border-top:1px solid var(--bd);margin:1.5rem 0;}
   <div class="psub">直近イベントを複数登録できます。終了後はアーカイブに移動してください。</div>
   <div id="event-items"></div>
   <button class="btn bg" onclick="addEvent()" style="margin-bottom:2rem;">＋ 新しいイベントを追加</button>
-  <br><button class="btn bp bbl" onclick="saveAll()">💾 保存してdata.jsonを書き出す</button>
+  <br><button class="btn bp bbl" onclick="saveAll()">✓ 保存する</button>
 </div>
 
 <!-- ════ 商品 ════ -->
@@ -130,7 +129,7 @@ hr.div{border:none;border-top:1px solid var(--bd);margin:1.5rem 0;}
   <div class="psub">商品情報と画像を登録します</div>
   <div id="product-list"></div>
   <button class="btn bg" onclick="addProduct()" style="margin-bottom:1.5rem;">＋ 商品を追加</button>
-  <br><button class="btn bp bbl" onclick="saveAll()">💾 保存してdata.jsonを書き出す</button>
+  <br><button class="btn bp bbl" onclick="saveAll()">✓ 保存する</button>
 </div>
 
 <!-- ════ 蔵元 ════ -->
@@ -145,7 +144,7 @@ hr.div{border:none;border-top:1px solid var(--bd);margin:1.5rem 0;}
   <div id="tm"></div>
   <div id="ts" style="display:none;"></div>
   <div id="ta" style="display:none;"></div>
-  <button class="btn bp bbl" style="margin-top:2rem;" onclick="saveAll()">💾 保存してdata.jsonを書き出す</button>
+  <button class="btn bp bbl" style="margin-top:2rem;" onclick="saveAll()">✓ 保存する</button>
 </div>
 
 <!-- ════ 酒類鑑評会 ════ -->
@@ -167,34 +166,6 @@ hr.div{border:none;border-top:1px solid var(--bd);margin:1.5rem 0;}
     <button class="btn bs" onclick="saveAward()">✓ この年度を追加する</button>
   </div>
   <div class="card"><div class="ctitle">登録済み</div><div id="award-list"></div></div>
-</div>
-
-<!-- ════ 各ページ画像 ════ -->
-<div class="panel" id="p-page-images">
-  <div class="ptitle">📸 各ページ画像</div>
-  <div class="psub">新酒研究会（2枚）・松尾神社（3枚）の画像を管理します</div>
-
-  <!-- 新酒研究会 -->
-  <div class="card">
-    <div class="ctitle">🍶 新酒研究会 — 画像（2枚）</div>
-    <div style="font-size:.82rem;color:var(--muted);margin-bottom:1.2rem;line-height:1.8;">
-      研究会ページの「新酒研究会」カード内に横並びで表示されます。<br>
-      推奨サイズ：<strong>800×600px 以上</strong>　対応形式：JPG / PNG / WebP
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;" id="research-img-list"></div>
-  </div>
-
-  <!-- 松尾神社 -->
-  <div class="card">
-    <div class="ctitle">⛩ 松尾神社 — 画像（3枚）</div>
-    <div style="font-size:.82rem;color:var(--muted);margin-bottom:1.2rem;line-height:1.8;">
-      1枚目が大きく表示され、2・3枚目がサイドに縦並びで表示されます。<br>
-      推奨サイズ：<strong>1200×900px 以上</strong>（1枚目）／ <strong>800×600px 以上</strong>（2・3枚目）
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;" id="shrine-img-list"></div>
-  </div>
-
-  <button class="btn bp bbl" onclick="saveAll()">💾 保存してdata.jsonを書き出す</button>
 </div>
 
 <!-- ════ 画像管理 ════ -->
@@ -220,6 +191,29 @@ hr.div{border:none;border-top:1px solid var(--bd);margin:1.5rem 0;}
   <div class="card">
     <div class="ctitle">商品画像一覧</div>
     <div class="gimg" id="prod-img-grid"></div>
+  </div>
+
+  <!-- 研究会写真（各2枚） -->
+  <div class="card">
+    <div class="ctitle">🔬 研究会 写真（各カード2枚まで）</div>
+    <div style="font-size:.82rem;color:var(--muted);margin-bottom:1rem;">研究会ページの各カード下部に表示されます。推奨：横長（4:3）</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+      <div>
+        <div style="font-size:.8rem;color:var(--amber);margin-bottom:.6rem;font-weight:600;">新酒研究会（3月）</div>
+        <div id="research-photo-grid-0" style="display:flex;flex-direction:column;gap:.6rem;"></div>
+      </div>
+      <div>
+        <div style="font-size:.8rem;color:var(--amber);margin-bottom:.6rem;font-weight:600;">初のみきり研究会（7月）</div>
+        <div id="research-photo-grid-1" style="display:flex;flex-direction:column;gap:.6rem;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 松尾神社写真（3枚） -->
+  <div class="card">
+    <div class="ctitle">⛩ 松尾神社 写真（3枚）</div>
+    <div style="font-size:.82rem;color:var(--muted);margin-bottom:1rem;">松尾神社ページ下部に横3列で表示されます。推奨：横長（4:3）</div>
+    <div id="shrine-photo-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;"></div>
   </div>
 </div>
 
@@ -348,15 +342,11 @@ const S={
     {file:'',alt:''},
     {file:'',alt:''},
   ],
-  researchImages:[
-    {file:'',alt:'新酒研究会の様子'},
-    {file:'',alt:'審査の様子'},
-  ],
-  shrineImages:[
-    {file:'',alt:'松尾神社 外観'},
-    {file:'',alt:'松尾神社 境内'},
-    {file:'',alt:'例祭の様子'},
-  ],
+  pagePhotos:{
+    research_0:[{file:'',alt:'新酒研究会'},{file:'',alt:'新酒研究会'}],
+    research_1:[{file:'',alt:'初のみきり研究会'},{file:'',alt:'初のみきり研究会'}],
+    shrine:[{file:'',alt:'松尾神社'},{file:'',alt:'松尾神社'},{file:'',alt:'松尾神社'}],
+  },
 };
 
 // ── 画像ピック ─────────────────────────────────────────────
@@ -382,12 +372,6 @@ async function pickImg(input,thumbId,lblId,role){
   } else if(typeof role==='string'&&role.startsWith('br:')){
     const [,reg,idx]=role.split(':');
     if(S.breweries[reg]&&S.breweries[reg][parseInt(idx)]) S.breweries[reg][parseInt(idx)].image=file.name;
-  } else if(typeof role==='string'&&role.startsWith('research:')){
-    const idx=parseInt(role.slice(9));
-    if(S.researchImages&&S.researchImages[idx]) S.researchImages[idx].file=file.name;
-  } else if(typeof role==='string'&&role.startsWith('shrine:')){
-    const idx=parseInt(role.slice(7));
-    if(S.shrineImages&&S.shrineImages[idx]) S.shrineImages[idx].file=file.name;
   }
   if(ok) toast('✓ images/'+file.name+' に保存しました');
   else if(imgH) toast('画像保存に失敗しました',true);
@@ -568,18 +552,14 @@ function renderAwardList(){
 function delAward(i){ if(!confirm('削除しますか？')) return; S.awards.splice(i,1); renderAwardList(); }
 
 // ── 保存・書き出し ─────────────────────────────────────────
-function saveAll(){ exportData(); }
+function saveAll(){ upPrev(); toast('保存しました ✓'); }
 async function exportData(){
   const str=JSON.stringify(S,null,2); upPrev();
-  if(rootH){
-    const ok=await saveJSON(str);
-    if(ok){ toast('✓ data.jsonを保存しました'); return; }
-    toast('ファイル保存に失敗。ダウンロードします',true);
-  }
+  if(rootH){ const ok=await saveJSON(str); if(ok){toast('✓ data.jsonをフォルダに保存しました');return;} }
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([str],{type:'application/json'}));
   a.download='data.json'; a.click();
-  toast('📥 data.jsonをダウンロードしました。サイトフォルダに上書きしてください');
+  toast('data.jsonをダウンロードしました（フォルダに置いてください）');
 }
 function upPrev(){ const el=document.getElementById('jprev'); if(el) el.textContent=JSON.stringify(S,null,2); }
 
@@ -609,7 +589,70 @@ function ST(id,btn){
   btn.closest('.panel').querySelectorAll('[id^="t"]').forEach(p=>{if(['tm','ts','ta'].includes(p.id))p.style.display='none';});
   btn.classList.add('active'); document.getElementById(id).style.display='block';
 }
-function renderAll(){ renderEvents(); renderProducts(); renderProdImgGrid(); renderBreweries(); renderAwardList(); renderHeroImages(); renderResearchImgAdmin(); renderShrineImgAdmin(); upPrev(); }
+function renderAll(){ renderEvents(); renderProducts(); renderProdImgGrid(); renderBreweries(); renderAwardList(); renderHeroImages(); renderPagePhotosAdmin(); upPrev(); }
+
+// ── ページ写真（研究会・神社）管理 ───────────────────────────
+function renderPagePhotosAdmin(){
+  if(!S.pagePhotos) S.pagePhotos={research_0:[{file:'',alt:''},{file:'',alt:''}],research_1:[{file:'',alt:''},{file:'',alt:''}],shrine:[{file:'',alt:''},{file:'',alt:''},{file:'',alt:''}]};
+
+  // 研究会 0・1
+  ['0','1'].forEach(idx=>{
+    const el=document.getElementById('research-photo-grid-'+idx); if(!el) return;
+    const photos=S.pagePhotos['research_'+idx]||[];
+    el.innerHTML=photos.map((p,i)=>{
+      const src=p.file?`images/${E(p.file)}`:'';
+      return `<div style="display:flex;align-items:center;gap:.6rem;">
+        <div class="ipick ${p.file?'has':''}" style="width:80px;min-height:60px;flex-shrink:0;" onclick="document.getElementById('rpfi-${idx}-${i}').click()">
+          <input type="file" id="rpfi-${idx}-${i}" accept="image/*" onclick="event.stopPropagation()" onchange="pickPagePhoto(this,'research_${idx}',${i})">
+          <img id="rpth-${idx}-${i}" class="ith ${p.file?'show':''}" alt="" style="max-height:60px;" ${src?`src="${src}"`:''}>
+          <div id="rplb-${idx}-${i}" class="ilb ${p.file?'named':''}" style="font-size:.65rem;">${p.file?'✓ '+E(p.file):'📷'}</div>
+        </div>
+        <input type="text" value="${E(p.alt||'')}" placeholder="alt（省略可）"
+          oninput="S.pagePhotos['research_${idx}'][${i}].alt=this.value"
+          style="flex:1;font-size:.78rem;padding:.3rem .5rem;">
+      </div>`;
+    }).join('');
+  });
+
+  // 神社 3枚
+  const shrineEl=document.getElementById('shrine-photo-grid'); if(!shrineEl) return;
+  const shrine=S.pagePhotos.shrine||[];
+  shrineEl.innerHTML=shrine.map((p,i)=>{
+    const src=p.file?`images/${E(p.file)}`:'';
+    return `<div>
+      <div class="ipick ${p.file?'has':''}" style="min-height:80px;" onclick="document.getElementById('spfi-${i}').click()">
+        <input type="file" id="spfi-${i}" accept="image/*" onclick="event.stopPropagation()" onchange="pickPagePhoto(this,'shrine',${i})">
+        <img id="spth-${i}" class="ith ${p.file?'show':''}" alt="" style="max-height:80px;width:100%;object-fit:cover;" ${src?`src="${src}"`:''}>
+        <div id="splb-${i}" class="ilb ${p.file?'named':''}" style="font-size:.68rem;">${p.file?'✓ '+E(p.file):'📷 '+(i+1)+'枚目'}</div>
+      </div>
+      <input type="text" value="${E(p.alt||'')}" placeholder="alt（省略可）"
+        oninput="S.pagePhotos.shrine[${i}].alt=this.value"
+        style="width:100%;font-size:.75rem;padding:.3rem .5rem;margin-top:.3rem;background:rgba(255,255,255,.06);border:1px solid var(--bd);color:var(--fg);">
+    </div>`;
+  }).join('');
+}
+
+async function pickPagePhoto(input, key, idx){
+  const file=input.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    // サムネ更新
+    const isShrine=key==='shrine';
+    const prefix=isShrine?'sp':'rp';
+    const idxStr=isShrine?String(idx):(key.slice(-1)+'-'+idx);
+    const th=document.getElementById(prefix+'th-'+idxStr);
+    const lb=document.getElementById(prefix+'lb-'+idxStr);
+    if(th){th.src=e.target.result;th.classList.add('show');}
+    if(lb){lb.textContent='✓ '+file.name;lb.classList.add('named');}
+  };
+  reader.readAsDataURL(file);
+  const ok=imgH?await saveImg(file,file.name):false;
+  if(!S.pagePhotos[key]) S.pagePhotos[key]=[];
+  if(!S.pagePhotos[key][idx]) S.pagePhotos[key][idx]={file:'',alt:''};
+  S.pagePhotos[key][idx].file=file.name;
+  if(ok) toast('✓ images/'+file.name+' に保存しました');
+  else toast(file.name+' を記録。imagesフォルダに手動で置いてください');
+}
 
 // ── ヒーロー画像（複数）管理 ──────────────────────────────────
 function renderHeroImages(){
@@ -680,62 +723,6 @@ function moveHeroImg(idx,dir){
   if(target<0||target>=arr.length) return;
   [arr[idx],arr[target]]=[arr[target],arr[idx]];
   renderHeroImages();
-}
-
-// ── 新酒研究会 画像管理 ─────────────────────────────────────
-function renderResearchImgAdmin(){
-  const el=document.getElementById('research-img-list'); if(!el) return;
-  if(!S.researchImages) S.researchImages=[{file:'',alt:'新酒研究会の様子'},{file:'',alt:'審査の様子'}];
-  const labels=['① 研究会の様子','② 審査の様子'];
-  el.innerHTML=S.researchImages.map((img,i)=>{
-    const imgSrc=img.file?`images/${E(img.file)}`:'';
-    return `<div>
-      <div style="font-size:.75rem;color:var(--amber);margin-bottom:.5rem;font-weight:700;">${labels[i]||'画像 '+(i+1)}</div>
-      <div class="ipick ${img.file?'has':''}" style="min-height:120px;" onclick="document.getElementById('rfi-${i}').click()">
-        <input type="file" id="rfi-${i}" accept="image/*" onclick="event.stopPropagation()" onchange="pickImg(this,'rth-${i}','rlb-${i}','research:${i}');rerenderResearch(${i},this)">
-        <img id="rth-${i}" class="ith ${img.file?'show':''}" alt="" style="max-height:120px;width:100%;object-fit:cover;" ${imgSrc?`src="${imgSrc}"`:''}><br>
-        <div id="rlb-${i}" class="ilb ${img.file?'named':''}">${img.file?'✓ '+E(img.file):'📷 画像を選択'}</div>
-      </div>
-      <div class="f" style="margin-top:.5rem;">
-        <input type="text" placeholder="alt テキスト（省略可）" value="${E(img.alt||'')}"
-          oninput="S.researchImages[${i}].alt=this.value"
-          style="font-size:.82rem;padding:.4rem .7rem;">
-      </div>
-    </div>`;
-  }).join('');
-}
-function rerenderResearch(idx,input){
-  const file=input.files[0]; if(!file) return;
-  if(!S.researchImages[idx]) S.researchImages[idx]={file:'',alt:''};
-  S.researchImages[idx].file=file.name;
-}
-
-// ── 松尾神社 画像管理 ───────────────────────────────────────
-function renderShrineImgAdmin(){
-  const el=document.getElementById('shrine-img-list'); if(!el) return;
-  if(!S.shrineImages) S.shrineImages=[{file:'',alt:'松尾神社 外観'},{file:'',alt:'松尾神社 境内'},{file:'',alt:'例祭の様子'}];
-  const labels=['① メイン（大）','② サブ１（右上）','③ サブ２（右下）'];
-  el.innerHTML=S.shrineImages.map((img,i)=>{
-    const imgSrc=img.file?`images/${E(img.file)}`:'';
-    return `<div>
-      <div style="font-size:.75rem;color:var(--amber);margin-bottom:.5rem;font-weight:700;">${labels[i]||'画像 '+(i+1)}</div>
-      <div class="ipick ${img.file?'has':''}" style="min-height:120px;" onclick="document.getElementById('sfi-${i}').click()">
-        <input type="file" id="sfi-${i}" accept="image/*" onclick="event.stopPropagation()" onchange="pickImg(this,'sth-${i}','slb-${i}','shrine:${i}');rerenderShrine(${i},this)">
-        <img id="sth-${i}" class="ith ${img.file?'show':''}" alt="" style="max-height:120px;width:100%;object-fit:cover;" ${imgSrc?`src="${imgSrc}"`:''}><br>
-        <div id="slb-${i}" class="ilb ${img.file?'named':''}">${img.file?'✓ '+E(img.file):'📷 画像を選択'}</div>
-      </div>
-      <div class="f" style="margin-top:.5rem;">
-        <input type="text" placeholder="alt テキスト（省略可）" value="${E(img.alt||'')}"
-          oninput="S.shrineImages[${i}].alt=this.value"
-          style="font-size:.82rem;padding:.4rem .7rem;">
-      </div>
-    </div>`;
-  }).join('');
-}
-function rerenderShrine(idx,input){
-  const file=input.files[0]; if(!file) return;
-  if(!S.shrineImages[idx]) S.shrineImages[idx]={file:'',alt:''};
-  S.shrineImages[idx].file=file.name;
 }
 
 document.addEventListener('DOMContentLoaded',()=>{

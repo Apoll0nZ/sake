@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderEventPage(d.events, d.sakes);
     renderAwardsPage(d.awards);
     renderProductsPage(d.products);
+    renderPagePhotos(d.pagePhotos);
   }
 
   /* ④ 描画完了後に RevealObserver 起動 */
@@ -390,8 +391,8 @@ function renderProductsPage(products) {
   if (!grid || !products?.length) return;
   grid.innerHTML = products.map(p => {
     const imgHtml = p.image
-      ? `<img src="images/${esc(p.image)}" alt="${esc(p.name)}" style="width:100%;aspect-ratio:4/3;object-fit:cover;margin-bottom:1rem;">`
-      : `<div style="width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,#3D2A10,#1A1510);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-family:var(--serif);font-size:2.5rem;color:rgba(200,146,42,.2);">酒</div>`;
+      ? `<div class="product-img-wrap"><img src="images/${esc(p.image)}" alt="${esc(p.name)}"></div>`
+      : `<div class="product-img-wrap"><div class="product-img-placeholder">酒</div></div>`;
     return `<div class="product-card">
       <div class="product-num">${esc(p.num)}</div>
       ${imgHtml}
@@ -410,6 +411,41 @@ function renderProductsPage(products) {
   if (sel) {
     sel.innerHTML = '<option value="">指定なし／おすすめをお任せ</option>' +
       products.map(p=>`<option>No.${p.num} ${p.name} — ${p.price}円</option>`).join('');
+  }
+}
+
+/* ── 研究会・神社 写真レンダリング ─────────────────────────── */
+function renderPagePhotos(pagePhotos) {
+  if (!pagePhotos) return;
+
+  // 研究会（新酒研究会・初のみきり研究会 各2枚）
+  ['0','1'].forEach(idx => {
+    const el = $(`research-photos-${idx}`);
+    if (!el) return;
+    const photos = pagePhotos[`research_${idx}`] || [];
+    const filled = photos.filter(p => p.file);
+    if (!filled.length) { el.style.display = 'none'; return; }
+    el.style.display = '';
+    el.innerHTML = filled.map(p =>
+      `<div class="page-photo-item reveal">
+        <img src="images/${esc(p.file)}" alt="${esc(p.alt||'研究会')}">
+      </div>`
+    ).join('');
+  });
+
+  // 松尾神社（3枚）
+  const shrineEl = $('shrine-photos');
+  if (shrineEl) {
+    const photos = (pagePhotos.shrine || []).filter(p => p.file);
+    if (!photos.length) { shrineEl.style.display = 'none'; }
+    else {
+      shrineEl.style.display = '';
+      shrineEl.innerHTML = photos.map(p =>
+        `<div class="page-photo-item reveal">
+          <img src="images/${esc(p.file)}" alt="${esc(p.alt||'松尾神社')}">
+        </div>`
+      ).join('');
+    }
   }
 }
 

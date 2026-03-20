@@ -358,25 +358,24 @@ section { padding: 9rem 4rem; }
 
 /* タグ */
 .about-tag {
-  font-size: 0.72rem;
-  letter-spacing: 0.55em;
+  font-size: 0.85rem;
+  letter-spacing: 0.5em;
   color: #1A3A5C;
   text-transform: uppercase;
-  margin-bottom: 1rem;
-  font-weight: 600;
+  margin-bottom: 1.2rem;
+  font-weight: 700;
 }
 
 /* 見出し：黒に近い濃紺で川に負けない */
 .about-heading {
   font-family: var(--serif);
-  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
   color: #0D1E2E;
   line-height: 1.4;
   letter-spacing: 0.1em;
-  margin: 0 0 0.6rem;
+  margin: 0 0 0.8rem;
   font-weight: 700;
-  /* テキストシャドウで映えさせる */
-  text-shadow: 0 1px 6px rgba(255,255,255,0.6);
+  text-shadow: 0 1px 8px rgba(255,255,255,0.7);
 }
 
 .about-rule {
@@ -388,10 +387,10 @@ section { padding: 9rem 4rem; }
 
 /* 本文：濃い色でくっきり */
 .about-body {
-  font-size: 1.02rem;
-  line-height: 2.1;
-  color: #1C2B3A;
-  margin-bottom: 1.8rem;
+  font-size: 1.12rem;
+  line-height: 2.2;
+  color: #0D1E2E;
+  margin-bottom: 2rem;
   font-weight: 500;
 }
 
@@ -403,16 +402,16 @@ section { padding: 9rem 4rem; }
 .about-list li {
   display: flex;
   align-items: baseline;
-  gap: 0.7rem;
-  font-size: 0.98rem;
-  color: #1C2B3A;
-  font-weight: 500;
-  margin-bottom: 0.7rem;
+  gap: 0.8rem;
+  font-size: 1.08rem;
+  color: #0D1E2E;
+  font-weight: 600;
+  margin-bottom: 0.9rem;
 }
 .about-list li:last-child { margin-bottom: 0; }
 .about-list-mark {
   color: #1A3A5C;
-  font-size: 1rem;
+  font-size: 1.2rem;
   flex-shrink: 0;
   font-weight: 700;
 }
@@ -977,14 +976,16 @@ footer {
 }
 .carousel-item:hover { transform: translateY(-6px); }
 .carousel-img {
-  width: 220px; height: 280px; object-fit: cover;
+  width: 220px;
+  aspect-ratio: 2 / 3;
+  height: auto;
   background: linear-gradient(155deg, #3D2A10, #1A1510);
   margin-bottom: 1rem;
   display: flex; align-items: center; justify-content: center;
   font-family: var(--serif); font-size: 3rem;
   color: rgba(200,146,42,0.25); overflow: hidden;
 }
-.carousel-img img { width: 100%; height: 100%; object-fit: cover; }
+.carousel-img img { width: 100%; height: 100%; object-fit: contain; background: #0E0A06; }
 .carousel-item-brewery { font-size: 0.65rem; letter-spacing: 0.3em; color: var(--amber); margin-bottom: 0.3rem; }
 .carousel-item-name { font-family: var(--serif); font-size: 1rem; letter-spacing: 0.05em; line-height: 1.4; margin-bottom: 0.3rem; }
 .carousel-item-price { font-size: 0.78rem; opacity: 0.5; }
@@ -1381,4 +1382,61 @@ footer {
   /* #breweries のセクション左右余白 */
   #breweries .section-inner { padding: 0 1.2rem; }
   .marquee-wrap { margin: 2rem 0 3rem; }
+}
+
+/* ── 研究会・神社 画像ギャラリー ────────────────────────────── */
+.page-photo-grid {
+  display: grid;
+  gap: 1rem;
+  margin: 3rem 0 0;
+}
+/* 研究会：2枚（横並び） */
+.page-photo-grid.cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+/* 松尾神社：3枚（横並び） */
+.page-photo-grid.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.page-photo-item {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+}
+.page-photo-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.page-photo-item:hover img { transform: scale(1.04); }
+
+/* 商品ページの縦長画像対応 */
+.product-img-wrap {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  background: linear-gradient(155deg,#2A1A08,#0E0A06);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.2rem;
+}
+.product-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+}
+.product-img-placeholder {
+  font-family: var(--serif);
+  font-size: 2.5rem;
+  color: rgba(200,146,42,0.15);
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 640px) {
+  .page-photo-grid.cols-2 { grid-template-columns: 1fr; }
+  .page-photo-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+  .page-photo-grid.cols-3 .page-photo-item:last-child {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 9;
+  }
 }
