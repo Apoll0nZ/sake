@@ -61,13 +61,14 @@ function initLoader() {
   };
 
   const unlockScroll = () => {
+    // position:fixed 解除前のスクロール位置を復元
+    const y = parseInt(document.body.style.top || '0') * -1;
     document.body.style.position  = '';
     document.body.style.top       = '';
     document.body.style.left      = '';
     document.body.style.right     = '';
     document.body.style.overflowY = '';
-    // ロック前の位置に戻す（常に最上部）
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    window.scrollTo({ top: y, behavior: 'instant' });
   };
 
   lockScroll();
@@ -484,7 +485,7 @@ function initNavbar() {
 function initPageSystem() {
   let _currentPage = 'page-main';
   function showPage(id) {
-    if (id === _currentPage) return; // 同じページなら何もしない
+    if (id === _currentPage) return;
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     const target=$(id);
     if (!target) return;
