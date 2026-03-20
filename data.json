@@ -13,7 +13,7 @@
       "feeAdvance": "2,500円",
       "ticketShops": "相澤酒店・中島酒店・米田屋・三代澤酒店・穂高酒店",
       "desc": "地域を代表する銘柄が多数揃うほか、大好評のお惣菜やM's Factoryのスイーツも並びます。春の松本の風情を感じながら日本酒の魅力を心ゆくまで味わえるイベントです。",
-      "image": ""
+      "image": "2026.4.11.jpg"
     },
     {
       "id": "2025-kanko",
@@ -45,7 +45,7 @@
       "title": "信州松本大歌舞伎",
       "dateLabel": "2025年",
       "desc": "",
-      "image": ""
+      "image": "kabukitaru1.jpg"
     }
   ],
   "sakes": [
@@ -160,7 +160,7 @@
       "al": "15",
       "volume": "720",
       "price": "1,045",
-      "image": ""
+      "image": "sakefukashi.jpg"
     },
     {
       "num": 2,
@@ -171,7 +171,7 @@
       "al": "15",
       "volume": "720",
       "price": "1,760",
-      "image": ""
+      "image": "sakeiwanami.jpg"
     },
     {
       "num": 3,
@@ -182,7 +182,7 @@
       "al": "16",
       "volume": "720",
       "price": "1,980",
-      "image": ""
+      "image": "sakesasai720.jpg"
     },
     {
       "num": 4,
@@ -193,7 +193,7 @@
       "al": "15",
       "volume": "720",
       "price": "3,850",
-      "image": ""
+      "image": "sakekametaya1.jpg"
     },
     {
       "num": 5,
@@ -204,7 +204,7 @@
       "al": "15",
       "volume": "720",
       "price": "3,300",
-      "image": ""
+      "image": "saketakanami.jpg"
     },
     {
       "num": 6,
@@ -215,7 +215,7 @@
       "al": "15",
       "volume": "720",
       "price": "2,090",
-      "image": ""
+      "image": "sakewakyou.jpg"
     },
     {
       "num": 7,
@@ -226,7 +226,7 @@
       "al": "15",
       "volume": "720",
       "price": "1,650",
-      "image": ""
+      "image": "sakemisuzu.jpg"
     },
     {
       "num": 8,
@@ -237,7 +237,7 @@
       "al": "15",
       "volume": "720",
       "price": "1,600",
-      "image": ""
+      "image": "sakesuien.jpg"
     }
   ],
   "breweries": {
@@ -503,7 +503,7 @@
   },
   "heroImages": [
     {
-      "file": "",
+      "file": "header.png",
       "alt": "信州松本の清流"
     },
     {
@@ -513,6 +513,30 @@
     {
       "file": "",
       "alt": ""
+    }
+  ],
+  "researchImages": [
+    {
+      "file": "nomi01.gif",
+      "alt": "新酒研究会の様子"
+    },
+    {
+      "file": "nomi02.gif",
+      "alt": "審査の様子"
+    }
+  ],
+  "shrineImages": [
+    {
+      "file": "matuoyokomaku1.jpg",
+      "alt": "松尾神社 外観"
+    },
+    {
+      "file": "matuosaidan1.jpg",
+      "alt": "松尾神社 境内"
+    },
+    {
+      "file": "matuoyokomaku2.jpg",
+      "alt": "例祭の様子"
     }
   ]
 }

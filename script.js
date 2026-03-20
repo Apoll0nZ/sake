@@ -38,6 +38,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderEventPage(d.events, d.sakes);
     renderAwardsPage(d.awards);
     renderProductsPage(d.products);
+    renderResearchImages(d.researchImages);
+    renderShrineImages(d.shrineImages);
   }
 
   /* ④ 描画完了後に RevealObserver 起動 */
@@ -398,6 +400,40 @@ function renderProductsPage(products) {
     sel.innerHTML = '<option value="">指定なし／おすすめをお任せ</option>' +
       products.map(p=>`<option>No.${p.num} ${p.name} — ${p.price}円</option>`).join('');
   }
+}
+
+/* ── 研究会 画像 ─────────────────────────────────────────── */
+function renderResearchImages(images) {
+  const wrap = $('research-images-wrap');
+  if (!wrap) return;
+  const imgs = (images || []).filter(img => img.file);
+  if (!imgs.length) { wrap.style.display = 'none'; return; }
+  wrap.innerHTML = imgs.map(img =>
+    `<div class="research-img-item">
+      <img src="images/${esc(img.file)}" alt="${esc(img.alt || '')}" loading="lazy">
+    </div>`
+  ).join('');
+}
+
+/* ── 松尾神社 画像ギャラリー ─────────────────────────────── */
+function renderShrineImages(images) {
+  const wrap = $('shrine-images-wrap');
+  if (!wrap) return;
+  const imgs = (images || []).filter(img => img.file);
+  if (!imgs.length) { wrap.style.display = 'none'; return; }
+  // 1枚目を大きく、残りをサイド
+  const [first, ...rest] = imgs;
+  wrap.innerHTML = `
+    <div class="shrine-gallery">
+      <div class="shrine-gallery-main">
+        <img src="images/${esc(first.file)}" alt="${esc(first.alt || '')}" loading="lazy">
+      </div>
+      ${rest.length ? `<div class="shrine-gallery-sub">
+        ${rest.map(img => `<div class="shrine-gallery-sub-item">
+          <img src="images/${esc(img.file)}" alt="${esc(img.alt || '')}" loading="lazy">
+        </div>`).join('')}
+      </div>` : ''}
+    </div>`;
 }
 
 /* ── HELPERS ────────────────────────────────────────────────── */
