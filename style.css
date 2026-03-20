@@ -720,6 +720,11 @@ footer {
 .page-hero-tag { font-size: 0.68rem; letter-spacing: 0.5em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.8rem; }
 .page-hero-title { font-family: var(--serif); font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.1; color: #FFFFFF; font-weight: 700; letter-spacing: 0.05em; }
 .page-hero-sub { font-size: 0.88rem; color: rgba(255,255,255,0.55); letter-spacing: 0.2em; margin-top: 0.8rem; }
+/* 松尾神社ページのみ：背景が明るいため文字色を上書き */
+#page-shrine .page-hero { background: var(--midnight); }
+#page-shrine .page-hero-title { color: var(--cream); }
+#page-shrine .page-hero-tag { color: var(--amber-lt); }
+#page-shrine .page-hero-sub { color: rgba(247,249,252,0.75); }
 
 /* ── PRODUCTS PAGE ─────────────────────────────────────────── */
 .products-section { padding: 6rem 4rem; background: var(--ink); }

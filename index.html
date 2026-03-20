@@ -319,58 +319,58 @@
     <div class="products-grid" id="products-dynamic-grid"></div>
     <p style="font-size:.75rem;opacity:.35;margin-top:1rem;">※ 商品価格には送料は含まれておりません</p>
   </div></div>
-  <div class="order-section"><div class="order-inner"><div class="order-grid">
-    <div>
-      <p class="section-tag reveal">How to Order</p>
-      <h2 class="section-heading reveal" style="font-size:1.8rem;">ご注文方法</h2>
-      <div class="order-steps reveal">
-        <div class="order-step"><span class="order-step-icon">✉</span><div><strong style="color:var(--amber-lt);font-weight:400;">メール</strong> または <strong style="color:var(--amber-lt);font-weight:400;">FAX</strong> にて①〜⑨をご記入の上お申込みください。</div></div>
-        <div class="order-step"><span class="order-step-icon">○</span><div>① 注文者氏名</div></div>
-        <div class="order-step"><span class="order-step-icon">○</span><div>② 年齢（20歳未満への販売不可）</div></div>
-        <div class="order-step"><span class="order-step-icon">○</span><div>③ 注文者 郵便番号・住所</div></div>
-        <div class="order-step"><span class="order-step-icon">○</span><div>④ 電話番号</div></div>
-        <div class="order-step"><span class="order-step-icon">○</span><div>⑤ メールアドレス</div></div>
-        <div class="order-step"><span class="order-step-icon">○</span><div>⑥ 送り先（注文者と異なる場合）</div></div>
-        <div class="order-step"><span class="order-step-icon">○</span><div>⑧ ご注文商品番号と本数</div></div>
-        <div class="order-step"><span class="order-step-icon">○</span><div>⑨ お振込予定日</div></div>
-      </div>
-      <div class="order-info-box reveal"><strong>メール：</strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="403a293a212b2500302f6e2d2323296e2f326e2a30">[email&#160;protected]</a><br><strong>FAX：</strong>0263-24-3607<br><strong>休日：</strong>土・日・祝日・年末年始・夏季休暇等<br><br>確認メール受領後、5日以内にお振込ください。入金確認後5日以内に発送いたします。</div>
-      <div class="bank-box reveal"><strong style="color:var(--amber-lt);font-weight:400;">振込口座</strong><br>八十二長野銀行 0143 松本営業部<br>口座番号：1032707（普通口座）<br>口座名義：松本地酒振興協同組合</div>
-    </div>
-    <div class="contact-form reveal-right">
-      <div class="form-title">お問い合わせ・ご注文フォーム</div>
-      <div class="form-group"><label for="fName">お名前</label><input type="text" id="fName" placeholder="山田 太郎"></div>
-      <div class="form-group"><label for="fEmail">メールアドレス</label><input type="email" id="fEmail" placeholder="taro@example.com"></div>
-      <div class="form-group"><label for="fType">お問い合わせ種別</label>
-        <select id="fType"><option value="">選択してください</option><option>地酒のご注文・在庫確認</option><option>イベント参加申込み</option><option>酒類審評会について</option><option>研究会・勉強会について</option><option>その他</option></select>
-      </div>
-      <div class="form-group"><label for="fProduct">ご希望商品（任意）</label>
-        <select id="fProduct"><option value="">指定なし／おすすめをお任せ</option></select>
-      </div>
-      <div class="form-group"><label for="fMsg">メッセージ・本数など</label><textarea id="fMsg" rows="4" placeholder="ご質問・ご要望をお気軽にどうぞ..."></textarea></div>
-      <p class="form-note">※ 送料は別途ご案内します ／ 20歳未満の方への販売不可</p><br>
-      <button class="btn-submit" id="formSubmit">送信する</button>
-    </div>
-  </div></div></div>
+  <div class="order-section"><div class="order-inner">
+    <p class="section-tag reveal">How to Order</p>
+    <h2 class="section-heading reveal" style="font-size:1.8rem;margin-bottom:3rem;">ご注文方法</h2>
+    <div class="order-unified-grid reveal">
 
-  <div class="legal-section"><div class="legal-inner">
-    <div class="legal-title">通信販売の法規（特定商取引法）に基づく表示 ／ 酒類販売管理者標識</div>
-    <table class="legal-table">
-      <tr><td>販売場の名称及び所在地</td><td>松本市鎌田２－３－６５ 松本地酒振興協同組合</td></tr>
-      <tr><td>酒類販売管理者の氏名</td><td>花岡　佳子</td></tr>
-      <tr><td>酒類販売管理研修受講年月日</td><td>令和6年3月4日</td></tr>
-      <tr><td>次回研修の受講期限</td><td>令和9年3月3日</td></tr>
-      <tr><td>研修実施団体名</td><td>中信小売酒販組合</td></tr>
-      <tr><td>電話・FAX・E-mail</td><td>TEL 0263-24-3606 ／ FAX 0263-24-3607 ／ zizake@po.mcci.or.jp</td></tr>
-      <tr><td>返品・交換</td><td>不良品などの場合を除いて返品はご容赦願います。不良品は着払いにてご返品後、交換いたします。</td></tr>
-    </table>
+      <!-- 左：注文手順 -->
+      <div class="order-col-steps">
+        <div class="order-block-title">✉ 注文の流れ</div>
+        <p style="font-size:.82rem;line-height:2;opacity:.7;margin-bottom:1.2rem;">メール または FAX にて①〜⑨をご記入の上お申込みください。</p>
+        <div class="order-steps">
+          <div class="order-step"><span class="order-step-icon">①</span><div>注文者氏名</div></div>
+          <div class="order-step"><span class="order-step-icon">②</span><div>年齢（20歳未満への販売不可）</div></div>
+          <div class="order-step"><span class="order-step-icon">③</span><div>注文者 郵便番号・住所</div></div>
+          <div class="order-step"><span class="order-step-icon">④</span><div>電話番号</div></div>
+          <div class="order-step"><span class="order-step-icon">⑤</span><div>メールアドレス</div></div>
+          <div class="order-step"><span class="order-step-icon">⑥</span><div>送り先（注文者と異なる場合）</div></div>
+          <div class="order-step"><span class="order-step-icon">⑧</span><div>ご注文商品番号と本数</div></div>
+          <div class="order-step"><span class="order-step-icon">⑨</span><div>お振込予定日</div></div>
+        </div>
+      </div>
+
+      <!-- 中：連絡先・振込 -->
+      <div class="order-col-contact">
+        <div class="order-block-title">📬 送付先・振込口座</div>
+        <div class="order-contact-item"><span class="order-contact-label">メール</span><span>zizake@po.mcci.or.jp</span></div>
+        <div class="order-contact-item"><span class="order-contact-label">FAX</span><span>0263-24-3607</span></div>
+        <div class="order-contact-item"><span class="order-contact-label">休日</span><span>土・日・祝日・年末年始・夏季休暇等</span></div>
+        <p style="font-size:.78rem;opacity:.55;line-height:1.9;margin:1rem 0 1.5rem;">確認メール受領後、5日以内にお振込ください。<br>入金確認後5日以内に発送いたします。</p>
+        <div class="bank-box">
+          <div style="font-size:.65rem;letter-spacing:.4em;color:var(--amber);margin-bottom:.8rem;">振込口座</div>
+          八十二長野銀行 0143 松本営業部<br>
+          口座番号：1032707（普通口座）<br>
+          口座名義：松本地酒振興協同組合
+        </div>
+      </div>
+
+      <!-- 右：特定商取引法 -->
+      <div class="order-col-legal">
+        <div class="order-block-title">📋 特定商取引法・酒類販売管理者標識</div>
+        <table class="legal-table">
+          <tr><td>販売場の名称及び所在地</td><td>松本市鎌田２－３－６５ 松本地酒振興協同組合</td></tr>
+          <tr><td>酒類販売管理者の氏名</td><td>花岡　佳子</td></tr>
+          <tr><td>酒類販売管理研修受講年月日</td><td>令和6年3月4日</td></tr>
+          <tr><td>次回研修の受講期限</td><td>令和9年3月3日</td></tr>
+          <tr><td>研修実施団体名</td><td>中信小売酒販組合</td></tr>
+          <tr><td>電話・FAX・E-mail</td><td>TEL 0263-24-3606 ／ FAX 0263-24-3607 ／ zizake@po.mcci.or.jp</td></tr>
+          <tr><td>返品・交換</td><td>不良品などの場合を除いて返品はご容赦願います。不良品は着払いにてご返品後、交換いたします。</td></tr>
+        </table>
+      </div>
+
+    </div>
   </div></div>
   <footer><div class="footer-inner"><div class="footer-bottom">
     <span class="footer-copy">© 松本地酒家 ／ 松本地酒振興協同組合</span>
-    <span class="footer-age">※ 20歳未満の方への酒類の販売はいたしておりません</span>
-  </div></div></footer>
-</div><!-- /page-purchase -->
-
-<script src="script.js"></script>
-</body>
-</html>
+    <span class="footer-age">※ 20歳未満の方への酒類の販売はいたしてお�
