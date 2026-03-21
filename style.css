@@ -234,11 +234,11 @@ section { padding: 9rem 4rem; }
 #about, #breweries, #product-carousel { padding: 9rem 4rem; }
 .section-inner { max-width: 1120px; margin: 0 auto; }
 
-.reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.42s ease, transform 0.42s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
-.reveal-left { opacity: 0; transform: translateX(-28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal-left { opacity: 0; transform: translateX(-18px); transition: opacity 0.42s ease, transform 0.42s ease; }
 .reveal-left.visible { opacity: 1; transform: translateX(0); }
-.reveal-right { opacity: 0; transform: translateX(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal-right { opacity: 0; transform: translateX(18px); transition: opacity 0.42s ease, transform 0.42s ease; }
 .reveal-right.visible { opacity: 1; transform: translateX(0); }
 
 .section-tag {

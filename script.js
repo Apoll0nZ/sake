@@ -503,13 +503,14 @@ function initRevealObserver() {
     entries.forEach(entry=>{
       if(!entry.isIntersecting) return;
       entry.target.classList.add('visible');
+      revealObs?.unobserve(entry.target);
     });
-  },{threshold:0.12});
+  },{threshold:0.04, rootMargin:'0px 0px -8% 0px'});
   document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>revealObs.observe(el));
   ['.brewery-card','.product-card','.award-year-block'].forEach(sel=>{
-    document.querySelectorAll(sel).forEach((el,i)=>{ el.style.transitionDelay=`${i*0.07}s`; el.classList.add('reveal'); revealObs.observe(el); });
+    document.querySelectorAll(sel).forEach((el,i)=>{ el.style.transitionDelay=`${i*0.03}s`; el.classList.add('reveal'); revealObs.observe(el); });
   });
-  document.querySelectorAll('.step-item').forEach((el,i)=>{ el.style.transitionDelay=`${i*0.12}s`; el.classList.add('reveal-left'); revealObs.observe(el); });
+  document.querySelectorAll('.step-item').forEach((el,i)=>{ el.style.transitionDelay=`${i*0.06}s`; el.classList.add('reveal-left'); revealObs.observe(el); });
 }
 
 /* ── PARALLAX ───────────────────────────────────────────────── */
