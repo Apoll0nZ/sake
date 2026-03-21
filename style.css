@@ -1325,16 +1325,6 @@ footer {
   max-width: 600px;
 }
 
-/* 区切り線 */
-.nss-quote-wrap::before {
-  content: '';
-  display: block;
-  width: 2.5rem;
-  height: 1px;
-  background: rgba(255,255,255,0.5);
-  margin-bottom: 1.4rem;
-}
-
 .nss-quote-main {
   font-family: var(--serif);
   font-size: clamp(1.8rem, 3.8vw, 3.2rem);
