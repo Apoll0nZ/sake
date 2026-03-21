@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initForm();
   initStaticHeroCarousel();
   initRevealObserver();
+  initVideoLazyLoad();
 });
 
 function getCurrentPageKey() {
@@ -300,3 +301,30 @@ function initForm(){
     setTimeout(()=>{this.textContent='送信する';this.classList.remove('sent');},4000);
   });
 }
+
+/* ── VIDEO LAZY LOAD ─────────────────────────────────────────── */
+function initVideoLazyLoad() {
+  const container = document.getElementById('about-video-container');
+  if (!container) return;
+
+  // 即座にダウンロード開始、再生可能になったら静止画と差し替え
+  const video = document.createElement('video');
+  video.className = 'about-video-bg';
+  video.autoplay = true;
+  video.muted = true;
+  video.loop = true;
+  video.playsInline = true;
+  video.preload = 'auto';
+
+  const source = document.createElement('source');
+  source.src = 'images/river.mp4';
+  source.type = 'video/mp4';
+  video.appendChild(source);
+
+  // 再生可能になったら静止画を置き換え
+  video.addEventListener('canplay', () => {
+    container.innerHTML = '';
+    container.appendChild(video);
+  }, { once: true });
+}
+

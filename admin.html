@@ -807,7 +807,7 @@ function buildStaticHtml(name, payload, html){
   const doc = new DOMParser().parseFromString(html, 'text/html');
   doc.body.dataset.staticRendered = '1';
   const scriptEl = doc.getElementById('static-site-data');
-  if(scriptEl) scriptEl.textContent = escapeInlineJson(payload);
+  if(scriptEl) scriptEl.remove(); // static-site-dataを削除
 
   if(name === 'index.html'){
     fillIndexStaticContent(doc, payload);
