@@ -200,7 +200,7 @@
       "al": "15",
       "volume": "720",
       "price": "1,045",
-      "image": "sake1.png"
+      "image": "sake1.webp"
     },
     {
       "num": 2,
@@ -211,7 +211,7 @@
       "al": "15",
       "volume": "720",
       "price": "1,760",
-      "image": "sake2.png"
+      "image": "sake2.webp"
     },
     {
       "num": 3,
@@ -222,7 +222,7 @@
       "al": "16",
       "volume": "720",
       "price": "1,980",
-      "image": "sake3.png"
+      "image": "sake3.webp"
     },
     {
       "num": 4,
@@ -233,7 +233,7 @@
       "al": "15",
       "volume": "720",
       "price": "3,850",
-      "image": "sake4.png"
+      "image": "sake4.webp"
     },
     {
       "num": 5,
@@ -244,7 +244,7 @@
       "al": "15",
       "volume": "720",
       "price": "3,300",
-      "image": "sake5.png"
+      "image": "sake5.webp"
     },
     {
       "num": 6,
@@ -255,7 +255,7 @@
       "al": "15",
       "volume": "720",
       "price": "2,090",
-      "image": "sake6.png"
+      "image": "sake6.webp"
     },
     {
       "num": 7,
@@ -266,7 +266,7 @@
       "al": "15",
       "volume": "720",
       "price": "1,650",
-      "image": "sake7.png"
+      "image": "sake7.webp"
     },
     {
       "num": 8,
@@ -277,7 +277,7 @@
       "al": "15",
       "volume": "720",
       "price": "1,600",
-      "image": "sake8.png"
+      "image": "sake8.webp"
     }
   ],
   "breweries": {
@@ -2261,7 +2261,7 @@
   },
   "heroImages": [
     {
-      "file": "header.png",
+      "file": "header.webp",
       "alt": "信州松本の清流"
     },
     {
@@ -2286,25 +2286,25 @@
     ],
     "research_1": [
       {
-        "file": "nomi01.gif",
+        "file": "nomi01.webp",
         "alt": "初のみきり研究会"
       },
       {
-        "file": "nomi02.gif",
+        "file": "nomi02.webp",
         "alt": "初のみきり研究会"
       }
     ],
     "shrine": [
       {
-        "file": "matsuozinzya1.png",
+        "file": "matsuozinzya1.webp",
         "alt": "松尾神社"
       },
       {
-        "file": "matuoyokomaku2.jpg",
+        "file": "matuoyokomaku2.webp",
         "alt": "松尾神社"
       },
       {
-        "file": "matuosaidan1.jpg",
+        "file": "matuosaidan1.webp",
         "alt": "松尾神社"
       }
     ]
