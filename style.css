@@ -1099,7 +1099,7 @@ footer {
   flex: 0 0 280px; cursor: pointer;
   transition: transform 0.3s;
   text-decoration: none; color: #1b1712;
-  background: linear-gradient(180deg, rgba(255,250,242,0.98) 0%, rgba(244,236,224,0.95) 100%);
+  background: #ffffff;
   border: 1px solid rgba(30,24,15,0.12);
   padding: 1.2rem 1.2rem 1.35rem;
 }
