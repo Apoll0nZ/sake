@@ -1065,6 +1065,62 @@ footer {
   .season-card:hover { flex: 0 0 280px; }
   .award-table th:nth-child(3), .award-table td:nth-child(3) { display: none; }
 
+  /* ── ご購入ページを一覧しやすく ── */
+  .products-section { padding: 3.5rem 1rem; }
+  .products-intro {
+    padding: 1rem 1.1rem;
+    margin-bottom: 1.6rem;
+    font-size: 0.78rem;
+    line-height: 1.8;
+  }
+  .products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    margin-bottom: 2.5rem;
+  }
+  .product-card-body {
+    padding: 0.9rem 0.8rem 1rem;
+  }
+  .product-num {
+    font-size: 2.2rem;
+    top: 0.35rem;
+    right: 0.55rem;
+  }
+  .product-brewery {
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    margin-bottom: 0.35rem;
+  }
+  .product-name {
+    font-size: 0.95rem;
+    line-height: 1.32;
+    margin-bottom: 0.2rem;
+  }
+  .product-type {
+    font-size: 0.62rem;
+    margin-bottom: 0.7rem;
+  }
+  .product-desc {
+    font-size: 0.72rem;
+    line-height: 1.6;
+    margin-bottom: 0.8rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .product-meta {
+    gap: 0.45rem;
+    padding-top: 0.8rem;
+  }
+  .product-meta-item {
+    font-size: 0.66rem;
+    letter-spacing: 0.04em;
+  }
+  .product-img-wrap img {
+    padding: 0.45rem;
+  }
+
   /* ── イベントバナー さらに小さい ── */
   .event-banner-item { padding: 2rem 1rem; }
   .event-title { font-size: 1.4rem; }
