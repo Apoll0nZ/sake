@@ -1552,6 +1552,12 @@ footer {
   }
   #event-banners-wrap .event-poster-img {
     aspect-ratio: 4/3;
+    background: rgba(255,255,255,0.96);
+  }
+  #event-banners-wrap .event-poster-photo,
+  #event-banners-wrap .event-poster-img img {
+    object-fit: contain;
+    object-position: center;
   }
   #event-banners-wrap .event-inner > .event-poster   { order: 1; }
   #event-banners-wrap .event-inner > div:first-child { order: 2; }
