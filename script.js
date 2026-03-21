@@ -260,15 +260,7 @@ function initRevealObserver() {
 
 /* ── PARALLAX ───────────────────────────────────────────────── */
 function initParallax(){
-  // 旧 parallaxStrip は削除済みのためスキップ
-
-  // 川動画（about）の再生速度を 1/3 に設定
-  const riverVideo = document.querySelector('.about-video-bg');
-  if (riverVideo) {
-    riverVideo.playbackRate = 0.333;
-    riverVideo.addEventListener('loadedmetadata', () => { riverVideo.playbackRate = 0.333; });
-    riverVideo.addEventListener('play', () => { riverVideo.playbackRate = 0.333; });
-  }
+  // 旧 parallaxStrip は削除済み
 }
 
 /* ── REGION TABS ────────────────────────────────────────────── */
