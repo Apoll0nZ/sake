@@ -1105,7 +1105,7 @@ footer {
   -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
 }
 .carousel-track {
-  display: flex; gap: 1.5rem;
+  display: flex; gap: 2rem;
   padding: 0 4rem 1rem;
   animation: carouselScroll 30s linear infinite;
   width: max-content;
@@ -1116,13 +1116,16 @@ footer {
   to   { transform: translateX(-50%); }
 }
 .carousel-item {
-  flex: 0 0 220px; cursor: pointer;
+  flex: 0 0 280px; cursor: pointer;
   transition: transform 0.3s;
   text-decoration: none; color: var(--cream);
+  background: linear-gradient(180deg, rgba(245,240,232,0.05) 0%, rgba(245,240,232,0.015) 100%);
+  border: 1px solid rgba(245,240,232,0.08);
+  padding: 1.2rem 1.2rem 1.35rem;
 }
 .carousel-item:hover { transform: translateY(-6px); }
 .carousel-img {
-  width: 180px;
+  width: 100%;
   aspect-ratio: 3 / 4;
   background: #fff;
   margin-bottom: 1rem;
@@ -1134,11 +1137,29 @@ footer {
   width: 100%; height: 100%;
   object-fit: contain;
   mix-blend-mode: multiply;
-  padding: 0.5rem;
+  padding: 0.8rem;
 }
-.carousel-item-brewery { font-size: 0.65rem; letter-spacing: 0.3em; color: var(--amber); margin-bottom: 0.3rem; }
-.carousel-item-name { font-family: var(--serif); font-size: 1rem; letter-spacing: 0.05em; line-height: 1.4; margin-bottom: 0.3rem; }
-.carousel-item-price { font-size: 0.78rem; opacity: 0.5; }
+.carousel-item-brewery {
+  font-size: 0.7rem;
+  letter-spacing: 0.28em;
+  color: var(--amber-lt);
+  margin-bottom: 0.45rem;
+}
+.carousel-item-name {
+  font-family: var(--serif);
+  font-size: 1.18rem;
+  letter-spacing: 0.04em;
+  line-height: 1.45;
+  margin-bottom: 0.45rem;
+  color: #fffdf8;
+  text-shadow: 0 1px 10px rgba(0,0,0,0.18);
+}
+.carousel-item-price {
+  font-size: 0.92rem;
+  color: rgba(255,248,232,0.88);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
 
 /* ── EVENT ARCHIVE ─────────────────────────────────────────── */
 .event-archive-grid {
