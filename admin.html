@@ -768,8 +768,7 @@ async function exportData(){
   const out={...S};
   delete out.sakes;
   const files = {
-    'data.json': JSON.stringify(out,null,2),
-    ...buildPublicPayloads(out)
+    'data.json': JSON.stringify(out,null,2)
   };
   upPrev();
   if(rootH){
@@ -786,24 +785,6 @@ async function exportData(){
   toast('公開用データを含むJSONを書き出しました');
 }
 function upPrev(){ const el=document.getElementById('jprev'); if(el) el.textContent=JSON.stringify(S,null,2); }
-function buildPublicPayloads(data){
-  return {
-    'site-index.json': JSON.stringify({
-      events: data.events || [],
-      breweries: data.breweries || {},
-      products: data.products || [],
-      images: data.images || {},
-      heroImages: data.heroImages || [],
-      pagePhotos: data.pagePhotos || {}
-    }, null, 2),
-    'site-purchase.json': JSON.stringify({
-      products: data.products || []
-    }, null, 2),
-    'site-awards.json': JSON.stringify({
-      awards: data.awards || []
-    }, null, 2)
-  };
-}
 function buildInlinePayloads(data){
   return {
     'index.html': {
