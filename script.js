@@ -57,6 +57,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 /* ── LOADER ────────────────────────────────────────────────── */
 function initLoader() {
+  const loader = $('loader');
+  if (!loader) return;
+  const loaderSeenKey = 'sake_loader_seen';
+  try {
+    if (sessionStorage.getItem(loaderSeenKey) === '1') {
+      loader.classList.add('hide');
+      return;
+    }
+    sessionStorage.setItem(loaderSeenKey, '1');
+  } catch (_) {
+    // sessionStorage が使えない環境では従来どおり毎回表示
+  }
   let _done = false;
   const lockScroll = () => {
     document.body.dataset.lockedY = window.scrollY;
@@ -74,7 +86,7 @@ function initLoader() {
     window.scrollTo({ top: y, behavior: 'instant' });
   };
   lockScroll();
-  const hideLoader = () => { const l=$('loader'); if(l) l.classList.add('hide'); unlockScroll(); };
+  const hideLoader = () => { loader.classList.add('hide'); unlockScroll(); };
   window.addEventListener('load', () => setTimeout(hideLoader, 1500), { once: true });
   setTimeout(hideLoader, 5000);
 }
