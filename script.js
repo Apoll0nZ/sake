@@ -136,7 +136,7 @@ function preloadImage(href, highPriority = false) {
 function initLoader({ dataPromise, criticalAssetPromise } = {}) {
   const loader = $('loader');
   if (!loader) return;
-  const minLoaderMs = 1500;
+  const minLoaderMs = 2000;
   const startedAt = performance.now();
   const loaderSeenKey = 'sake_loader_seen';
   try {
