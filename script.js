@@ -20,10 +20,10 @@ const staticPriorityAssetsByPage = {
 
 document.addEventListener('DOMContentLoaded', async () => {
   const dataPromise = fetchSiteData();
+  const criticalAssetPromise = warmCriticalAssets();
 
   /* ① ローダー・UI を即時初期化（data.json 待ちしない） */
-  initLoader();
-  warmCriticalAssets();
+  initLoader({ dataPromise, criticalAssetPromise });
   initNavbar();
   initPageSystem();
   initParticles();
@@ -77,11 +77,11 @@ function getCurrentPageKey() {
 function warmCriticalAssets() {
   const pageKey = getCurrentPageKey();
   const assets = staticPriorityAssetsByPage[pageKey] || [];
-  if (!assets.length) return;
+  if (!assets.length) return Promise.resolve();
 
-  assets.forEach((file, index) => {
-    preloadImage(`images/${file}`, index === 0);
-  });
+  return Promise.all(
+    assets.map((file, index) => preloadImage(`images/${file}`, index === 0))
+  );
 }
 
 function warmProductAssets(products) {
@@ -95,7 +95,7 @@ function warmProductAssets(products) {
 }
 
 function preloadImage(href, highPriority = false) {
-  if (!href) return;
+  if (!href) return Promise.resolve();
   if (!document.head.querySelector(`link[rel="preload"][href="${href}"]`)) {
     const link = document.createElement('link');
     link.rel = 'preload';
@@ -108,11 +108,16 @@ function preloadImage(href, highPriority = false) {
   const img = new Image();
   if (highPriority) img.fetchPriority = 'high';
   img.decoding = 'async';
+  const loadPromise = new Promise(resolve => {
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+  });
   img.src = href;
+  return loadPromise;
 }
 
 /* ── LOADER ────────────────────────────────────────────────── */
-function initLoader() {
+function initLoader({ dataPromise, criticalAssetPromise } = {}) {
   const loader = $('loader');
   if (!loader) return;
   const loaderSeenKey = 'sake_loader_seen';
@@ -143,7 +148,11 @@ function initLoader() {
   };
   lockScroll();
   const hideLoader = () => { loader.classList.add('hide'); unlockScroll(); };
-  setTimeout(hideLoader, 1500);
+  Promise.allSettled([
+    dataPromise || Promise.resolve(),
+    criticalAssetPromise || Promise.resolve()
+  ]).then(hideLoader);
+  setTimeout(hideLoader, 6000);
 }
 
 /* ── ヒーロー背景 ───────────────────────────────────────────── */
