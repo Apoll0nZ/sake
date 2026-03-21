@@ -350,6 +350,15 @@ section { padding: 9rem 4rem; }
   object-position: center center;
   display: block;
 }
+.about-video-bg video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
 
 /* 動画ポスター画像 */
 .about-video-poster {
@@ -1565,6 +1574,7 @@ footer {
     margin-bottom: 0.8rem;
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }

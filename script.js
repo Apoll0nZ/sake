@@ -72,15 +72,14 @@ function initLoader({ criticalAssetPromise } = {}) {
   const minLoaderMs = 2500;
   const startedAt = performance.now();
   const loaderSeenKey = 'sake_loader_seen';
-  try {
-    if (sessionStorage.getItem(loaderSeenKey) === '1') {
-      loader.classList.add('hide');
-      return;
-    }
-    sessionStorage.setItem(loaderSeenKey, '1');
-  } catch (_) {
-    // sessionStorage が使えない環境では従来どおり毎回表示
-  }
+  const alreadySeen = (() => {
+    try {
+      if (sessionStorage.getItem(loaderSeenKey) === '1') return true;
+      sessionStorage.setItem(loaderSeenKey, '1');
+      return false;
+    } catch (_) { return false; }
+  })();
+
   let _done = false;
   const lockScroll = () => {
     document.body.dataset.lockedY = window.scrollY;
@@ -99,6 +98,14 @@ function initLoader({ criticalAssetPromise } = {}) {
   };
   lockScroll();
   const hideLoader = () => { loader.classList.add('hide'); unlockScroll(); };
+
+  if (alreadySeen) {
+    // 2回目以降はローダーを即非表示にするが、スクロールロックは解除する
+    loader.classList.add('hide');
+    unlockScroll();
+    return;
+  }
+
   Promise.allSettled([criticalAssetPromise || Promise.resolve()]).then(() => {
     const remaining = Math.max(0, minLoaderMs - (performance.now() - startedAt));
     setTimeout(hideLoader, remaining);
