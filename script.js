@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   /* ① ローダー・UI を即時初期化（data.json 待ちしない） */
   initLoader();
   warmCriticalAssets();
+  const dataPromise = fetchSiteData();
   initNavbar();
   initPageSystem();
   initParticles();
@@ -32,14 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initForm();
 
   /* ② data.json を fetch で取得 */
-  let d = null;
-  try {
-    const res = await fetch('data.json?v=' + Date.now());
-    if (res.ok) d = await res.json();
-    else throw new Error('HTTP ' + res.status);
-  } catch(e) {
-    console.error('data.json の読み込みに失敗しました:', e);
-  }
+  const d = await dataPromise;
 
   /* ③ 取得できたらレンダリング */
   if (d) {
@@ -60,6 +54,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   /* ④ 描画完了後に RevealObserver 起動 */
   initRevealObserver();
 });
+
+async function fetchSiteData() {
+  try {
+    const res = await fetch('data.json', { cache: 'no-store' });
+    if (res.ok) return await res.json();
+    throw new Error('HTTP ' + res.status);
+  } catch (e) {
+    console.error('data.json の読み込みに失敗しました:', e);
+    return null;
+  }
+}
 
 function getCurrentPageKey() {
   const path = location.pathname.toLowerCase();
@@ -138,8 +143,7 @@ function initLoader() {
   };
   lockScroll();
   const hideLoader = () => { loader.classList.add('hide'); unlockScroll(); };
-  window.addEventListener('load', () => setTimeout(hideLoader, 1500), { once: true });
-  setTimeout(hideLoader, 5000);
+  setTimeout(hideLoader, 1500);
 }
 
 /* ── ヒーロー背景 ───────────────────────────────────────────── */
