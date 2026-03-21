@@ -50,9 +50,9 @@ function initLoader() {
   let _done = false;
   const lockScroll = () => {
     document.body.dataset.lockedY = window.scrollY;
-    document.body.style.position  = 'fixed';
-    document.body.style.top       = `-${window.scrollY}px`;
-    document.body.style.left = '0'; document.body.style.right = '0';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${window.scrollY}px`;
+    document.body.style.left = document.body.style.right = '0';
     document.body.style.overflowY = 'scroll';
   };
   const unlockScroll = () => {
@@ -189,7 +189,7 @@ function renderEventBanners(events) {
   wrap.innerHTML = upcoming.map(ev => {
     const dateLabel = ev.dateLabel || (ev.date ? formatDate(ev.date) : '');
     const posterHtml = ev.image
-      ? `<img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" style="width:100%;height:auto;display:block;object-fit:contain;">`
+      ? `<img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" style="width:100%;height:auto;display:block;">`
       : `<div class="event-poster-inner">
            <div class="event-poster-year">${esc(dateLabel.slice(0,4))} — Event</div>
            <div class="event-poster-main">${esc(ev.title)}</div>
@@ -282,29 +282,28 @@ function renderEventPage(events, sakes) {
     upBlock.innerHTML = upcoming.map(ev => {
       const dateLabel = ev.dateLabel || (ev.date ? formatDate(ev.date) : '');
       const imgHtml = ev.image
-        ? `<img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" style="width:100%;max-height:360px;object-fit:cover;margin-bottom:2rem;">`
+        ? `<img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" style="width:100%;height:auto;display:block;margin-bottom:2rem;">`
         : '';
-      return `<div style="background:var(--deep);border:1px solid var(--border);padding:3.5rem;margin-bottom:2rem;" class="reveal">
+      return `<div style="background:var(--deep);border:1px solid var(--border);padding:2.5rem;margin-bottom:2rem;" class="reveal">
         <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:1.5rem;">
           <span style="width:6px;height:6px;border-radius:50%;background:var(--amber);animation:blink 1.4s ease infinite;display:inline-block;"></span>
           <span style="font-size:.68rem;letter-spacing:.5em;color:var(--amber);text-transform:uppercase;">Upcoming</span>
         </div>
         ${imgHtml}
-        <h2 style="font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:1.5rem;line-height:1.3;">${esc(ev.title)}</h2>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;">
-          <table style="font-size:.88rem;width:100%;border-collapse:collapse;">
-            <tr style="border-bottom:1px solid rgba(245,240,232,.07);"><td style="padding:.8rem 1rem .8rem 0;opacity:.4;width:80px;vertical-align:top;">日時</td>
-              <td style="padding:.8rem 0;line-height:2;">${esc(dateLabel)}
-                ${ev.time1?`<br>1部 ${esc(ev.time1)}<br>2部 ${esc(ev.time2)}<br><span style="font-size:.75rem;opacity:.5;">※各部開始15分前から受付</span>`:''}
-              </td></tr>
-            <tr style="border-bottom:1px solid rgba(245,240,232,.07);"><td style="padding:.8rem 1rem .8rem 0;opacity:.4;">会場</td><td style="padding:.8rem 0;">${esc(ev.venue||'')}</td></tr>
-            <tr style="border-bottom:1px solid rgba(245,240,232,.07);"><td style="padding:.8rem 1rem .8rem 0;opacity:.4;">会費</td>
-              <td style="padding:.8rem 0;">${ev.fee?`当日 ${esc(ev.fee)}<br><span style="color:var(--amber-lt);">前売り ${esc(ev.feeAdvance||'')}</span>`:''}</td></tr>
-            <tr><td style="padding:.8rem 1rem .8rem 0;opacity:.4;vertical-align:top;">前売り<br>販売店</td>
-              <td style="padding:.8rem 0;font-size:.82rem;line-height:2;opacity:.6;">${esc(ev.ticketShops||'')}</td></tr>
+        <h2 style="font-family:var(--serif);font-size:clamp(1.5rem,4vw,2.8rem);margin-bottom:1.5rem;line-height:1.3;">${esc(ev.title)}</h2>
+        <div class="event-detail-grid">
+          <table class="event-detail-table">
+            <tr><td class="edt-label">日時</td>
+              <td>${esc(dateLabel)}
+                ${ev.time1?`<br>1部 ${esc(ev.time1)}<br>2部 ${esc(ev.time2)}<br><small>※各部開始15分前から受付</small>`:''}</td></tr>
+            <tr><td class="edt-label">会場</td><td>${esc(ev.venue||'')}</td></tr>
+            <tr><td class="edt-label">会費</td>
+              <td>${ev.fee?`当日 ${esc(ev.fee)}<br><span style="color:var(--amber-lt);">前売り ${esc(ev.feeAdvance||'')}</span>`:''}</td></tr>
+            <tr><td class="edt-label">前売り<br>販売店</td>
+              <td>${esc(ev.ticketShops||'')}</td></tr>
           </table>
           <div>
-            <p style="font-size:.85rem;line-height:2.1;opacity:.6;margin-bottom:1.5rem;">${esc(ev.desc||'')}</p>
+            <p style="font-size:.85rem;line-height:2;opacity:.65;margin-bottom:1.5rem;">${esc(ev.desc||'')}</p>
             <a href="#" data-page="page-purchase" class="btn-primary" style="font-size:.78rem;">お問い合わせ・申込み</a>
           </div>
         </div>
@@ -371,7 +370,7 @@ function renderProductsPage(products) {
   if (!grid || !products?.length) return;
   grid.innerHTML = products.map(p => {
     const imgHtml = p.image
-      ? `<div class="product-img-wrap"><img src="images/${esc(p.image)}" alt="${esc(p.name)}"></div>`
+      ? `<div class="product-img-wrap"><img src="images/${esc(p.image)}" alt="${esc(p.name)}" style="max-width:85%;max-height:100%;width:auto;height:auto;object-fit:contain;display:block;"></div>`
       : `<div class="product-img-wrap"><div class="product-img-placeholder">酒</div></div>`;
     return `<div class="product-card">
       <div class="product-num">${esc(p.num)}</div>
