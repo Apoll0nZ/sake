@@ -362,10 +362,23 @@ section { padding: 9rem 4rem; }
 
 /* 動画ポスター画像 */
 .about-video-poster {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center center;
+  display: block;
+}
+
+.about-video-bg video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
 }
 
 /* 動画の上のオーバーレイ（文字を読みやすくする半透明幕） */
