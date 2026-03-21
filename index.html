@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="ja">
-<head>
+<html lang="ja"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="松本地酒家 — 信州松本の地酒を紹介・販売。長野県酒造組合松本支部・松本地酒振興協同組合">
   <title>松本地酒家 — 信州松本の地酒を紹介・販売</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preload" as="image" href="images/header.webp" fetchpriority="high">
-  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&amp;family=Zen+Kaku+Gothic+New:wght@300;400;500&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=20260321b">
 </head>
-<body>
+<body data-static-rendered="1">
 
 <div id="loader">
   <div class="loader-kanji">松本地酒家</div>
@@ -48,9 +47,8 @@
   <!-- ヒーロービジュアル -->
   <div id="nav-slideshow">
     <div class="nss-slides" id="nsSlides">
-      <!-- 初期表示：1枚目（画像なし時はグラデーション） -->
       <div class="nss-slide active">
-        <div class="nss-slide-img" id="heroSlide0"></div>
+        <div class="nss-slide-img" style="background-image:url('images/header.webp');background-size:cover;background-position:center;"></div>
         <div class="nss-slide-sub">長野県松本市の地酒</div>
         <div class="nss-content">
           <div class="nss-quote-wrap">
@@ -58,28 +56,23 @@
             <p class="nss-quote-attr">— 信州松本の地酒職人より —</p>
           </div>
         </div>
-      </div>
-    </div>
+      </div></div>
     <!-- 複数画像時のみ表示されるコントロール -->
     <div class="nss-controls" id="heroControls" style="display:none;">
-      <button id="nssPrev" class="nss-btn" aria-label="前へ">&#8592;</button>
+      <button id="nssPrev" class="nss-btn" aria-label="前へ">←</button>
       <div class="nss-dots" id="nssDots"></div>
-      <button id="nssNext" class="nss-btn" aria-label="次へ">&#8594;</button>
+      <button id="nssNext" class="nss-btn" aria-label="次へ">→</button>
     </div>
     <div class="nss-progress" id="nssProgress"></div>
   </div>
 
   <!-- イベントバナー（直近イベント複数対応） -->
-  <div id="event-banners-wrap"></div>
+  <div id="event-banners-wrap"><div class="event-banner-item"><div class="event-inner"><div><div class="event-badge"><span class="event-badge-dot"></span>Upcoming Event</div><h2 class="event-title">松本平の地酒を味わう会</h2><div class="event-meta"><div class="event-meta-item"><span class="event-meta-icon">📅</span><span>2026年4月11日（土）</span></div><div class="event-meta-item"><span class="event-meta-icon">🕐</span><span>1部 14:00〜15:30 ／ 2部 16:00〜17:30</span></div><div class="event-meta-item"><span class="event-meta-icon">📍</span><span>信毎メディアガーデン 1階ホール（松本市）</span></div><div class="event-meta-item"><span class="event-meta-icon">💴</span><span>会費 3,000円（前売り 2,500円）</span></div></div><p class="event-desc">地域を代表する銘柄が多数揃うほか、大好評のお惣菜やM's Factoryのスイーツも並びます。春の松本の風情を感じながら日本酒の魅力を心ゆくまで味わえるイベントです。</p><a href="index.html?page=page-event" data-page="page-event" class="btn-primary">詳細・チケット情報</a></div><div class="event-poster"><div class="event-poster-img"><img src="images/2026.4.11.jpg" alt="松本平の地酒を味わう会" class="event-poster-photo"></div></div></div></div></div>
 
   <!-- ABOUT -->
   <section id="about">
     <!-- 動画背景（全幅） -->
-    <video
-      class="about-video-bg"
-      autoplay muted loop playsinline
-      poster="images/river.png"
-    >
+    <video class="about-video-bg" autoplay="" muted="" loop="" playsinline="" poster="images/river.png">
       <source src="images/river.mp4" type="video/mp4">
       <source src="images/river.webm" type="video/webm">
     </video>
@@ -106,32 +99,16 @@
       <h2 class="section-heading reveal">蔵元一覧</h2>
       <p class="section-body reveal" style="max-width:520px;margin-bottom:0;">松本・塩尻・安曇野に点在する個性豊かな蔵元10社を厳選。</p>
     </div>
-    <div class="marquee-wrap"><div class="marquee-track">
-      <span>深志鶴</span><span>·</span><span>善哉</span><span>·</span><span>岩波</span><span>·</span><span>笹の誉</span><span>·</span><span>大信州</span><span>·</span><span>アルプス正宗</span><span>·</span><span>高波</span><span>·</span><span>和饗</span><span>·</span><span>美寿々</span><span>·</span><span>酔園</span><span>·</span>
-      <span>深志鶴</span><span>·</span><span>善哉</span><span>·</span><span>岩波</span><span>·</span><span>笹の誉</span><span>·</span><span>大信州</span><span>·</span><span>アルプス正宗</span><span>·</span><span>高波</span><span>·</span><span>和饗</span><span>·</span><span>美寿々</span><span>·</span><span>酔園</span><span>·</span>
-    </div></div>
+    <div class="marquee-wrap"><div class="marquee-track"><span>深志鶴</span><span>·</span><span>善哉</span><span>·</span><span>岩波</span><span>·</span><span>笹の誉</span><span>·</span><span>大信州</span><span>·</span><span>アルプス正宗</span><span>·</span><span>高波</span><span>·</span><span>和饗</span><span>·</span><span>美寿々</span><span>·</span><span>酔園</span><span>·</span><span>深志鶴</span><span>·</span><span>善哉</span><span>·</span><span>岩波</span><span>·</span><span>笹の誉</span><span>·</span><span>大信州</span><span>·</span><span>アルプス正宗</span><span>·</span><span>高波</span><span>·</span><span>和饗</span><span>·</span><span>美寿々</span><span>·</span><span>酔園</span><span>·</span></div></div>
     <div class="section-inner">
       <div class="region-tabs reveal">
         <button class="region-tab active" data-panel="panel-matsumoto">松本市</button>
         <button class="region-tab" data-panel="panel-shiojiri">塩尻市</button>
         <button class="region-tab" data-panel="panel-azumino">安曇野市</button>
       </div>
-      <div class="region-panel active" id="panel-matsumoto"><div class="brewery-grid" id="grid-matsumoto">
-        <div class="brewery-card" data-num="01"><div class="bc-region">Matsumoto</div><div class="bc-name">深志鶴</div><div class="bc-maker">（名）奥沢商会</div><div class="bc-info">〒390-0811 松本市中央2-1-20<br>TEL：0263(32)0734 ／ FAX：0263(32)9054<br><a href="mailto:yoikana@po.mcci.or.jp">yoikana@po.mcci.or.jp</a></div></div>
-        <div class="brewery-card" data-num="02"><div class="bc-region">Matsumoto</div><div class="bc-name">善哉</div><div class="bc-maker">善哉酒造（株）</div><div class="bc-info">〒390-0874 松本市大手5-4-24<br>TEL：0263(32)0734 ／ FAX：0263(32)9054</div></div>
-        <div class="brewery-card" data-num="03"><div class="bc-region">Matsumoto</div><div class="bc-name">岩波</div><div class="bc-maker">岩波酒造（資）</div><div class="bc-info">〒390-0221 松本市里山辺5159<br>TEL：0263(25)1300 ／ FAX：0263(25)6300<br><a href="mailto:iwanami@po.mcci.or.jp">iwanami@po.mcci.or.jp</a></div></div>
-        <div class="brewery-card" data-num="04"><div class="bc-region">Matsumoto</div><div class="bc-name">笹の誉</div><div class="bc-maker">笹井酒造（株）</div><div class="bc-info">〒390-0851 松本市島内3682<br>TEL：0263(47)0762 ／ FAX：0263(47)1421<br><a href="mailto:sake@sasanohomare.co.jp">sake@sasanohomare.co.jp</a></div></div>
-        <div class="brewery-card" data-num="05"><div class="bc-region">Matsumoto</div><div class="bc-name">大信州</div><div class="bc-maker">大信州酒造（株）</div><div class="bc-info">〒390-0852 松本市島立2380<br>TEL：0263(47)0895 ／ FAX：0263(47)8007<br><a href="mailto:info@daishinsyu.com">info@daishinsyu.com</a></div></div>
-        <div class="brewery-card" data-num="06"><div class="bc-region">Matsumoto</div><div class="bc-name">アルプス正宗</div><div class="bc-maker">（株）亀田屋酒造店</div><div class="bc-info">〒390-0852 松本市島立2748<br>TEL：0263(47)1320 ／ FAX：0263(47)7056<br><a href="mailto:kametaya@chive.ocn.ne.jp">kametaya@chive.ocn.ne.jp</a></div></div>
-      </div></div>
-      <div class="region-panel" id="panel-shiojiri"><div class="brewery-grid" id="grid-shiojiri">
-        <div class="brewery-card" data-num="07"><div class="bc-region">Shiojiri</div><div class="bc-name">高波</div><div class="bc-maker">（資）丸永酒造場</div><div class="bc-info">〒399-0703 塩尻市広丘高出840<br>TEL：0263(52)2633 ／ FAX：0263(54)4749<br><a href="mailto:mail@takanami-sake.co.jp">mail@takanami-sake.co.jp</a></div></div>
-        <div class="brewery-card" data-num="08"><div class="bc-region">Shiojiri</div><div class="bc-name">和饗</div><div class="bc-maker">和饗酒造（株）</div><div class="bc-info">〒399-0700 塩尻市塩尻町140<br>TEL：0263(52)0302 ／ FAX：0263(52)3410</div></div>
-        <div class="brewery-card" data-num="09"><div class="bc-region">Shiojiri</div><div class="bc-name">美寿々</div><div class="bc-maker">美寿々酒造（株）</div><div class="bc-info">〒399-6462 塩尻市洗馬2402<br>TEL：0263(52)0013 ／ FAX：0263(54)3581<br><a href="mailto:info@misuzushuzo.com">info@misuzushuzo.com</a></div></div>
-      </div></div>
-      <div class="region-panel" id="panel-azumino"><div class="brewery-grid" id="grid-azumino">
-        <div class="brewery-card" data-num="10"><div class="bc-region">Azumino</div><div class="bc-name">酔園</div><div class="bc-maker">ＥＨ酒造（株）</div><div class="bc-info">〒399-8204 安曇野市豊科高家1090-1<br>TEL：0263(72)2828 ／ FAX：0263(72)6268<br><a href="mailto:mail@suien.co.jp">mail@suien.co.jp</a></div></div>
-      </div></div>
+      <div class="region-panel active" id="panel-matsumoto"><div class="brewery-grid" id="grid-matsumoto"><div class="brewery-card" data-num="01"><div class="bc-region">Matsumoto</div><div class="bc-name">深志鶴</div><div class="bc-maker">（名）奥沢商会</div><div class="bc-info">〒390-0811 松本市中央2-1-20<br>TEL：0263(32)0517<br><a href="mailto:yoikana@po.mcci.or.jp">yoikana@po.mcci.or.jp</a></div><span class="bc-arrow">詳しく見る →</span></div><div class="brewery-card" data-num="02"><div class="bc-region">Matsumoto</div><div class="bc-name">善哉</div><div class="bc-maker">善哉酒造（株）</div><div class="bc-info">〒390-0874 松本市大手5-4-24<br>TEL：0263(32)0734<br><a href="mailto:yoikana@po.mcci.or.jp">yoikana@po.mcci.or.jp</a></div><span class="bc-arrow">詳しく見る →</span></div><div class="brewery-card" data-num="03"><div class="bc-region">Matsumoto</div><div class="bc-name">岩波</div><div class="bc-maker">岩波酒造（資）</div><div class="bc-info">〒390-0221 松本市里山辺5159<br>TEL：0263(25)1300<br><a href="mailto:iwanami@po.mcci.or.jp">iwanami@po.mcci.or.jp</a></div><span class="bc-arrow">詳しく見る →</span></div><div class="brewery-card" data-num="04"><div class="bc-region">Matsumoto</div><div class="bc-name">笹の誉</div><div class="bc-maker">笹井酒造（株）</div><div class="bc-info">〒390-0851 松本市島内3682<br>TEL：0263(47)0762<br><a href="mailto:sake@sasanohomare.co.jp">sake@sasanohomare.co.jp</a></div><span class="bc-arrow">詳しく見る →</span></div><div class="brewery-card" data-num="05"><div class="bc-region">Matsumoto</div><div class="bc-name">大信州</div><div class="bc-maker">大信州酒造（株）</div><div class="bc-info">〒390-0852 松本市島立2380<br>TEL：0263(47)0895<br><a href="mailto:info@daishinsyu.com">info@daishinsyu.com</a></div><span class="bc-arrow">詳しく見る →</span></div><div class="brewery-card" data-num="06"><div class="bc-region">Matsumoto</div><div class="bc-name">アルプス正宗</div><div class="bc-maker">（株）亀田屋酒造店</div><div class="bc-info">〒390-0852 松本市島立2748<br>TEL：0263(47)1320<br><a href="mailto:kametaya@chive.ocn.ne.jp">kametaya@chive.ocn.ne.jp</a></div><span class="bc-arrow">詳しく見る →</span></div></div></div>
+      <div class="region-panel" id="panel-shiojiri"><div class="brewery-grid" id="grid-shiojiri"><div class="brewery-card" data-num="01"><div class="bc-region">Shiojiri</div><div class="bc-name">高波</div><div class="bc-maker">（資）丸永酒造場</div><div class="bc-info">〒399-0703 塩尻市広丘高出840<br>TEL：0263(52)2633<br><a href="mailto:mail@takanami-sake.co.jp">mail@takanami-sake.co.jp</a></div><span class="bc-arrow">詳しく見る →</span></div><div class="brewery-card" data-num="02"><div class="bc-region">Shiojiri</div><div class="bc-name">和饗</div><div class="bc-maker">和饗酒造（株）</div><div class="bc-info">〒399-0700 塩尻市塩尻町140<br>TEL：0263(52)0302<br></div><span class="bc-arrow">詳しく見る →</span></div><div class="brewery-card" data-num="03"><div class="bc-region">Shiojiri</div><div class="bc-name">美寿々</div><div class="bc-maker">美寿々酒造（株）</div><div class="bc-info">〒399-6462 塩尻市洗馬2402<br>TEL：0263(52)0013<br><a href="mailto:info@misuzushuzo.com">info@misuzushuzo.com</a></div><span class="bc-arrow">詳しく見る →</span></div></div></div>
+      <div class="region-panel" id="panel-azumino"><div class="brewery-grid" id="grid-azumino"><div class="brewery-card" data-num="01"><div class="bc-region">Azumino</div><div class="bc-name">酔園</div><div class="bc-maker">ＥＨ酒造（株）</div><div class="bc-info">〒399-8204 安曇野市豊科高家1090-1<br>TEL：0263(72)3011<br><a href="mailto:mail@suien.co.jp">mail@suien.co.jp</a></div><span class="bc-arrow">詳しく見る →</span></div></div></div>
     </div>
   </section>
 
@@ -143,7 +120,7 @@
       <p class="section-body reveal" style="max-width:460px;">クリックで購入ページへ。信州の旨みをそのままお届けします。</p>
     </div>
     <div class="carousel-track-wrap reveal">
-      <div class="carousel-track" id="carousel-track"></div>
+      <div class="carousel-track" id="carousel-track" style="animation-duration: 40s;"><a class="carousel-item" href="purchase.html" data-page="page-purchase"><div class="carousel-img"><img src="images/sake1.webp" alt="深志鶴 本醸造"></div><div class="carousel-item-brewery">合名会社奥沢商会</div><div class="carousel-item-name">深志鶴 本醸造</div><div class="carousel-item-price">1,045円（税込）</div></a><a class="carousel-item" href="purchase.html" data-page="page-purchase"><div class="carousel-img"><img src="images/sake2.webp" alt="鏡花水月 純米吟醸"></div><div class="carousel-item-brewery">岩波酒造合資会社</div><div class="carousel-item-name">鏡花水月 純米吟醸</div><div class="carousel-item-price">1,760円（税込）</div></a><a class="carousel-item" href="purchase.html" data-page="page-purchase"><div class="carousel-img"><img src="images/sake3.webp" alt="笹の誉 風穴貯蔵 純米吟醸"></div><div class="carousel-item-brewery">笹井酒造株式会社</div><div class="carousel-item-name">笹の誉 風穴貯蔵 純米吟醸</div><div class="carousel-item-price">1,980円（税込）</div></a><a class="carousel-item" href="purchase.html" data-page="page-purchase"><div class="carousel-img"><img src="images/sake4.webp" alt="亀乃世 大吟醸"></div><div class="carousel-item-brewery">株式会社亀田屋酒造店</div><div class="carousel-item-name">亀乃世 大吟醸</div><div class="carousel-item-price">3,850円（税込）</div></a><a class="carousel-item" href="purchase.html" data-page="page-purchase"><div class="carousel-img"><img src="images/sake5.webp" alt="高波 大吟醸"></div><div class="carousel-item-brewery">合資会社丸永酒造場</div><div class="carousel-item-name">高波 大吟醸</div><div class="carousel-item-price">3,300円（税込）</div></a><a class="carousel-item" href="purchase.html" data-page="page-purchase"><div class="carousel-img"><img src="images/sake6.webp" alt="和饗 純米吟醸酒"></div><div class="carousel-item-brewery">和饗酒造株式会社</div><div class="carousel-item-name">和饗 純米吟醸酒</div><div class="carousel-item-price">2,090円（税込）</div></a><a class="carousel-item" href="purchase.html" data-page="page-purchase"><div class="carousel-img"><img src="images/sake7.webp" alt="美寿々 純米吟醸原酒"></div><div class="carousel-item-brewery">美寿々酒造株式会社</div><div class="carousel-item-name">美寿々 純米吟醸原酒</div><div class="carousel-item-price">1,870円（税込）</div></a><a class="carousel-item" href="purchase.html" data-page="page-purchase"><div class="carousel-img"><img src="images/sake8.webp" alt="酔園 幻の酒ブルー"></div><div class="carousel-item-brewery">ＥＨ酒造株式会社</div><div class="carousel-item-name">酔園 幻の酒ブルー</div><div class="carousel-item-price">1,760円（税込）</div></a><a class="carousel-item" href="purchase.html" data-page="page-purchase"><div class="carousel-img"><img src="images/sake1.webp" alt="深志鶴 本醸造"></div><div class="carousel-item-brewery">合名会社奥沢商会</div><div class="carousel-item-name">深志鶴 本醸造</div><div class="carousel-item-price">1,045円（税込）</div></a><a class="carousel-item" href="purchase.html" data-page="page-purchase"><div class="carousel-img"><img src="images/sake2.webp" alt="鏡花水月 純米吟醸"></div><div class="carousel-item-brewery">岩波酒造合資会社</div><div class="carousel-item-name">鏡花水月 純米吟醸</div><div class="carousel-item-price">1,760円（税込）</div></a><a class="carousel-item" href="purchase.html" data-page="page-purchase"><div class="carousel-img"><img src="images/sake3.webp" alt="笹の誉 風穴貯蔵 純米吟醸"></div><div class="carousel-item-brewery">笹井酒造株式会社</div><div class="carousel-item-name">笹の誉 風穴貯蔵 純米吟醸</div><div class="carousel-item-price">1,980円（税込）</div></a><a class="carousel-item" href="purchase.html" data-page="page-purchase"><div class="carousel-img"><img src="images/sake4.webp" alt="亀乃世 大吟醸"></div><div class="carousel-item-brewery">株式会社亀田屋酒造店</div><div class="carousel-item-name">亀乃世 大吟醸</div><div class="carousel-item-price">3,850円（税込）</div></a><a class="carousel-item" href="purchase.html" data-page="page-purchase"><div class="carousel-img"><img src="images/sake5.webp" alt="高波 大吟醸"></div><div class="carousel-item-brewery">合資会社丸永酒造場</div><div class="carousel-item-name">高波 大吟醸</div><div class="carousel-item-price">3,300円（税込）</div></a><a class="carousel-item" href="purchase.html" data-page="page-purchase"><div class="carousel-img"><img src="images/sake6.webp" alt="和饗 純米吟醸酒"></div><div class="carousel-item-brewery">和饗酒造株式会社</div><div class="carousel-item-name">和饗 純米吟醸酒</div><div class="carousel-item-price">2,090円（税込）</div></a><a class="carousel-item" href="purchase.html" data-page="page-purchase"><div class="carousel-img"><img src="images/sake7.webp" alt="美寿々 純米吟醸原酒"></div><div class="carousel-item-brewery">美寿々酒造株式会社</div><div class="carousel-item-name">美寿々 純米吟醸原酒</div><div class="carousel-item-price">1,870円（税込）</div></a><a class="carousel-item" href="purchase.html" data-page="page-purchase"><div class="carousel-img"><img src="images/sake8.webp" alt="酔園 幻の酒ブルー"></div><div class="carousel-item-brewery">ＥＨ酒造株式会社</div><div class="carousel-item-name">酔園 幻の酒ブルー</div><div class="carousel-item-price">1,760円（税込）</div></a></div>
     </div>
   </section>
   <!-- 和紙セクション -->
@@ -211,10 +188,10 @@
     <p class="page-hero-sub reveal">松本地酒振興協同組合 主催イベント</p>
   </div></div>
   <div class="event-page-body"><div style="max-width:1120px;margin:0 auto;">
-    <div id="event-upcoming-block"></div>
-    <div id="sake-booth-sections"></div>
+    <div id="event-upcoming-block"><div class="ev-detail-card reveal"><div class="ev-detail-badge"><span style="width:6px;height:6px;border-radius:50%;background:var(--amber);animation:blink 1.4s ease infinite;display:inline-block;flex-shrink:0;"></span><span>Upcoming Event</span></div><div class="ev-img-wrap"><img src="images/2026.4.11.jpg" alt="松本平の地酒を味わう会" class="ev-detail-img"></div><h2 class="ev-detail-title">松本平の地酒を味わう会</h2><div class="ev-detail-body"><dl class="ev-detail-dl"><div class="ev-dl-row"><dt>日時</dt><dd>2026年4月11日（土） / 1部 14:00〜15:30 / 2部 16:00〜17:30</dd></div><div class="ev-dl-row"><dt>会場</dt><dd>信毎メディアガーデン 1階ホール（松本市）</dd></div><div class="ev-dl-row"><dt>会費</dt><dd>当日 3,000円 / 前売り <span style="color:var(--amber);">2,500円</span></dd></div><div class="ev-dl-row"><dt>前売店</dt><dd style="font-size:.82rem;">相澤酒店・中島酒店・米田屋・三代澤酒店・穂高酒店</dd></div></dl><div class="ev-detail-desc"><p>地域を代表する銘柄が多数揃うほか、大好評のお惣菜やM's Factoryのスイーツも並びます。春の松本の風情を感じながら日本酒の魅力を心ゆくまで味わえるイベントです。</p><a href="purchase.html" data-page="page-purchase" class="btn-primary">お問い合わせ・申込み</a></div></div></div></div>
+    <div id="sake-booth-sections"><section style="margin:4rem 0 0;"><h3 style="font-family:var(--serif);font-size:1.4rem;letter-spacing:.1em;margin:0 0 .75rem;" class="reveal">★ 蔵ブースのお酒 ★</h3><p style="font-size:.82rem;letter-spacing:.18em;color:var(--amber);margin:0 0 1.25rem;">松本平の地酒を味わう会</p><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5px;background:var(--border);border:1.5px solid var(--border);"><div style="background:var(--ink);padding:2rem;"><div style="font-size:.62rem;letter-spacing:.4em;color:var(--amber);margin-bottom:.6rem;">（名）奥澤商会</div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">深志鶴 本醸造</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">すっきりした中に味わいがあるバランスの良いお酒です。</p></div></div><div style="background:var(--ink);padding:2rem;"><div style="font-size:.62rem;letter-spacing:.4em;color:var(--amber);margin-bottom:.6rem;">善哉酒造（株）</div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">善哉 純米大吟醸 金紋錦</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">おだやかな香りと、スッキリとした旨味の飲みやすい純米大吟醸です。</p></div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">善哉 純米吟醸 山恵錦 酵母別仕込み</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">華やかな香り。柔らかでふくらみのある旨みときれいな味の純米吟醸。</p></div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">善哉 しぼりたて純米生原酒</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">バナナを思わせる芳醇な香りと味わいで、後味がスッキリとした純米酒です。</p></div></div><div style="background:var(--ink);padding:2rem;"><div style="font-size:.62rem;letter-spacing:.4em;color:var(--amber);margin-bottom:.6rem;">岩波酒造（資）</div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">いわなみ 純米吟醸 無濾過生原酒</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">原酒ならではの深い味わいの生原酒です。</p></div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">いわなみ 本醸造 無濾過生原酒</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">濃醇な味わいとキレが調和した食中酒です。</p></div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">岩波 純米吟醸酒</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">さわやかな風味で飲みやすい純米吟醸酒です。</p></div></div><div style="background:var(--ink);padding:2rem;"><div style="font-size:.62rem;letter-spacing:.4em;color:var(--amber);margin-bottom:.6rem;">笹井酒造（株）</div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">笹の誉 純米大吟醸 しずく採り 花酵母</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">秋田流花酵母AK-1を使用した新しい笹の誉。</p></div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">笹の誉 純米吟醸 直汲み生</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">搾りたてのさわやかな純米吟醸です。</p></div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">笹の誉 濁酒どぶろく</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">甘くて飲みやすいどぶろくです。</p></div></div><div style="background:var(--ink);padding:2rem;"><div style="font-size:.62rem;letter-spacing:.4em;color:var(--amber);margin-bottom:.6rem;">大信州酒造（株）</div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">大信州 GI NAGANO 金紋錦</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">飲酒適温15℃。金目鯛の煮つけ、黒豆クリームチーズに相性よし。</p></div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">大信州 手の内 純米吟醸 生詰</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">飲酒適温13℃。馬刺しや肉じゃがに相性よし。</p></div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">大信州 GI NAGANO ひとごこち</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">飲酒適温15℃。揚げ物や生ハムによく合います。</p></div></div><div style="background:var(--ink);padding:2rem;"><div style="font-size:.62rem;letter-spacing:.4em;color:var(--amber);margin-bottom:.6rem;">（株）亀田屋酒造店</div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">アルプス正宗 純米吟醸 美山錦</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">スッキリとした辛口。優しい香りと口当たりは飲み飽きしません。</p></div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">アルプス正宗 純米原酒 山恵錦</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">優しい香りと甘み、程よい酸味が特長の15％純米原酒。KuraMasterプラチナ賞。</p></div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">亀乃世 無濾過生原酒</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">「これぞ搾りたて！」と呼べるフレッシュ感溢れる生原酒です。</p></div></div><div style="background:var(--ink);padding:2rem;"><div style="font-size:.62rem;letter-spacing:.4em;color:var(--amber);margin-bottom:.6rem;">(資)丸永酒造場</div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">髙波 大吟醸</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">華やかな吟醸香で雑味が少なくきれいな甘味の大吟醸です。</p></div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">髙波 純米吟醸</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">やや控えめな吟醸香で柔らかい甘味の純米吟醸です。</p></div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">髙波 特別本醸造 Frozen</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">しぼりたて原酒の香りと味わいを急速冷凍しました。</p></div></div><div style="background:var(--ink);padding:2rem;"><div style="font-size:.62rem;letter-spacing:.4em;color:var(--amber);margin-bottom:.6rem;">和饗酒造（株）</div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">和饗 純米吟醸</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">さわやかな口当たり。かつ豊かな米の味わいが楽しめる純米吟醸です。</p></div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">和饗 純米酒</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">バランスのとれた幅のある味わいの純米酒です。</p></div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">和饗 特別純米原酒</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">濃醇で奥行きのある味わいの特別純米原酒です。</p></div></div><div style="background:var(--ink);padding:2rem;"><div style="font-size:.62rem;letter-spacing:.4em;color:var(--amber);margin-bottom:.6rem;">美寿々酒造（株）</div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">美寿々 純米吟醸 美山錦 無濾過生</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">軽快でさわやかな香りでバランスのとれた旨味のお酒です。</p></div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">鉢盛山 純米吟醸 無濾過生酒</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">日本三百名山「鉢盛山」の豊かな自然と清らかな水に育まれたさわやかなお酒です。</p></div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">SUN-ROKU（サンロク）</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">低アルで飲みやすいお酒。日本酒を初めて飲む方にお勧めです。</p></div></div><div style="background:var(--ink);padding:2rem;"><div style="font-size:.62rem;letter-spacing:.4em;color:var(--amber);margin-bottom:.6rem;">EH酒造（株）</div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">酔園 幻の酒 ブルー 純米吟醸</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">芳醇でキレのある味わいの純米吟醸です。</p></div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">信濃の国酔園 純米大吟醸 美山錦</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">上品で穏やかな香り軽快な口当たり。手仕事で醸した純米大吟醸です。</p></div><div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">酔園 純米吟醸 ワイン酵母仕込み</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">新商品！白ワインを思わせるような純米吟醸です。</p></div></div></div></section></div>
     <h3 style="font-family:var(--serif);font-size:1.2rem;letter-spacing:.1em;margin:5rem 0 1rem;opacity:.5;" class="reveal">過去のイベント</h3>
-    <div class="event-archive-grid" id="event-archive-grid"></div>
+    <div class="event-archive-grid" id="event-archive-grid"><div class="event-archive-card"><div class="event-archive-img">信州の観</div><div class="event-archive-title">信州の観光と物産展</div><div class="event-archive-date">2025年秋</div></div><div class="event-archive-card"><div class="event-archive-img">美ケ原温</div><div class="event-archive-title">美ケ原温泉マルシェ</div><div class="event-archive-date">2025年</div></div><div class="event-archive-card"><div class="event-archive-img">美ケ原温</div><div class="event-archive-title">美ケ原温泉 松本平地酒紀行</div><div class="event-archive-date">2025年</div></div><div class="event-archive-card"><div class="event-archive-img">信州松本</div><div class="event-archive-title">信州松本大歌舞伎</div><div class="event-archive-date">2025年</div></div></div>
   </div></div>
   <footer><div class="footer-inner"><div class="footer-bottom"><span class="footer-copy">© 松本地酒家 ／ 松本地酒振興協同組合</span><a class="footer-instagram footer-instagram-inline" href="https://www.instagram.com/zizake2025/" target="_blank" rel="noreferrer"><img src="images/instagram_logo.webp" alt="Instagram"><span>@zizake2025</span></a><span class="footer-age">※ 20歳未満の方への酒類の販売はいたしておりません</span></div></div></footer>
 </div>
@@ -233,7 +210,7 @@
       <p class="rc-body">日本酒は11月頃から翌年の3月頃にかけて製造します。出来上がった新酒を3月に持ち寄り、「酒質・出来栄え」等を関東信越国税局の鑑定官、長野県工業技術総合センターの研究員に審査していただきます。先生からいただいた講評などをもとに、全国や県の鑑評会へ出品します。</p>
       <div class="rc-label">○ 毎年3月開催</div>
       <!-- 研究会画像（adminから登録） -->
-      <div class="page-photo-grid cols-2" id="research-photos-0"></div>
+      <div class="page-photo-grid cols-2" id="research-photos-0" style="display: none;"></div>
     </div>
     <div class="research-card reveal" data-month="７月">
       <div class="rc-tag">July — Summer</div>
@@ -241,7 +218,7 @@
       <p class="rc-body">酒造が終了すると「澱引き」「濾過」をして生酒以外は「火入れ」をしタンクに低温貯蔵されます。タンクに金属製の呑み口をつけ少量の酒を採取することを「呑み切り」といいます。気温が上昇して酒質が変化しがちな6月〜7月にかけて貯蔵酒の保存状態や出荷について、関東信越国税局の鑑定官、長野県工業技術総合センターの研究員に審査していただきます。</p>
       <div class="rc-label">○ 毎年7月開催</div>
       <!-- 研究会画像（adminから登録） -->
-      <div class="page-photo-grid cols-2" id="research-photos-1"></div>
+      <div class="page-photo-grid cols-2" id="research-photos-1"><div class="page-photo-item reveal"><img src="images/nomi01.webp" alt="初のみきり研究会"></div><div class="page-photo-item reveal"><img src="images/nomi02.webp" alt="初のみきり研究会"></div></div>
     </div>
   </div></div>
   <footer><div class="footer-inner"><div class="footer-bottom"><span class="footer-copy">© 松本地酒家 ／ 松本地酒振興協同組合</span><a class="footer-instagram footer-instagram-inline" href="https://www.instagram.com/zizake2025/" target="_blank" rel="noreferrer"><img src="images/instagram_logo.webp" alt="Instagram"><span>@zizake2025</span></a><span class="footer-age">※ 20歳未満の方への酒類の販売はいたしておりません</span></div></div></footer>
@@ -256,8 +233,8 @@
   </div></div>
   <div class="shrine-section"><div class="shrine-hero-img" id="shrineHeroImg">
     <!-- adminから登録した画像1枚目をヒーローに使用、未登録時は装飾テキスト -->
-    <div class="shrine-hero-placeholder" id="shrineHeroPlaceholder">松尾</div>
-  </div><div class="shrine-inner">
+    <div class="shrine-hero-placeholder" id="shrineHeroPlaceholder" style="display: none;">松尾</div>
+  <img src="images/matsuozinzya1.webp" alt="松尾神社"></div><div class="shrine-inner">
     <div class="shrine-body">
       <p class="reveal">松尾神社は、大山咋神（おおやまくいのかみ）・市杵島姫命（いちきしまひめのみこと）を祭神に祀る、日本酒の神様として全国各地にある神社です。</p>
       <p class="reveal">江戸時代（1710年頃）、町ごと城下ごとの酒造仲間が、京都から松尾大社の分神を勧請して、それぞれに社を建て、それを拠りどころにして酒造の繁栄を祈っていました。</p>
@@ -270,7 +247,7 @@
       <strong style="color:var(--amber-lt);font-weight:400;">例祭</strong>　酒造りの季節ごとに安全祈願を斎行
     </div>
     <!-- 松尾神社画像（adminから登録・3枚） -->
-    <div class="page-photo-grid cols-3" id="shrine-photos" style="margin-top:3rem;"></div>
+    <div class="page-photo-grid cols-3" id="shrine-photos" style="margin-top:3rem;"><div class="page-photo-item reveal"><img src="images/matuoyokomaku2.webp" alt="松尾神社"></div><div class="page-photo-item reveal"><img src="images/matuosaidan1.webp" alt="松尾神社"></div></div>
   </div></div>
   <footer><div class="footer-inner"><div class="footer-bottom"><span class="footer-copy">© 松本地酒家 ／ 松本地酒振興協同組合</span><a class="footer-instagram footer-instagram-inline" href="https://www.instagram.com/zizake2025/" target="_blank" rel="noreferrer"><img src="images/instagram_logo.webp" alt="Instagram"><span>@zizake2025</span></a><span class="footer-age">※ 20歳未満の方への酒類の販売はいたしておりません</span></div></div></footer>
 </div>
@@ -735,5 +712,6 @@
   }
 }</script>
 <script src="script.js?v=20260321b"></script>
-</body>
-</html>
+
+
+</body></html>
