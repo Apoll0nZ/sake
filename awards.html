@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="松本地酒家 — 酒類鑑評会">
+  <title>酒類鑑評会 | 松本地酒家</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20260321b">
+</head>
+<body>
+
+<div id="loader">
+  <div class="loader-kanji">松本地酒家</div>
+  <div class="loader-en">zizake</div>
+  <div class="loader-bar"></div>
+</div>
+
+<nav id="navbar">
+  <a href="index.html" data-page="page-main" class="nav-logo">
+    <span class="nav-logo-main">松本地酒家</span>
+    <span class="nav-logo-sub">一杯の酒に、山と里の物語が宿る</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" data-page="page-main">TOP</a></li>
+    <li><a href="index.html?page=page-event" data-page="page-event">イベント</a></li>
+    <li><a href="awards.html" data-page="page-awards">酒類鑑評会</a></li>
+    <li><a href="index.html?page=page-research" data-page="page-research">研究会</a></li>
+    <li><a href="index.html?page=page-shrine" data-page="page-shrine">松尾神社</a></li>
+    <li><a href="purchase.html" data-page="page-purchase">ご購入</a></li>
+  </ul>
+  <div class="nav-hamburger" id="navHamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="index.html" data-page="page-main">TOP</a>
+  <a href="index.html?page=page-event" data-page="page-event">イベント</a>
+  <a href="awards.html" data-page="page-awards">酒類鑑評会</a>
+  <a href="index.html?page=page-research" data-page="page-research">研究会</a>
+  <a href="index.html?page=page-shrine" data-page="page-shrine">松尾神社</a>
+  <a href="purchase.html" data-page="page-purchase">ご購入</a>
+</div>
+
+<div class="page active" id="page-awards">
+  <div class="page-hero"><div class="page-hero-inner">
+    <p class="page-hero-tag reveal">Awards</p>
+    <h1 class="page-hero-title reveal">酒類鑑評会</h1>
+    <p class="page-hero-sub reveal">全国新酒鑑評会 ／ 関東信越国税局酒類鑑評会</p>
+  </div></div>
+  <div class="awards-section"><div class="awards-inner">
+    <div class="awards-filter reveal">
+      <div class="awards-filter-buttons">
+        <button class="filter-btn active" data-filter="all">すべて</button>
+        <button class="filter-btn" data-filter="national">全国新酒鑑評会</button>
+        <button class="filter-btn" data-filter="kanto">関東信越国税局</button>
+      </div>
+    </div>
+    <div id="awards-dynamic-list"></div>
+  </div></div>
+  <footer><div class="footer-inner"><div class="footer-bottom"><span class="footer-copy">© 松本地酒家 ／ 松本地酒振興協同組合</span><a class="footer-instagram footer-instagram-inline" href="https://www.instagram.com/zizake2025/" target="_blank" rel="noreferrer"><img src="images/instagram_logo.png" alt="Instagram"><span>@zizake2025</span></a><span class="footer-age">※ 20歳未満の方への酒類の販売はいたしておりません</span></div></div></footer>
+</div>
+
+<script src="script.js?v=20260321b"></script>
+</body>
+</html>
