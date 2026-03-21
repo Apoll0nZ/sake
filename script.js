@@ -14,11 +14,16 @@ const pageHrefMap = {
   'page-shrine': 'index.html?page=page-shrine',
   'page-purchase': 'purchase.html'
 };
+const priorityAssetsByPage = {
+  main: ['header.webp', 'sake1.webp', 'sake2.webp', 'sake3.webp', 'sake4.webp'],
+  purchase: ['sake1.webp', 'sake2.webp', 'sake3.webp', 'sake4.webp']
+};
 
 document.addEventListener('DOMContentLoaded', async () => {
 
   /* ① ローダー・UI を即時初期化（data.json 待ちしない） */
   initLoader();
+  warmCriticalAssets();
   initNavbar();
   initPageSystem();
   initParticles();
@@ -54,6 +59,37 @@ document.addEventListener('DOMContentLoaded', async () => {
   /* ④ 描画完了後に RevealObserver 起動 */
   initRevealObserver();
 });
+
+function getCurrentPageKey() {
+  const path = location.pathname.toLowerCase();
+  if (path.endsWith('/purchase.html') || path.endsWith('purchase.html')) return 'purchase';
+  const requestedPage = new URLSearchParams(location.search).get('page');
+  if (!requestedPage || requestedPage === 'page-main') return 'main';
+  return '';
+}
+
+function warmCriticalAssets() {
+  const pageKey = getCurrentPageKey();
+  const assets = priorityAssetsByPage[pageKey] || [];
+  if (!assets.length) return;
+
+  assets.forEach((file, index) => {
+    const href = `images/${file}`;
+    if (!document.head.querySelector(`link[rel="preload"][href="${href}"]`)) {
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = href;
+      if (index === 0) link.fetchPriority = 'high';
+      document.head.appendChild(link);
+    }
+
+    const img = new Image();
+    if (index === 0) img.fetchPriority = 'high';
+    img.decoding = 'async';
+    img.src = href;
+  });
+}
 
 /* ── LOADER ────────────────────────────────────────────────── */
 function initLoader() {
