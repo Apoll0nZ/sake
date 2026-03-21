@@ -59,7 +59,7 @@ function initLoader() {
   };
 
   const unlockScroll = () => {
-    if (_done) return; // 二重実行防止
+    if (_done) return;
     _done = true;
     const y = parseInt(document.body.dataset.lockedY || '0', 10);
     document.body.style.position  = '';
@@ -67,7 +67,7 @@ function initLoader() {
     document.body.style.left      = '';
     document.body.style.right     = '';
     document.body.style.overflowY = '';
-    window.scrollTo({ top: y, behavior: 'instant' }); // ロック前の位置を復元
+    window.scrollTo({ top: y, behavior: 'instant' });
   };
 
   lockScroll();
@@ -78,11 +78,7 @@ function initLoader() {
     unlockScroll();
   };
 
-  // DOMContentLoaded直後なので readyState は loading のはず
-  // window load（全リソース）完了後にローダーを隠す
   window.addEventListener('load', () => setTimeout(hideLoader, 1500), { once: true });
-
-  // 最大5秒で強制解除（動画等が重い場合のフォールバック、一度だけ）
   setTimeout(hideLoader, 5000);
 }
 
@@ -298,10 +294,14 @@ function renderEventPage(events, sakes) {
   if (upBlock) {
     upBlock.innerHTML = upcoming.map(ev => {
       const dateLabel = ev.dateLabel || (ev.date ? formatDate(ev.date) : '');
+      // スマホ: 画像をテキスト部分の背景に設定
+      const mobileBgStyle = ev.image
+        ? `background-image:url('images/${esc(ev.image)}');`
+        : '';
       const imgHtml = ev.image
         ? `<img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" style="width:100%;max-height:360px;object-fit:cover;margin-bottom:2rem;">`
         : '';
-      return `<div style="background:var(--deep);border:1px solid var(--border);padding:3.5rem;margin-bottom:2rem;" class="reveal">
+      return `<div class="event-mobile-bg reveal" style="background:var(--deep);border:1px solid var(--border);padding:3.5rem;margin-bottom:2rem;${mobileBgStyle}">
         <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:1.5rem;">
           <span style="width:6px;height:6px;border-radius:50%;background:var(--amber);animation:blink 1.4s ease infinite;display:inline-block;"></span>
           <span style="font-size:.68rem;letter-spacing:.5em;color:var(--amber);text-transform:uppercase;">Upcoming</span>
