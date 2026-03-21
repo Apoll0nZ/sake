@@ -260,7 +260,22 @@ function initRevealObserver() {
 
 /* ── PARALLAX ───────────────────────────────────────────────── */
 function initParallax(){
-  // 旧 parallaxStrip は削除済み
+  // river 動画: IntersectionObserver で画面内に入ったら遅延読み込み
+  const video = document.querySelector('.about-video-bg[data-lazy-video]');
+  if (!video) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      observer.unobserve(video);
+      video.querySelectorAll('source[data-src]').forEach(s => {
+        s.src = s.dataset.src;
+        s.removeAttribute('data-src');
+      });
+      video.load();
+      video.play().catch(() => {});
+    });
+  }, { rootMargin: '200px' });
+  observer.observe(video);
 }
 
 /* ── REGION TABS ────────────────────────────────────────────── */
