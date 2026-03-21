@@ -810,6 +810,33 @@ footer {
 .order-col-legal {
   margin-top: 1.4rem;
 }
+.legal-accordion-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  list-style: none;
+  cursor: default;
+}
+.legal-accordion-summary::-webkit-details-marker {
+  display: none;
+}
+.legal-accordion-summary .order-block-title {
+  margin-bottom: 0;
+}
+.legal-accordion-toggle {
+  display: none;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-right: 1px solid rgba(245,240,232,0.7);
+  border-bottom: 1px solid rgba(245,240,232,0.7);
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+.legal-accordion[open] .legal-accordion-toggle {
+  transform: rotate(225deg);
+}
 .order-block-title {
   font-size: 0.88rem;
   letter-spacing: 0.18em;
@@ -1084,6 +1111,12 @@ footer {
   .order-col-steps,
   .order-col-contact,
   .order-col-legal { padding: 1.2rem; }
+  .legal-accordion-summary {
+    cursor: pointer;
+  }
+  .legal-accordion-toggle {
+    display: inline-block;
+  }
   .order-contact-item { grid-template-columns: 1fr; gap: 0.2rem; }
   .legal-table,
   .legal-table tbody,
