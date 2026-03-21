@@ -29,10 +29,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16
 /* field */
 .f{margin-bottom:1.2rem;}
 .f label{display:block;font-size:.78rem;letter-spacing:.25em;color:var(--amber);margin-bottom:.45rem;text-transform:uppercase;}
-.f input,.f select,.f textarea{width:100%;padding:.85rem 1rem;background:rgba(255,255,255,.05);border:1px solid rgba(240,235,224,.15);color:var(--text);font-family:var(--sans);font-size:.95rem;outline:none;transition:border-color .2s;-webkit-appearance:none;border-radius:0;}
+.f input,.f select,.f textarea{width:100%;padding:.85rem 1rem;background:rgba(255,255,255,.05);border:1px solid rgba(240,235,224,.15);color:var(--amber-lt);font-family:var(--sans);font-size:.95rem;outline:none;transition:border-color .2s;-webkit-appearance:none;border-radius:0;}
 .f input:focus,.f select:focus,.f textarea:focus{border-color:var(--amber);}
+.f select option{background:#f6f1e8;color:#1b1712;}
 .f textarea{resize:vertical;min-height:80px;}
-.f select option{background:#2b1f0e;}
 .hint{font-size:.73rem;color:var(--muted);margin-top:.35rem;}
 /* image pick */
 .ipick{border:2px dashed rgba(200,146,42,.3);padding:1.2rem;text-align:center;cursor:pointer;transition:border-color .2s;background:rgba(200,146,42,.03);position:relative;}
@@ -63,8 +63,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16
 /* award row */
 .ar{display:grid;grid-template-columns:110px 1fr 1fr 1fr auto;gap:.7rem;align-items:center;padding:.75rem 0;border-bottom:1px solid rgba(240,235,224,.06);}
 .ar:last-child{border-bottom:none;}
-.ar input,.ar select{width:100%;padding:.55rem .75rem;background:rgba(255,255,255,.05);border:1px solid rgba(240,235,224,.12);color:var(--text);font-family:var(--sans);font-size:.88rem;outline:none;}
+.ar input,.ar select{width:100%;padding:.55rem .75rem;background:rgba(255,255,255,.05);border:1px solid rgba(240,235,224,.12);color:var(--amber-lt);font-family:var(--sans);font-size:.88rem;outline:none;}
 .ar input:focus,.ar select:focus{border-color:var(--amber);}
+.ar select option{background:#f6f1e8;color:#1b1712;}
 /* tabs */
 .tabs{display:flex;border-bottom:1px solid var(--bd);margin-bottom:2rem;}
 .tb{padding:.65rem 1.4rem;background:transparent;border:none;color:var(--muted);font-family:var(--sans);font-size:.93rem;cursor:pointer;border-bottom:2px solid transparent;position:relative;top:1px;transition:color .2s;}
