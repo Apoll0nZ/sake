@@ -888,14 +888,15 @@ footer {
 .awards-filter-buttons { display: flex; gap: 0.8rem; flex-wrap: wrap; }
 .filter-btn {
   padding: 0.4rem 1.1rem;
-  border: 1px solid rgba(245,240,232,0.12);
-  background: transparent; color: var(--cream);
+  border: 1px solid rgba(200,146,42,0.32);
+  background: rgba(245,240,232,0.08);
+  color: var(--amber-lt);
   font-family: var(--sans); font-size: 0.75rem;
   letter-spacing: 0.2em; cursor: pointer;
   transition: all 0.2s; border-radius: 0;
 }
 .filter-btn.active, .filter-btn:hover {
-  background: var(--amber); color: var(--ink); border-color: var(--amber);
+  background: var(--amber); color: #1b1712; border-color: var(--amber);
 }
 .award-sort-wrap {
   display: inline-flex; align-items: center; gap: 0.8rem;
