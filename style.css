@@ -336,8 +336,8 @@ section { padding: 9rem 4rem; }
   position: relative;
   overflow: hidden;
   padding: 0 !important;
-  /* 動画が読み込めない場合のフォールバック */
   background-color: #7BC8E0;
+  min-height: 520px;
 }
 
 /* 全幅動画背景 */
