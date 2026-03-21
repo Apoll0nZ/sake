@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   initParallax();
   initRegionTabs();
   initAwardsFilter();
-  initMobileLegalAccordion();
   initForm();
 
   /* ② data.json を fetch で取得 */
@@ -560,23 +559,6 @@ function initAwardsFilter(){
       });
     });
   });
-}
-
-/* ── MOBILE LEGAL ACCORDION ───────────────────────────────── */
-function initMobileLegalAccordion(){
-  const items = document.querySelectorAll('[data-mobile-collapsed]');
-  if (!items.length) return;
-
-  const sync = () => {
-    const mobile = window.matchMedia('(max-width: 600px)').matches;
-    items.forEach(el => {
-      if (mobile) el.removeAttribute('open');
-      else el.setAttribute('open', '');
-    });
-  };
-
-  sync();
-  window.addEventListener('resize', sync, { passive: true });
 }
 
 /* ── FORM ───────────────────────────────────────────────────── */

@@ -810,33 +810,6 @@ footer {
 .order-col-legal {
   margin-top: 1.4rem;
 }
-.legal-accordion-summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  list-style: none;
-  cursor: default;
-}
-.legal-accordion-summary::-webkit-details-marker {
-  display: none;
-}
-.legal-accordion-summary .order-block-title {
-  margin-bottom: 0;
-}
-.legal-accordion-toggle {
-  display: none;
-  width: 0.75rem;
-  height: 0.75rem;
-  border-right: 1px solid rgba(245,240,232,0.7);
-  border-bottom: 1px solid rgba(245,240,232,0.7);
-  transform: rotate(45deg);
-  transition: transform 0.2s ease;
-  flex-shrink: 0;
-}
-.legal-accordion[open] .legal-accordion-toggle {
-  transform: rotate(225deg);
-}
 .order-block-title {
   font-size: 0.88rem;
   letter-spacing: 0.18em;
@@ -919,8 +892,8 @@ footer {
 .legal-title { font-size: 0.7rem; letter-spacing: 0.4em; color: var(--amber); text-transform: uppercase; margin-bottom: 1.5rem; }
 .legal-table { width: 100%; border-collapse: separate; border-spacing: 0 0.45rem; font-size: 0.8rem; }
 .legal-table tr { background: rgba(245,240,232,0.025); }
-.legal-table td { padding: 0.9rem 1rem; vertical-align: top; }
-.legal-table td:first-child { width: 180px; opacity: 0.5; padding-right: 1rem; }
+.legal-table td { padding: 0.72rem 0.9rem; vertical-align: top; line-height: 1.7; }
+.legal-table td:first-child { width: 160px; opacity: 0.5; padding-right: 0.8rem; }
 .legal-table td:last-child { opacity: 0.78; }
 
 /* ── AWARDS PAGE ───────────────────────────────────────────── */
@@ -1111,20 +1084,11 @@ footer {
   .order-col-steps,
   .order-col-contact,
   .order-col-legal { padding: 1.2rem; }
-  .legal-accordion-summary {
-    cursor: pointer;
-  }
-  .legal-accordion-toggle {
-    display: inline-block;
-  }
   .order-contact-item { grid-template-columns: 1fr; gap: 0.2rem; }
-  .legal-table,
-  .legal-table tbody,
-  .legal-table tr,
-  .legal-table td { display: block; width: 100%; }
-  .legal-table tr { margin-bottom: 0.7rem; }
-  .legal-table td:first-child { padding-bottom: 0.15rem; width: 100%; }
-  .legal-table td:last-child { padding-top: 0; }
+  .legal-table { border-spacing: 0 0.35rem; font-size: 0.72rem; }
+  .legal-table td { padding: 0.55rem 0.7rem; line-height: 1.55; }
+  .legal-table td:first-child { width: 118px; padding-right: 0.55rem; }
+  .legal-table td:last-child { word-break: break-word; }
 
   /* ── about動画 ── */
   .about-overlay { padding: 4rem 1.4rem 5rem; min-height: 400px; }
