@@ -4,7 +4,7 @@
    ============================================================ */
 const $ = id => document.getElementById(id);
 const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-const awardsViewState = { items: [], filter: 'all', sort: 'recent' };
+const awardsViewState = { items: [], filter: 'all' };
 const awardCategoryLabels = { national: '全国新酒鑑評会', kanto: '関東信越国税局' };
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -363,7 +363,7 @@ function renderAwardsPage(awards) {
     return;
   }
   const badgeClass = {'金賞':'badge-gold','最優秀賞':'badge-best','優秀賞':'badge-excellent','入賞':'badge-entry'};
-  const visibleAwards = sortAwards(awardsViewState.items, awardsViewState.sort)
+  const visibleAwards = awardsViewState.items
     .filter(a => awardsViewState.filter === 'all' || a.category === awardsViewState.filter);
   container.innerHTML = visibleAwards.map(a => `
     <div class="award-year-block" data-type="${a.category}">
@@ -386,17 +386,6 @@ function renderAwardsPage(awards) {
 function normalizeAwardCategory(award) {
   if (award?.category === 'national' || award?.category === 'kanto') return award.category;
   return award?.competition?.includes('全国') ? 'national' : 'kanto';
-}
-
-function sortAwards(items, sortKey) {
-  const order = { national: 0, kanto: 1 };
-  const sorted = [...items];
-  if (sortKey === 'category') {
-    sorted.sort((a, b) => (order[a.category] ?? 99) - (order[b.category] ?? 99) || a._index - b._index);
-    return sorted;
-  }
-  sorted.sort((a, b) => a._index - b._index);
-  return sorted;
 }
 
 /* ── 商品ページ ─────────────────────────────────────────────── */
@@ -589,10 +578,6 @@ function initAwardsFilter(){
       awardsViewState.filter = btn.dataset.filter;
       renderAwardsPage();
     });
-  });
-  $('award-sort')?.addEventListener('change', e => {
-    awardsViewState.sort = e.target.value;
-    renderAwardsPage();
   });
 }
 

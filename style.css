@@ -899,7 +899,7 @@ footer {
 .awards-section { padding: 6rem 4rem; background: var(--ink); }
 .awards-inner { max-width: 1120px; margin: 0 auto; }
 .awards-filter {
-  display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;
   margin-bottom: 3.5rem;
 }
 .awards-filter-buttons { display: flex; gap: 0.8rem; flex-wrap: wrap; }
@@ -914,24 +914,6 @@ footer {
 }
 .filter-btn.active, .filter-btn:hover {
   background: var(--amber); color: #1b1712; border-color: var(--amber);
-}
-.award-sort-wrap {
-  display: inline-flex; align-items: center; gap: 0.8rem;
-  color: var(--text-sub); font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase;
-}
-.award-sort-select {
-  min-width: 11rem;
-  padding: 0.45rem 0.8rem;
-  border: 1px solid rgba(245,240,232,0.12);
-  background: rgba(255,255,255,0.03);
-  color: var(--amber-lt);
-  font-family: var(--sans);
-  font-size: 0.82rem;
-  letter-spacing: 0.08em;
-}
-.award-sort-select option {
-  background: #f6f1e8;
-  color: #1b1712;
 }
 .award-year-block { margin-bottom: 4rem; }
 .award-year-meta {
@@ -1083,9 +1065,6 @@ footer {
   .page-hero { padding: 10rem 1.8rem 3rem; }
   .products-section, .awards-section, .research-section, .shrine-section { padding: 4rem 1.8rem; }
   .order-section, .legal-section { padding: 3rem 1.8rem; }
-  .awards-filter { align-items: stretch; }
-  .award-sort-wrap { width: 100%; justify-content: space-between; }
-  .award-sort-select { width: 100%; min-width: 0; }
   .order-grid { grid-template-columns: 1fr; gap: 2.5rem; }
   .order-unified-grid { grid-template-columns: 1fr; }
   .order-steps { grid-template-columns: 1fr; }

@@ -392,31 +392,6 @@
     {
       "category": "kanto",
       "competition": "関東信越国税局酒類鑑評会",
-      "year": "テスト",
-      "entries": [
-        {
-          "award": "最優秀賞",
-          "brand": "テスト",
-          "maker": "テスト",
-          "division": "テスト"
-        },
-        {
-          "award": "金賞",
-          "brand": "テスtp",
-          "maker": "あ",
-          "division": "あ"
-        },
-        {
-          "award": "優秀賞",
-          "brand": "あ",
-          "maker": "あ",
-          "division": "あ"
-        }
-      ]
-    },
-    {
-      "category": "kanto",
-      "competition": "関東信越国税局酒類鑑評会",
       "year": "第96回（令和7年11月）",
       "entries": [
         {
