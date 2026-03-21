@@ -231,7 +231,7 @@ ul { list-style: none; }
 
 /* ── SECTION COMMONS ───────────────────────────────────────── */
 section { padding: 9rem 4rem; }
-#about, #breweries, #product-carousel, #stats { padding: 9rem 4rem; }
+#about, #breweries, #product-carousel { padding: 9rem 4rem; }
 .section-inner { max-width: 1120px; margin: 0 auto; }
 
 .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
@@ -562,23 +562,6 @@ section { padding: 9rem 4rem; }
   transition: max-height 0.45s ease, opacity 0.45s;
 }
 .season-card:hover .season-desc { max-height: 80px; opacity: 0.75; }
-
-/* ── STATS ─────────────────────────────────────────────────── */
-#stats {
-  background: var(--deep); padding: 5.5rem 4rem;
-  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-}
-.stats-grid {
-  max-width: 1120px; margin: 0 auto;
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;
-}
-.stat-item { text-align: center; }
-.stat-num {
-  font-family: var(--serif);
-  font-size: clamp(2.8rem, 5.5vw, 4.2rem);
-  color: var(--amber); line-height: 1; margin-bottom: 0.5rem;
-}
-.stat-label { font-size: 0.75rem; letter-spacing: 0.3em; color: rgba(255,255,255,0.6); }
 
 /* ── PURCHASE / CONTACT ────────────────────────────────────── */
 #purchase { background: var(--ink); }
@@ -1041,8 +1024,6 @@ footer {
   .seasons-header { padding: 0 1.8rem; }
   .seasons-track { padding: 0 1.8rem 2rem; }
 
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
-
   .purchase-grid { grid-template-columns: 1fr; gap: 3rem; }
 
   .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
@@ -1060,7 +1041,6 @@ footer {
 }
 @media (max-width: 600px) {
   .footer-top { grid-template-columns: 1fr; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .season-card { flex: 0 0 220px; }
   .season-card:hover { flex: 0 0 280px; }
   .award-table th:nth-child(3), .award-table td:nth-child(3) { display: none; }

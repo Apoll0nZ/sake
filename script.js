@@ -467,7 +467,7 @@ function initPageSystem() {
     _currentPage = id;
     if (!isSame) window.scrollTo({top:0,behavior:'instant'});
     setTimeout(()=>{
-      target.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stat-item').forEach(el=>revealObs?.observe(el));
+      target.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>revealObs?.observe(el));
     },80);
   }
   document.addEventListener('click', e => {
@@ -498,20 +498,13 @@ function initRevealObserver() {
     entries.forEach(entry=>{
       if(!entry.isIntersecting) return;
       entry.target.classList.add('visible');
-      const counter=entry.target.querySelector('.stat-num[data-target]');
-      if(counter&&!counter.dataset.counted){ counter.dataset.counted='1'; animateCounter(counter); }
     });
   },{threshold:0.12});
-  document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stat-item').forEach(el=>revealObs.observe(el));
+  document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>revealObs.observe(el));
   ['.brewery-card','.product-card','.award-year-block'].forEach(sel=>{
     document.querySelectorAll(sel).forEach((el,i)=>{ el.style.transitionDelay=`${i*0.07}s`; el.classList.add('reveal'); revealObs.observe(el); });
   });
   document.querySelectorAll('.step-item').forEach((el,i)=>{ el.style.transitionDelay=`${i*0.12}s`; el.classList.add('reveal-left'); revealObs.observe(el); });
-}
-function animateCounter(el){
-  const target=parseInt(el.dataset.target,10),suffix=el.dataset.suffix||'+';
-  let current=0; const step=target/(1600/16);
-  const t=setInterval(()=>{ current=Math.min(current+step,target); el.textContent=Math.round(current)+(current>=target?suffix:''); if(current>=target) clearInterval(t); },16);
 }
 
 /* ── PARALLAX ───────────────────────────────────────────────── */
