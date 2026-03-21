@@ -50,23 +50,18 @@ function initLoader() {
   let _done = false;
   const lockScroll = () => {
     document.body.dataset.lockedY = window.scrollY;
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${window.scrollY}px`;
-    document.body.style.left = document.body.style.right = '0';
-    document.body.style.overflowY = 'scroll';
+    document.body.style.cssText += 'position:fixed;top:-'+window.scrollY+'px;left:0;right:0;overflow-y:scroll;';
   };
   const unlockScroll = () => {
     if (_done) return; _done = true;
-    const y = parseInt(document.body.dataset.lockedY || '0', 10);
-    document.body.style.position = document.body.style.top =
-    document.body.style.left = document.body.style.right =
-    document.body.style.overflowY = '';
-    window.scrollTo({ top: y, behavior: 'instant' });
+    const y = parseInt(document.body.dataset.lockedY||'0',10);
+    document.body.style.position=document.body.style.top=document.body.style.left=document.body.style.right=document.body.style.overflowY='';
+    window.scrollTo({top:y,behavior:'instant'});
   };
   lockScroll();
-  const hideLoader = () => { const l=$('loader'); if(l) l.classList.add('hide'); unlockScroll(); };
-  window.addEventListener('load', () => setTimeout(hideLoader, 1500), { once: true });
-  setTimeout(hideLoader, 5000);
+  const hideLoader=()=>{const l=$('loader');if(l)l.classList.add('hide');unlockScroll();};
+  window.addEventListener('load',()=>setTimeout(hideLoader,1500),{once:true});
+  setTimeout(hideLoader,5000);
 }
 
 /* ── ヒーロー背景 ───────────────────────────────────────────── */
@@ -189,7 +184,7 @@ function renderEventBanners(events) {
   wrap.innerHTML = upcoming.map(ev => {
     const dateLabel = ev.dateLabel || (ev.date ? formatDate(ev.date) : '');
     const posterHtml = ev.image
-      ? `<img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" style="width:100%;height:auto;display:block;">`
+      ? `<img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" style="width:100%;height:100%;object-fit:cover;">`
       : `<div class="event-poster-inner">
            <div class="event-poster-year">${esc(dateLabel.slice(0,4))} — Event</div>
            <div class="event-poster-main">${esc(ev.title)}</div>
@@ -281,30 +276,33 @@ function renderEventPage(events, sakes) {
   if (upBlock) {
     upBlock.innerHTML = upcoming.map(ev => {
       const dateLabel = ev.dateLabel || (ev.date ? formatDate(ev.date) : '');
+      // PC: 元サイズで表示（拡大しない）/ スマホ: 全幅
       const imgHtml = ev.image
-        ? `<img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" style="width:100%;height:auto;display:block;margin-bottom:2rem;">`
+        ? `<div class="ev-img-wrap"><img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" class="ev-detail-img"></div>`
         : '';
-      return `<div style="background:var(--deep);border:1px solid var(--border);padding:2.5rem;margin-bottom:2rem;" class="reveal">
-        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:1.5rem;">
-          <span style="width:6px;height:6px;border-radius:50%;background:var(--amber);animation:blink 1.4s ease infinite;display:inline-block;"></span>
-          <span style="font-size:.68rem;letter-spacing:.5em;color:var(--amber);text-transform:uppercase;">Upcoming</span>
+      return `<div class="ev-detail-card reveal">
+        <div class="ev-detail-badge">
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--amber);animation:blink 1.4s ease infinite;display:inline-block;flex-shrink:0;"></span>
+          <span>Upcoming Event</span>
         </div>
         ${imgHtml}
-        <h2 style="font-family:var(--serif);font-size:clamp(1.5rem,4vw,2.8rem);margin-bottom:1.5rem;line-height:1.3;">${esc(ev.title)}</h2>
-        <div class="event-detail-grid">
-          <table class="event-detail-table">
-            <tr><td class="edt-label">日時</td>
-              <td>${esc(dateLabel)}
-                ${ev.time1?`<br>1部 ${esc(ev.time1)}<br>2部 ${esc(ev.time2)}<br><small>※各部開始15分前から受付</small>`:''}</td></tr>
-            <tr><td class="edt-label">会場</td><td>${esc(ev.venue||'')}</td></tr>
-            <tr><td class="edt-label">会費</td>
-              <td>${ev.fee?`当日 ${esc(ev.fee)}<br><span style="color:var(--amber-lt);">前売り ${esc(ev.feeAdvance||'')}</span>`:''}</td></tr>
-            <tr><td class="edt-label">前売り<br>販売店</td>
-              <td>${esc(ev.ticketShops||'')}</td></tr>
-          </table>
-          <div>
-            <p style="font-size:.85rem;line-height:2;opacity:.65;margin-bottom:1.5rem;">${esc(ev.desc||'')}</p>
-            <a href="#" data-page="page-purchase" class="btn-primary" style="font-size:.78rem;">お問い合わせ・申込み</a>
+        <h2 class="ev-detail-title">${esc(ev.title)}</h2>
+        <div class="ev-detail-body">
+          <dl class="ev-detail-dl">
+            <div class="ev-dl-row">
+              <dt>日時</dt>
+              <dd>${esc(dateLabel)}${ev.time1?` / 1部 ${esc(ev.time1)} / 2部 ${esc(ev.time2)}`:''}</dd>
+            </div>
+            <div class="ev-dl-row">
+              <dt>会場</dt>
+              <dd>${esc(ev.venue||'')}</dd>
+            </div>
+            ${ev.fee?`<div class="ev-dl-row"><dt>会費</dt><dd>当日 ${esc(ev.fee)} / 前売り <span style="color:var(--amber);">${esc(ev.feeAdvance||'')}</span></dd></div>`:''}
+            ${ev.ticketShops?`<div class="ev-dl-row"><dt>前売店</dt><dd style="font-size:.82rem;">${esc(ev.ticketShops)}</dd></div>`:''}
+          </dl>
+          <div class="ev-detail-desc">
+            <p>${esc(ev.desc||'')}</p>
+            <a href="#" data-page="page-purchase" class="btn-primary">お問い合わせ・申込み</a>
           </div>
         </div>
       </div>`;
@@ -461,26 +459,19 @@ function initNavbar() {
 
 /* ── PAGE SYSTEM ────────────────────────────────────────────── */
 function initPageSystem() {
-  let _currentPage = 'page-main';
+  let _cur='page-main';
   function showPage(id) {
-    const isSame = (id === _currentPage);
+    const same=(id===_cur);
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    const target=$(id);
-    if (!target) return;
-    target.classList.add('active');
-    _currentPage = id;
-    if (!isSame) window.scrollTo({top:0,behavior:'instant'});
-    setTimeout(()=>{
-      target.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stat-item').forEach(el=>revealObs?.observe(el));
-    },80);
+    const target=$(id); if(!target) return;
+    target.classList.add('active'); _cur=id;
+    if(!same) window.scrollTo({top:0,behavior:'instant'});
+    setTimeout(()=>target.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stat-item').forEach(el=>revealObs?.observe(el)),80);
   }
   document.addEventListener('click', e => {
-    const link=e.target.closest('[data-page]');
-    if (!link) return;
-    e.preventDefault();
-    showPage(link.dataset.page);
-    $('navHamburger')?.classList.remove('open');
-    $('navMobile')?.classList.remove('open');
+    const link=e.target.closest('[data-page]'); if(!link) return;
+    e.preventDefault(); showPage(link.dataset.page);
+    $('navHamburger')?.classList.remove('open'); $('navMobile')?.classList.remove('open');
   });
 }
 
