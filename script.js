@@ -52,18 +52,14 @@ function initLoader() {
     document.body.dataset.lockedY = window.scrollY;
     document.body.style.position  = 'fixed';
     document.body.style.top       = `-${window.scrollY}px`;
-    document.body.style.left      = '0';
-    document.body.style.right     = '0';
+    document.body.style.left = '0'; document.body.style.right = '0';
     document.body.style.overflowY = 'scroll';
   };
   const unlockScroll = () => {
-    if (_done) return;
-    _done = true;
+    if (_done) return; _done = true;
     const y = parseInt(document.body.dataset.lockedY || '0', 10);
-    document.body.style.position  = '';
-    document.body.style.top       = '';
-    document.body.style.left      = '';
-    document.body.style.right     = '';
+    document.body.style.position = document.body.style.top =
+    document.body.style.left = document.body.style.right =
     document.body.style.overflowY = '';
     window.scrollTo({ top: y, behavior: 'instant' });
   };
@@ -193,7 +189,7 @@ function renderEventBanners(events) {
   wrap.innerHTML = upcoming.map(ev => {
     const dateLabel = ev.dateLabel || (ev.date ? formatDate(ev.date) : '');
     const posterHtml = ev.image
-      ? `<img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" style="width:100%;height:100%;object-fit:cover;">`
+      ? `<img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" style="width:100%;height:auto;display:block;object-fit:contain;">`
       : `<div class="event-poster-inner">
            <div class="event-poster-year">${esc(dateLabel.slice(0,4))} — Event</div>
            <div class="event-poster-main">${esc(ev.title)}</div>
@@ -214,7 +210,7 @@ function renderEventBanners(events) {
           ${ev.desc?`<p class="event-desc">${esc(ev.desc)}</p>`:''}
           <a href="#" data-page="page-event" class="btn-primary">詳細・チケット情報</a>
         </div>
-        <div class="event-poster" style="order:2;">
+        <div class="event-poster">
           <div class="event-poster-img">${posterHtml}</div>
         </div>
       </div>
