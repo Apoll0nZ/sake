@@ -4,6 +4,8 @@
    ============================================================ */
 const $ = id => document.getElementById(id);
 const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const awardsViewState = { items: [], filter: 'all', sort: 'recent' };
+const awardCategoryLabels = { national: '全国新酒鑑評会', kanto: '関東信越国税局' };
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -348,12 +350,28 @@ function renderEventPage(events, sakes) {
 /* ── 酒類鑑評会ページ ───────────────────────────────────────── */
 function renderAwardsPage(awards) {
   const container = $('awards-dynamic-list');
-  if (!container || !awards?.length) return;
+  if (!container) return;
+  if (awards) {
+    awardsViewState.items = awards.map((a, index) => ({
+      ...a,
+      category: normalizeAwardCategory(a),
+      _index: index
+    }));
+  }
+  if (!awardsViewState.items.length) {
+    container.innerHTML = '';
+    return;
+  }
   const badgeClass = {'金賞':'badge-gold','最優秀賞':'badge-best','優秀賞':'badge-excellent','入賞':'badge-entry'};
-  container.innerHTML = awards.map(a => `
-    <div class="award-year-block" data-type="${a.competition.includes('全国')?'national':'kanto'}">
+  const visibleAwards = sortAwards(awardsViewState.items, awardsViewState.sort)
+    .filter(a => awardsViewState.filter === 'all' || a.category === awardsViewState.filter);
+  container.innerHTML = visibleAwards.map(a => `
+    <div class="award-year-block" data-type="${a.category}">
       <div class="award-year-heading">${esc(a.year)}</div>
-      <div class="award-year-sub">${esc(a.competition)}</div>
+      <div class="award-year-meta">
+        <div class="award-year-sub">${esc(a.competition)}</div>
+        <div class="award-category-chip">${esc(awardCategoryLabels[a.category] || a.category)}</div>
+      </div>
       ${a.note ? `<p style="margin:0 0 1rem;font-size:.82rem;line-height:1.8;color:var(--amber-lt);">${esc(a.note)}</p>` : ''}
       <table class="award-table">
         <thead><tr><th>賞</th><th>銘柄</th><th>製造者</th><th>部門</th></tr></thead>
@@ -363,6 +381,22 @@ function renderAwardsPage(awards) {
         </tr>`).join('')}</tbody>
       </table>
     </div>`).join('');
+}
+
+function normalizeAwardCategory(award) {
+  if (award?.category === 'national' || award?.category === 'kanto') return award.category;
+  return award?.competition?.includes('全国') ? 'national' : 'kanto';
+}
+
+function sortAwards(items, sortKey) {
+  const order = { national: 0, kanto: 1 };
+  const sorted = [...items];
+  if (sortKey === 'category') {
+    sorted.sort((a, b) => (order[a.category] ?? 99) - (order[b.category] ?? 99) || a._index - b._index);
+    return sorted;
+  }
+  sorted.sort((a, b) => a._index - b._index);
+  return sorted;
 }
 
 /* ── 商品ページ ─────────────────────────────────────────────── */
@@ -552,11 +586,13 @@ function initAwardsFilter(){
     btn.addEventListener('click',()=>{
       document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
-      const f=btn.dataset.filter;
-      document.querySelectorAll('.award-year-block').forEach(b=>{
-        b.style.display=(f==='all'||b.dataset.type===f)?'':'none';
-      });
+      awardsViewState.filter = btn.dataset.filter;
+      renderAwardsPage();
     });
+  });
+  $('award-sort')?.addEventListener('change', e => {
+    awardsViewState.sort = e.target.value;
+    renderAwardsPage();
   });
 }
 

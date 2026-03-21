@@ -882,9 +882,10 @@ footer {
 .awards-section { padding: 6rem 4rem; background: var(--ink); }
 .awards-inner { max-width: 1120px; margin: 0 auto; }
 .awards-filter {
-  display: flex; gap: 0.8rem; flex-wrap: wrap;
+  display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: space-between;
   margin-bottom: 3.5rem;
 }
+.awards-filter-buttons { display: flex; gap: 0.8rem; flex-wrap: wrap; }
 .filter-btn {
   padding: 0.4rem 1.1rem;
   border: 1px solid rgba(245,240,232,0.12);
@@ -896,12 +897,41 @@ footer {
 .filter-btn.active, .filter-btn:hover {
   background: var(--amber); color: var(--ink); border-color: var(--amber);
 }
+.award-sort-wrap {
+  display: inline-flex; align-items: center; gap: 0.8rem;
+  color: var(--text-sub); font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase;
+}
+.award-sort-select {
+  min-width: 11rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid rgba(245,240,232,0.12);
+  background: rgba(255,255,255,0.03);
+  color: var(--cream);
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+}
+.award-sort-select option { color: var(--ink); }
 .award-year-block { margin-bottom: 4rem; }
+.award-year-meta {
+  display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
 .award-year-heading {
   font-family: var(--serif); font-size: 1.5rem; letter-spacing: 0.1em;
   margin-bottom: 0.4rem; color: var(--amber);
 }
-.award-year-sub { font-size: 0.72rem; letter-spacing: 0.3em; opacity: 0.4; margin-bottom: 1.5rem; text-transform: uppercase; }
+.award-year-sub { font-size: 0.72rem; letter-spacing: 0.3em; opacity: 0.4; text-transform: uppercase; }
+.award-category-chip {
+  display: inline-flex; align-items: center;
+  padding: 0.2rem 0.7rem;
+  border: 1px solid rgba(200,146,42,0.3);
+  background: rgba(200,146,42,0.08);
+  color: var(--amber);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
 .award-table { width: 100%; border-collapse: collapse; }
 .award-table thead tr { border-bottom: 1px solid var(--border); }
 .award-table th { font-size: 0.65rem; letter-spacing: 0.4em; color: var(--amber); text-transform: uppercase; padding: 0 1rem 0.8rem 0; text-align: left; font-weight: 400; }
@@ -1031,6 +1061,9 @@ footer {
   .page-hero { padding: 10rem 1.8rem 3rem; }
   .products-section, .awards-section, .research-section, .shrine-section { padding: 4rem 1.8rem; }
   .order-section, .legal-section { padding: 3rem 1.8rem; }
+  .awards-filter { align-items: stretch; }
+  .award-sort-wrap { width: 100%; justify-content: space-between; }
+  .award-sort-select { width: 100%; min-width: 0; }
   .order-grid { grid-template-columns: 1fr; gap: 2.5rem; }
   .order-unified-grid { grid-template-columns: 1fr; }
   .order-steps { grid-template-columns: 1fr; }

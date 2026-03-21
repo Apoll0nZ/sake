@@ -186,7 +186,8 @@ hr.div{border:none;border-top:1px solid var(--bd);margin:1.5rem 0;}
   <div class="card">
     <div class="ctitle">新しい受賞記録を追加</div>
     <div class="g2">
-      <div class="f"><label>鑑評会名</label><select id="awc"><option>全国新酒鑑評会</option><option>関東信越国税局酒類鑑評会</option></select></div>
+      <div class="f"><label>カテゴリ</label><select id="awcat" onchange="syncAwardCompetition('category')"><option value="national">全国新酒鑑評会</option><option value="kanto">関東信越国税局酒類鑑評会</option></select></div>
+      <div class="f"><label>鑑評会名</label><select id="awc" onchange="syncAwardCompetition('competition')"><option>全国新酒鑑評会</option><option>関東信越国税局酒類鑑評会</option></select></div>
       <div class="f"><label>年度・回数</label><input type="text" id="awy" placeholder="例: 令和7年5月 / 第96回"></div>
     </div>
     <div style="font-size:.85rem;color:var(--muted);margin-bottom:.8rem;">受賞内容</div>
@@ -463,8 +464,8 @@ const S={
     ],
   },
   awards:[
-    {competition:'関東信越国税局酒類鑑評会',year:'第96回（令和7年11月）',entries:[{award:'優秀賞',brand:'アルプス正宗',maker:'（株）亀田屋酒造店',division:'純米吟醸の部'},{award:'優秀賞',brand:'アルプス正宗',maker:'（株）亀田屋酒造店',division:'純米の部'}]},
-    {competition:'全国新酒鑑評会',year:'令和6酒造年度（令和7年5月）',entries:[{award:'金賞',brand:'アルプス正宗',maker:'（株）亀田屋酒造店',division:''},{award:'入賞',brand:'美寿々',maker:'美寿々酒造（株）',division:''},{award:'入賞',brand:'大信州',maker:'大信州酒造（株）',division:''}]},
+    {category:'kanto',competition:'関東信越国税局酒類鑑評会',year:'第96回（令和7年11月）',entries:[{award:'優秀賞',brand:'アルプス正宗',maker:'（株）亀田屋酒造店',division:'純米吟醸の部'},{award:'優秀賞',brand:'アルプス正宗',maker:'（株）亀田屋酒造店',division:'純米の部'}]},
+    {category:'national',competition:'全国新酒鑑評会',year:'令和6酒造年度（令和7年5月）',entries:[{award:'金賞',brand:'アルプス正宗',maker:'（株）亀田屋酒造店',division:''},{award:'入賞',brand:'美寿々',maker:'美寿々酒造（株）',division:''},{award:'入賞',brand:'大信州',maker:'大信州酒造（株）',division:''}]},
   ],
   images:{hero:'',products:[]},
   heroImages:[
@@ -664,22 +665,44 @@ function addAR(){
   row.innerHTML=`<select><option>金賞</option><option>最優秀賞</option><option>優秀賞</option><option>入賞</option></select><input type="text" placeholder="銘柄名"><input type="text" placeholder="製造者"><input type="text" placeholder="部門"><button class="btn bd bsm" onclick="this.closest('.ar').remove()">削除</button>`;
   document.getElementById('award-entries').appendChild(row);
 }
+function awardCategoryOf(a){
+  if(a?.category==='national'||a?.category==='kanto') return a.category;
+  return a?.competition?.includes('全国') ? 'national' : 'kanto';
+}
+function awardCategoryLabel(key){
+  return key==='national' ? '全国新酒鑑評会' : '関東信越国税局酒類鑑評会';
+}
+function syncAwardCompetition(source){
+  const cat=document.getElementById('awcat');
+  const comp=document.getElementById('awc');
+  if(!cat||!comp) return;
+  if(source==='category'){
+    comp.value=awardCategoryLabel(cat.value);
+    return;
+  }
+  cat.value=comp.value.includes('全国') ? 'national' : 'kanto';
+}
+function normalizeAwards(){
+  if(!Array.isArray(S.awards)) S.awards=[];
+  S.awards=S.awards.map(a=>({ ...a, category: awardCategoryOf(a) }));
+}
 function saveAward(){
-  const comp=G('awc'),year=G('awy'); if(!year.trim()){alert('年度を入力してください');return;}
+  const category=G('awcat'),comp=G('awc'),year=G('awy'); if(!year.trim()){alert('年度を入力してください');return;}
   const entries=[];
   document.querySelectorAll('#award-entries .ar').forEach(row=>{
     const [sel,b1,b2,b3]=row.querySelectorAll('select,input');
     if(b1.value.trim()) entries.push({award:sel.value,brand:b1.value,maker:b2.value,division:b3.value});
   });
-  S.awards.unshift({competition:comp,year,entries});
+  S.awards.unshift({category,competition:comp,year,entries});
   renderAwardList(); toast('受賞記録を追加しました');
 }
 function renderAwardList(){
+  normalizeAwards();
   const el=document.getElementById('award-list');
   if(!S.awards.length){el.innerHTML='<p style="color:var(--muted);font-size:.9rem;padding:1rem 0;">まだ記録がありません</p>';return;}
   el.innerHTML=S.awards.map((a,i)=>`
     <div class="li">
-      <div class="lim"><div class="lin">${a.year}</div><div class="lis">${a.competition} — ${a.entries.length}件</div></div>
+      <div class="lim"><div class="lin">${a.year}</div><div class="lis">${awardCategoryLabel(awardCategoryOf(a))} ／ ${a.competition} — ${a.entries.length}件</div></div>
       <span class="btag">${a.entries.some(e=>e.award==='金賞')?'金賞':a.entries.some(e=>e.award==='最優秀賞')?'最優秀賞':'優秀賞等'}</span>
       <button class="btn bd bsm" onclick="delAward(${i})">削除</button>
     </div>`).join('');
@@ -724,7 +747,7 @@ function ST(id,btn){
   btn.closest('.panel').querySelectorAll('[id^="t"]').forEach(p=>{if(['tm','ts','ta'].includes(p.id))p.style.display='none';});
   btn.classList.add('active'); document.getElementById(id).style.display='block';
 }
-function renderAll(){ renderEvents(); renderProducts(); renderBreweries(); renderAwardList(); renderHeroImages(); renderPagePhotosAdmin(); upPrev(); }
+function renderAll(){ normalizeAwards(); renderEvents(); renderProducts(); renderBreweries(); renderAwardList(); renderHeroImages(); renderPagePhotosAdmin(); upPrev(); }
 
 // ── ページ写真（研究会・神社）管理 ───────────────────────────
 function renderPagePhotosAdmin(){

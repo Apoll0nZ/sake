@@ -232,9 +232,18 @@
   </div></div>
   <div class="awards-section"><div class="awards-inner">
     <div class="awards-filter reveal">
-      <button class="filter-btn active" data-filter="all">すべて</button>
-      <button class="filter-btn" data-filter="national">全国新酒鑑評会</button>
-      <button class="filter-btn" data-filter="kanto">関東信越国税局</button>
+      <div class="awards-filter-buttons">
+        <button class="filter-btn active" data-filter="all">すべて</button>
+        <button class="filter-btn" data-filter="national">全国新酒鑑評会</button>
+        <button class="filter-btn" data-filter="kanto">関東信越国税局</button>
+      </div>
+      <label class="award-sort-wrap" for="award-sort">
+        <span>並び順</span>
+        <select id="award-sort" class="award-sort-select">
+          <option value="recent">新しい順</option>
+          <option value="category">カテゴリ順</option>
+        </select>
+      </label>
     </div>
     <div id="awards-dynamic-list"></div>
   </div></div>
