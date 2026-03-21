@@ -50,18 +50,23 @@ function initLoader() {
   let _done = false;
   const lockScroll = () => {
     document.body.dataset.lockedY = window.scrollY;
-    document.body.style.cssText += 'position:fixed;top:-'+window.scrollY+'px;left:0;right:0;overflow-y:scroll;';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${window.scrollY}px`;
+    document.body.style.left = document.body.style.right = '0';
+    document.body.style.overflowY = 'scroll';
   };
   const unlockScroll = () => {
     if (_done) return; _done = true;
-    const y = parseInt(document.body.dataset.lockedY||'0',10);
-    document.body.style.position=document.body.style.top=document.body.style.left=document.body.style.right=document.body.style.overflowY='';
-    window.scrollTo({top:y,behavior:'instant'});
+    const y = parseInt(document.body.dataset.lockedY || '0', 10);
+    document.body.style.position = document.body.style.top =
+    document.body.style.left = document.body.style.right =
+    document.body.style.overflowY = '';
+    window.scrollTo({ top: y, behavior: 'instant' });
   };
   lockScroll();
-  const hideLoader=()=>{const l=$('loader');if(l)l.classList.add('hide');unlockScroll();};
-  window.addEventListener('load',()=>setTimeout(hideLoader,1500),{once:true});
-  setTimeout(hideLoader,5000);
+  const hideLoader = () => { const l=$('loader'); if(l) l.classList.add('hide'); unlockScroll(); };
+  window.addEventListener('load', () => setTimeout(hideLoader, 1500), { once: true });
+  setTimeout(hideLoader, 5000);
 }
 
 /* ── ヒーロー背景 ───────────────────────────────────────────── */
@@ -184,7 +189,7 @@ function renderEventBanners(events) {
   wrap.innerHTML = upcoming.map(ev => {
     const dateLabel = ev.dateLabel || (ev.date ? formatDate(ev.date) : '');
     const posterHtml = ev.image
-      ? `<img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" style="width:100%;height:100%;object-fit:cover;">`
+      ? `<img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" style="width:100%;height:auto;display:block;">`
       : `<div class="event-poster-inner">
            <div class="event-poster-year">${esc(dateLabel.slice(0,4))} — Event</div>
            <div class="event-poster-main">${esc(ev.title)}</div>
@@ -276,7 +281,6 @@ function renderEventPage(events, sakes) {
   if (upBlock) {
     upBlock.innerHTML = upcoming.map(ev => {
       const dateLabel = ev.dateLabel || (ev.date ? formatDate(ev.date) : '');
-      // PC: 元サイズで表示（拡大しない）/ スマホ: 全幅
       const imgHtml = ev.image
         ? `<div class="ev-img-wrap"><img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" class="ev-detail-img"></div>`
         : '';
@@ -289,14 +293,8 @@ function renderEventPage(events, sakes) {
         <h2 class="ev-detail-title">${esc(ev.title)}</h2>
         <div class="ev-detail-body">
           <dl class="ev-detail-dl">
-            <div class="ev-dl-row">
-              <dt>日時</dt>
-              <dd>${esc(dateLabel)}${ev.time1?` / 1部 ${esc(ev.time1)} / 2部 ${esc(ev.time2)}`:''}</dd>
-            </div>
-            <div class="ev-dl-row">
-              <dt>会場</dt>
-              <dd>${esc(ev.venue||'')}</dd>
-            </div>
+            <div class="ev-dl-row"><dt>日時</dt><dd>${esc(dateLabel)}${ev.time1?` / 1部 ${esc(ev.time1)} / 2部 ${esc(ev.time2)}`:''}</dd></div>
+            <div class="ev-dl-row"><dt>会場</dt><dd>${esc(ev.venue||'')}</dd></div>
             ${ev.fee?`<div class="ev-dl-row"><dt>会費</dt><dd>当日 ${esc(ev.fee)} / 前売り <span style="color:var(--amber);">${esc(ev.feeAdvance||'')}</span></dd></div>`:''}
             ${ev.ticketShops?`<div class="ev-dl-row"><dt>前売店</dt><dd style="font-size:.82rem;">${esc(ev.ticketShops)}</dd></div>`:''}
           </dl>
@@ -368,7 +366,7 @@ function renderProductsPage(products) {
   if (!grid || !products?.length) return;
   grid.innerHTML = products.map(p => {
     const imgHtml = p.image
-      ? `<div class="product-img-wrap"><img src="images/${esc(p.image)}" alt="${esc(p.name)}" style="max-width:85%;max-height:100%;width:auto;height:auto;object-fit:contain;display:block;"></div>`
+      ? `<div class="product-img-wrap"><img src="images/${esc(p.image)}" alt="${esc(p.name)}"></div>`
       : `<div class="product-img-wrap"><div class="product-img-placeholder">酒</div></div>`;
     return `<div class="product-card">
       <div class="product-num">${esc(p.num)}</div>
@@ -459,19 +457,26 @@ function initNavbar() {
 
 /* ── PAGE SYSTEM ────────────────────────────────────────────── */
 function initPageSystem() {
-  let _cur='page-main';
+  let _currentPage = 'page-main';
   function showPage(id) {
-    const same=(id===_cur);
+    const isSame = (id === _currentPage);
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    const target=$(id); if(!target) return;
-    target.classList.add('active'); _cur=id;
-    if(!same) window.scrollTo({top:0,behavior:'instant'});
-    setTimeout(()=>target.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stat-item').forEach(el=>revealObs?.observe(el)),80);
+    const target=$(id);
+    if (!target) return;
+    target.classList.add('active');
+    _currentPage = id;
+    if (!isSame) window.scrollTo({top:0,behavior:'instant'});
+    setTimeout(()=>{
+      target.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stat-item').forEach(el=>revealObs?.observe(el));
+    },80);
   }
   document.addEventListener('click', e => {
-    const link=e.target.closest('[data-page]'); if(!link) return;
-    e.preventDefault(); showPage(link.dataset.page);
-    $('navHamburger')?.classList.remove('open'); $('navMobile')?.classList.remove('open');
+    const link=e.target.closest('[data-page]');
+    if (!link) return;
+    e.preventDefault();
+    showPage(link.dataset.page);
+    $('navHamburger')?.classList.remove('open');
+    $('navMobile')?.classList.remove('open');
   });
 }
 

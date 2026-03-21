@@ -141,12 +141,19 @@ ul { list-style: none; }
 
 .nav-mobile {
   display: none; position: fixed; inset: 0; z-index: 190;
-  background: rgba(14,11,8,0.97);
-  flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+  background: rgba(26,58,92,0.97);
+  flex-direction: column; align-items: center; justify-content: flex-start;
+  gap: 0; padding-top: 80px; overflow-y: auto;
   backdrop-filter: blur(16px);
 }
 .nav-mobile.open { display: flex; }
-.nav-mobile a { font-family: var(--serif); font-size: 1.8rem; letter-spacing: 0.2em; }
+.nav-mobile a {
+  font-family: var(--serif); font-size: 1.6rem; letter-spacing: 0.2em;
+  color: #fff; width: 100%; text-align: center;
+  padding: 1.1rem 0; border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.nav-mobile a:first-child { border-top: 1px solid rgba(255,255,255,0.12); }
+.nav-mobile a:hover { background: rgba(255,255,255,0.08); color: #a8d4f0; }
 
 /* ── HERO ──────────────────────────────────────────────────── */
 #hero {
@@ -287,13 +294,16 @@ section { padding: 9rem 4rem; }
 }
 .event-poster {
   position: relative; border-radius: 2px; overflow: hidden;
-  aspect-ratio: 3/4; max-width: 340px; margin: 0 auto;
+  max-width: 460px; margin: 0 auto;
 }
 .event-poster-img {
-  width: 100%; height: 100%; object-fit: cover;
+  width: 100%;
   background: linear-gradient(145deg, #5C2B4A 0%, #3D2A10 50%, #1A1510 100%);
   display: flex; align-items: center; justify-content: center;
   flex-direction: column; gap: 1rem;
+}
+.event-poster-img img {
+  width: 100%; height: auto; display: block;
 }
 .event-poster-inner {
   text-align: center; padding: 2rem;
@@ -713,13 +723,13 @@ footer {
 /* ── INNER PAGE HERO ───────────────────────────────────────── */
 .page-hero {
   padding: 12rem 4rem 5rem;
-  background: var(--deep);
+  background: var(--midnight);
   border-bottom: 1px solid var(--border);
 }
 .page-hero-inner { max-width: 1120px; margin: 0 auto; }
-.page-hero-tag { font-size: 0.68rem; letter-spacing: 0.5em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.8rem; }
-.page-hero-title { font-family: var(--serif); font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.1; color: #FFFFFF; font-weight: 700; letter-spacing: 0.05em; }
-.page-hero-sub { font-size: 0.88rem; color: rgba(255,255,255,0.55); letter-spacing: 0.2em; margin-top: 0.8rem; }
+.page-hero-tag { font-size: 0.68rem; letter-spacing: 0.5em; color: var(--amber-lt); text-transform: uppercase; margin-bottom: 0.8rem; }
+.page-hero-title { font-family: var(--serif); font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.1; color: var(--cream); font-weight: 700; letter-spacing: 0.05em; }
+.page-hero-sub { font-size: 0.88rem; color: rgba(247,249,252,0.65); letter-spacing: 0.2em; margin-top: 0.8rem; }
 /* 松尾神社ページのみ：背景が明るいため文字色を上書き */
 #page-shrine .page-hero { background: var(--midnight); }
 #page-shrine .page-hero-title { color: var(--cream); }
@@ -841,10 +851,10 @@ footer {
   padding: 0.2rem 0.7rem; font-size: 0.68rem; letter-spacing: 0.15em;
   border-radius: 0; white-space: nowrap;
 }
-.badge-gold { background: rgba(200,146,42,0.18); color: var(--amber-lt); border: 1px solid rgba(200,146,42,0.3); }
-.badge-best { background: rgba(200,146,42,0.28); color: var(--amber-lt); border: 1px solid rgba(200,146,42,0.5); }
-.badge-excellent { background: rgba(245,240,232,0.06); color: rgba(245,240,232,0.7); border: 1px solid rgba(245,240,232,0.12); }
-.badge-entry { background: transparent; color: rgba(245,240,232,0.45); border: 1px solid rgba(245,240,232,0.08); }
+.badge-gold { background: rgba(200,146,42,0.15); color: #7A4800; border: 1px solid rgba(200,146,42,0.6); font-weight: 700; }
+.badge-best { background: rgba(200,146,42,0.25); color: #5C3000; border: 1px solid rgba(200,146,42,0.8); font-weight: 700; }
+.badge-excellent { background: rgba(42,100,150,0.1); color: var(--amber); border: 1px solid rgba(42,100,150,0.3); }
+.badge-entry { background: rgba(0,0,0,0.04); color: var(--text-sub); border: 1px solid var(--border); }
 
 /* ── RESEARCH PAGE ─────────────────────────────────────────── */
 .research-section { padding: 6rem 4rem; background: var(--ink); }
@@ -925,12 +935,15 @@ footer {
   .hero-ribbon { display: none; }
 
   /* ── イベントバナー ── */
-  .event-inner { grid-template-columns: 1fr; gap: 2rem; }
-  .event-poster { max-width: 100%; }
-  .event-banner-item { padding: 2.5rem 1.4rem; }
-  .event-title { font-size: clamp(1.4rem, 5vw, 2.2rem); }
-  .event-meta { gap: 1rem; }
-  .event-meta-item { font-size: 0.88rem; }
+  .event-inner { display: flex; flex-direction: column; gap: 0; }
+  .event-inner > div:first-child { order: 2; padding: 1.5rem 1.2rem 0; }
+  .event-inner > .event-poster { order: 1; max-width: 100%; margin: 0; }
+  .event-poster-img img { width: 100%; height: auto; }
+  .event-banner-item { padding: 0 0 2rem; overflow: hidden; }
+  .event-title { font-size: clamp(1.3rem, 5vw, 2rem); }
+  .event-meta { gap: 0.7rem; flex-direction: column; }
+  .event-meta-item { font-size: 0.84rem; }
+  .event-desc { font-size: 0.82rem; margin-bottom: 1.2rem; }
 
   /* ── 蔵元グリッド ── */
   .brewery-grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
@@ -1491,4 +1504,52 @@ footer {
     grid-column: 1 / -1;
     aspect-ratio: 16 / 9;
   }
+}
+
+/* ── イベントページ詳細カード ────────────────────────────────── */
+.ev-detail-card {
+  background: var(--deep); border: 1px solid var(--border);
+  padding: 2.5rem; margin-bottom: 2rem;
+}
+.ev-detail-badge {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-size: .65rem; letter-spacing: .4em; color: var(--amber);
+  text-transform: uppercase; margin-bottom: 1.2rem;
+}
+.ev-img-wrap { text-align: center; margin-bottom: 2rem; overflow: hidden; }
+.ev-detail-img {
+  max-width: 560px; max-height: 420px;
+  width: auto; height: auto; object-fit: contain; display: inline-block;
+}
+.ev-detail-title {
+  font-family: var(--serif); font-size: clamp(1.6rem,4vw,2.6rem);
+  line-height: 1.3; margin-bottom: 1.5rem; color: var(--text);
+}
+.ev-detail-body {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;
+}
+.ev-detail-dl { margin: 0; }
+.ev-dl-row {
+  display: grid; grid-template-columns: 4rem 1fr; gap: .5rem;
+  padding: .65rem 0; border-bottom: 1px solid var(--border);
+  font-size: .87rem; line-height: 1.7;
+}
+.ev-dl-row:last-child { border-bottom: none; }
+.ev-dl-row dt { color: var(--text-sub); font-weight: 400; }
+.ev-detail-desc p {
+  font-size: .87rem; line-height: 2; opacity: .7; margin-bottom: 1.5rem;
+}
+@media (max-width: 768px) {
+  .ev-detail-card { padding: 1rem; }
+  .ev-detail-body { grid-template-columns: 1fr; gap: 1.2rem; }
+  .ev-dl-row { grid-template-columns: 3.2rem 1fr; font-size: .83rem; padding: .5rem 0; }
+  .ev-detail-title { font-size: 1.25rem; margin-bottom: 1rem; }
+  .ev-img-wrap { margin-bottom: 1.2rem; }
+  .ev-detail-img { max-width: 100%; max-height: none; width: 100%; height: auto; display: block; }
+}
+
+/* ── イベントページ本体余白 ──────────────────────────────────── */
+.event-page-body { padding: 6rem 4rem; background: var(--ink); }
+@media (max-width: 768px) {
+  .event-page-body { padding: 2.5rem 1rem; }
 }
