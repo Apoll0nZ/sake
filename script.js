@@ -50,7 +50,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderBreweries(d.breweries);
     renderMarquee(d.breweries);
     renderCarousel(d.products);
-    renderEventPage(d.events, d.sakes);
+    normalizeEventSakes(d);
+    renderEventPage(d.events);
     renderAwardsPage(d.awards);
     renderProductsPage(d.products);
     renderPagePhotos(d.pagePhotos);
@@ -343,8 +344,19 @@ function renderCarousel(products) {
   track.style.animationDuration = Math.max(30, products.length * 5) + 's';
 }
 
+function normalizeEventSakes(data) {
+  if (!data || !Array.isArray(data.events)) return;
+  data.events.forEach(event => {
+    if (!Array.isArray(event.sakes)) event.sakes = [];
+  });
+  if (Array.isArray(data.sakes) && data.sakes.length && !data.events.some(event => event.sakes.length)) {
+    const target = data.events.find(event => event.status === 'upcoming') || data.events[0];
+    if (target) target.sakes = data.sakes.map(sake => ({ ...sake }));
+  }
+}
+
 /* ── イベントページ ─────────────────────────────────────────── */
-function renderEventPage(events, sakes) {
+function renderEventPage(events) {
   if (!events?.length) return;
   const upcoming = events.filter(e => e.status === 'upcoming');
   const ended    = events.filter(e => e.status === 'ended');
@@ -380,20 +392,34 @@ function renderEventPage(events, sakes) {
   }
 
   // 出品酒グリッド
-  const grid = $('sake-booth-grid');
-  if (grid && sakes?.length) {
-    const grouped = {};
-    sakes.forEach(s => { if(!grouped[s.brewery]) grouped[s.brewery]=[]; grouped[s.brewery].push(s); });
-    grid.innerHTML = Object.entries(grouped).map(([brewery, items]) => `
-      <div style="background:var(--ink);padding:2rem;">
-        <div style="font-size:.62rem;letter-spacing:.4em;color:var(--amber);margin-bottom:.6rem;">${esc(brewery)}</div>
-        ${items.map(s=>`
-          <div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);">
-            <div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">${esc(s.name)}</div>
-            <p style="font-size:.78rem;opacity:.65;line-height:1.85;">${esc(s.desc)}</p>
+  const sections = $('sake-booth-sections');
+  if (sections) {
+    const eventsWithSakes = events.filter(event => event.sakes?.length);
+    sections.innerHTML = eventsWithSakes.map(event => {
+      const grouped = {};
+      event.sakes.forEach(sake => {
+        if (!grouped[sake.brewery]) grouped[sake.brewery] = [];
+        grouped[sake.brewery].push(sake);
+      });
+      return `
+        <section style="margin:4rem 0 0;">
+          <h3 style="font-family:var(--serif);font-size:1.4rem;letter-spacing:.1em;margin:0 0 .75rem;" class="reveal">★ 蔵ブースのお酒 ★</h3>
+          <p style="font-size:.82rem;letter-spacing:.18em;color:var(--amber);margin:0 0 1.25rem;">${esc(event.title)}</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5px;background:var(--border);border:1.5px solid var(--border);">
+            ${Object.entries(grouped).map(([brewery, items]) => `
+              <div style="background:var(--ink);padding:2rem;">
+                <div style="font-size:.62rem;letter-spacing:.4em;color:var(--amber);margin-bottom:.6rem;">${esc(brewery)}</div>
+                ${items.map(s=>`
+                  <div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);">
+                    <div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">${esc(s.name)}</div>
+                    <p style="font-size:.78rem;opacity:.65;line-height:1.85;">${esc(s.desc)}</p>
+                  </div>
+                `).join('')}
+              </div>
+            `).join('')}
           </div>
-        `).join('')}
-      </div>`).join('');
+        </section>`;
+    }).join('');
   }
 
   // アーカイブ

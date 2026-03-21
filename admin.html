@@ -299,6 +299,7 @@ async function loadJSON(){
     const text=await (await fh.getFile()).text();
     const parsed=JSON.parse(text);
     Object.assign(S, parsed);
+    normalizeEventSakesState();
     if(!S.events) S.events=[];
     if(!S.heroImages) S.heroImages=[];
     if(!S.pagePhotos) S.pagePhotos={research_0:[],research_1:[],shrine:[]};
@@ -554,17 +555,52 @@ function renderEvents(){
           <div id="ev-lb-${i}" class="ilb ${ev.image?'named':''}">${ev.image?'✓ '+E(ev.image):'クリックして画像を選択'}</div>
         </div>
       </div>
+      <div class="card" style="padding:1.2rem;margin-top:1rem;margin-bottom:0;">
+        <div class="ctitle" style="margin-bottom:1rem;padding-bottom:.6rem;">★ 蔵ブースのお酒</div>
+        <div id="event-sakes-${i}" style="display:flex;flex-direction:column;gap:.8rem;"></div>
+        <button class="btn bg bsm" type="button" onclick="addEventSake(${i})" style="margin-top:1rem;">＋ 銘柄を追加</button>
+      </div>
     </div>`;
   }).join('');
+  S.events.forEach((_,i)=>renderEventSakeRows(i));
 }
 
 function addEvent(){
-  S.events.unshift({id:'ev-'+Date.now(),status:'upcoming',title:'',date:'',dateLabel:'',time1:'',time2:'',venue:'',fee:'',feeAdvance:'',ticketShops:'',desc:'',image:''});
+  S.events.unshift({id:'ev-'+Date.now(),status:'upcoming',title:'',date:'',dateLabel:'',time1:'',time2:'',venue:'',fee:'',feeAdvance:'',ticketShops:'',desc:'',image:'',sakes:[]});
   renderEvents(); document.getElementById('event-items').firstElementChild?.scrollIntoView({behavior:'smooth'});
 }
 function deleteEvent(i){ if(!confirm('削除しますか？')) return; S.events.splice(i,1); renderEvents(); }
 function moveToArchive(i){ S.events[i].status='ended'; renderEvents(); toast('アーカイブに移動しました'); }
 function moveToUpcoming(i){ S.events[i].status='upcoming'; renderEvents(); toast('直近イベントに戻しました'); }
+function renderEventSakeRows(eventIndex){
+  const wrap=document.getElementById('event-sakes-'+eventIndex);
+  if(!wrap) return;
+  const event=S.events[eventIndex];
+  if(!Array.isArray(event.sakes)) event.sakes=[];
+  if(!event.sakes.length){
+    wrap.innerHTML='<div style="font-size:.82rem;color:var(--muted);padding:.6rem 0;">まだ登録がありません</div>';
+    return;
+  }
+  wrap.innerHTML=event.sakes.map((sake,sakeIndex)=>`
+    <div style="border:1px solid var(--bd);padding:1rem;background:rgba(255,255,255,.03);">
+      <div class="g2">
+        <div class="f"><label>蔵元名</label><input type="text" value="${E(sake.brewery||'')}" oninput="S.events[${eventIndex}].sakes[${sakeIndex}].brewery=this.value"></div>
+        <div class="f"><label>銘柄名</label><input type="text" value="${E(sake.name||'')}" oninput="S.events[${eventIndex}].sakes[${sakeIndex}].name=this.value"></div>
+      </div>
+      <div class="f" style="margin-bottom:.4rem;"><label>特徴</label><textarea rows="2" oninput="S.events[${eventIndex}].sakes[${sakeIndex}].desc=this.value">${E(sake.desc||'')}</textarea></div>
+      <button class="btn bd bsm" type="button" onclick="deleteEventSake(${eventIndex},${sakeIndex})">削除</button>
+    </div>
+  `).join('');
+}
+function addEventSake(eventIndex){
+  if(!Array.isArray(S.events[eventIndex].sakes)) S.events[eventIndex].sakes=[];
+  S.events[eventIndex].sakes.push({brewery:'',name:'',desc:''});
+  renderEventSakeRows(eventIndex);
+}
+function deleteEventSake(eventIndex,sakeIndex){
+  S.events[eventIndex].sakes.splice(sakeIndex,1);
+  renderEventSakeRows(eventIndex);
+}
 
 // ── 商品 ───────────────────────────────────────────────────
 function renderProducts(){
@@ -711,9 +747,12 @@ function renderAwardList(){
 function delAward(i){ if(!confirm('削除しますか？')) return; S.awards.splice(i,1); renderAwardList(); }
 
 // ── 保存・書き出し ─────────────────────────────────────────
-function saveAll(){ upPrev(); toast('保存しました ✓'); }
+function saveAll(){ normalizeEventSakesState(); upPrev(); toast('保存しました ✓'); }
 async function exportData(){
-  const str=JSON.stringify(S,null,2); upPrev();
+  normalizeEventSakesState();
+  const out={...S};
+  delete out.sakes;
+  const str=JSON.stringify(out,null,2); upPrev();
   if(rootH){ const ok=await saveJSON(str); if(ok){toast('✓ data.jsonをフォルダに保存しました');return;} }
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([str],{type:'application/json'}));
@@ -748,7 +787,16 @@ function ST(id,btn){
   btn.closest('.panel').querySelectorAll('[id^="t"]').forEach(p=>{if(['tm','ts','ta'].includes(p.id))p.style.display='none';});
   btn.classList.add('active'); document.getElementById(id).style.display='block';
 }
-function renderAll(){ normalizeAwards(); renderEvents(); renderProducts(); renderBreweries(); renderAwardList(); renderHeroImages(); renderPagePhotosAdmin(); upPrev(); }
+function renderAll(){ normalizeAwards(); normalizeEventSakesState(); renderEvents(); renderProducts(); renderBreweries(); renderAwardList(); renderHeroImages(); renderPagePhotosAdmin(); upPrev(); }
+function normalizeEventSakesState(){
+  if(!Array.isArray(S.events)) S.events=[];
+  S.events.forEach(event=>{ if(!Array.isArray(event.sakes)) event.sakes=[]; });
+  if(Array.isArray(S.sakes) && S.sakes.length && !S.events.some(event=>event.sakes.length)){
+    const target=S.events.find(event=>event.status==='upcoming')||S.events[0];
+    if(target) target.sakes=S.sakes.map(sake=>({...sake}));
+  }
+  delete S.sakes;
+}
 
 // ── ページ写真（研究会・神社）管理 ───────────────────────────
 function renderPagePhotosAdmin(){
