@@ -408,9 +408,12 @@ async function saveImg(file,name){
   }catch(e){ return false; }
 }
 async function saveJSON(str){
+  return saveFile('data.json', str);
+}
+async function saveFile(name,str){
   if(!rootH) return false;
   try{
-    const fh=await rootH.getFileHandle('data.json',{create:true});
+    const fh=await rootH.getFileHandle(name,{create:true});
     const w=await fh.createWritable();
     await w.write(str); await w.close(); return true;
   }catch(e){ return false; }
@@ -754,16 +757,45 @@ function delAward(i){ if(!confirm('削除しますか？')) return; S.awards.spl
 function saveAll(){ normalizeEventSakesState(); upPrev(); toast('保存しました ✓'); }
 async function exportData(){
   normalizeEventSakesState();
+  normalizeEventDatesState();
   const out={...S};
   delete out.sakes;
-  const str=JSON.stringify(out,null,2); upPrev();
-  if(rootH){ const ok=await saveJSON(str); if(ok){toast('✓ data.jsonをフォルダに保存しました');return;} }
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([str],{type:'application/json'}));
-  a.download='data.json'; a.click();
-  toast('data.jsonをダウンロードしました（フォルダに置いてください）');
+  const files = {
+    'data.json': JSON.stringify(out,null,2),
+    ...buildPublicPayloads(out)
+  };
+  upPrev();
+  if(rootH){
+    const results = await Promise.all(Object.entries(files).map(([name,content]) => saveFile(name, content)));
+    if(results.every(Boolean)){toast('✓ data.json と公開用データを保存しました');return;}
+  }
+  Object.entries(files).forEach(([name,content])=>{
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([content],{type:'application/json'}));
+    a.download=name;
+    a.click();
+  });
+  toast('公開用データを含むJSONを書き出しました');
 }
 function upPrev(){ const el=document.getElementById('jprev'); if(el) el.textContent=JSON.stringify(S,null,2); }
+function buildPublicPayloads(data){
+  return {
+    'site-index.json': JSON.stringify({
+      events: data.events || [],
+      breweries: data.breweries || {},
+      products: data.products || [],
+      images: data.images || {},
+      heroImages: data.heroImages || [],
+      pagePhotos: data.pagePhotos || {}
+    }, null, 2),
+    'site-purchase.json': JSON.stringify({
+      products: data.products || []
+    }, null, 2),
+    'site-awards.json': JSON.stringify({
+      awards: data.awards || []
+    }, null, 2)
+  };
+}
 
 // ── UTILS ──────────────────────────────────────────────────
 function G(id){return (document.getElementById(id)||{}).value||'';}

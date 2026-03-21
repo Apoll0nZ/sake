@@ -14,6 +14,11 @@ const pageHrefMap = {
   'page-shrine': 'index.html?page=page-shrine',
   'page-purchase': 'purchase.html'
 };
+const pageDataFiles = {
+  main: 'site-index.json',
+  purchase: 'site-purchase.json',
+  awards: 'site-awards.json'
+};
 const staticPriorityAssetsByPage = {
   main: ['header.webp']
 };
@@ -56,7 +61,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 async function fetchSiteData() {
-  const storageKey = 'sake_site_data_v1';
+  const pageKey = getCurrentPageKey();
+  const dataFile = pageDataFiles[pageKey] || 'site-index.json';
+  const storageKey = `sake_site_data_${dataFile}`;
   try {
     const cached = sessionStorage.getItem(storageKey);
     if (cached) return JSON.parse(cached);
@@ -65,7 +72,10 @@ async function fetchSiteData() {
   }
 
   try {
-    const res = await fetch('data.json', { cache: 'default' });
+    let res = await fetch(dataFile, { cache: 'default' });
+    if (!res.ok && dataFile !== 'data.json') {
+      res = await fetch('data.json', { cache: 'default' });
+    }
     if (res.ok) {
       const data = await res.json();
       try {
