@@ -14,9 +14,8 @@ const pageHrefMap = {
   'page-shrine': 'index.html?page=page-shrine',
   'page-purchase': 'purchase.html'
 };
-const priorityAssetsByPage = {
-  main: ['header.webp', 'sake1.webp', 'sake2.webp', 'sake3.webp', 'sake4.webp'],
-  purchase: ['sake1.webp', 'sake2.webp', 'sake3.webp', 'sake4.webp']
+const staticPriorityAssetsByPage = {
+  main: ['header.webp']
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -44,6 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   /* ③ 取得できたらレンダリング */
   if (d) {
+    warmProductAssets(d.products);
     renderHeroBg(d.images);
     renderNavCarousel(d.events, d.products, d.heroImages);
     renderEventBanners(d.events);
@@ -70,25 +70,39 @@ function getCurrentPageKey() {
 
 function warmCriticalAssets() {
   const pageKey = getCurrentPageKey();
-  const assets = priorityAssetsByPage[pageKey] || [];
+  const assets = staticPriorityAssetsByPage[pageKey] || [];
   if (!assets.length) return;
 
   assets.forEach((file, index) => {
-    const href = `images/${file}`;
-    if (!document.head.querySelector(`link[rel="preload"][href="${href}"]`)) {
-      const link = document.createElement('link');
-      link.rel = 'preload';
-      link.as = 'image';
-      link.href = href;
-      if (index === 0) link.fetchPriority = 'high';
-      document.head.appendChild(link);
-    }
-
-    const img = new Image();
-    if (index === 0) img.fetchPriority = 'high';
-    img.decoding = 'async';
-    img.src = href;
+    preloadImage(`images/${file}`, index === 0);
   });
+}
+
+function warmProductAssets(products) {
+  const pageKey = getCurrentPageKey();
+  if (pageKey !== 'main' && pageKey !== 'purchase') return;
+
+  (products || [])
+    .filter(product => product?.image)
+    .slice(0, 4)
+    .forEach((product, index) => preloadImage(`images/${product.image}`, index === 0));
+}
+
+function preloadImage(href, highPriority = false) {
+  if (!href) return;
+  if (!document.head.querySelector(`link[rel="preload"][href="${href}"]`)) {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'image';
+    link.href = href;
+    if (highPriority) link.fetchPriority = 'high';
+    document.head.appendChild(link);
+  }
+
+  const img = new Image();
+  if (highPriority) img.fetchPriority = 'high';
+  img.decoding = 'async';
+  img.src = href;
 }
 
 /* ── LOADER ────────────────────────────────────────────────── */
