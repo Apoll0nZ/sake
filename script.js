@@ -315,8 +315,12 @@ function renderEventPage(events, sakes) {
     grid.innerHTML = Object.entries(grouped).map(([brewery, items]) => `
       <div style="background:var(--ink);padding:2rem;">
         <div style="font-size:.62rem;letter-spacing:.4em;color:var(--amber);margin-bottom:.6rem;">${esc(brewery)}</div>
-        ${items.map(s=>`<div style="font-family:var(--serif);font-size:.95rem;margin-bottom:.25rem;">${esc(s.name)}</div>`).join('')}
-        <p style="font-size:.78rem;opacity:.55;line-height:1.9;margin-top:.8rem;">${esc(items[0].desc)}</p>
+        ${items.map(s=>`
+          <div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);">
+            <div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">${esc(s.name)}</div>
+            <p style="font-size:.78rem;opacity:.65;line-height:1.85;">${esc(s.desc)}</p>
+          </div>
+        `).join('')}
       </div>`).join('');
   }
 
