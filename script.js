@@ -189,7 +189,7 @@ function renderEventBanners(events) {
   wrap.innerHTML = upcoming.map(ev => {
     const dateLabel = ev.dateLabel || (ev.date ? formatDate(ev.date) : '');
     const posterHtml = ev.image
-      ? `<img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" style="width:100%;height:auto;display:block;">`
+      ? `<img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" class="event-poster-photo">`
       : `<div class="event-poster-inner">
            <div class="event-poster-year">${esc(dateLabel.slice(0,4))} — Event</div>
            <div class="event-poster-main">${esc(ev.title)}</div>
