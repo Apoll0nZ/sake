@@ -56,6 +56,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       renderAwardsPage(d.awards);
       renderProductsPage(d.products);
       renderPagePhotos(d.pagePhotos);
+    } else {
+      initStaticHeroCarousel();
     }
   }
 
@@ -265,6 +267,37 @@ function renderNavCarousel(events, products, heroImages) {
 
   // ヒーローは1枚固定なのでスライドショー制御は不要
   // initSlideshow(1); ← 不要
+}
+
+function initStaticHeroCarousel() {
+  const slides = Array.from(document.querySelectorAll('.nss-slide'));
+  const dotsWrap = $('nssDots');
+  const controls = $('heroControls');
+  if (!slides.length) return;
+
+  _heroCurrent = Math.max(0, slides.findIndex(slide => slide.classList.contains('active')));
+  if (_heroCurrent < 0) _heroCurrent = 0;
+
+  const dots = Array.from(dotsWrap?.querySelectorAll('.nss-dot') || []);
+  if (controls) controls.style.display = slides.length > 1 ? '' : 'none';
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      clearTimeout(window._heroTimer);
+      heroGoTo(index);
+      heroSchedule(slides.length);
+    });
+  });
+
+  const bar = $('nssProgress');
+  if (slides.length > 1 && bar) {
+    bar.style.transition = 'none';
+    bar.style.width = '0%';
+    bar.offsetHeight;
+    bar.style.transition = 'width 6000ms linear';
+    bar.style.width = '100%';
+    heroSchedule(slides.length);
+  }
 }
 
 let _heroCurrent = 0;
