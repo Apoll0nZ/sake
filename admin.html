@@ -803,25 +803,192 @@ function buildInlinePayloads(data){
     }
   };
 }
+function buildStaticHtml(name, payload, html){
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  doc.body.dataset.staticRendered = '1';
+  const scriptEl = doc.getElementById('static-site-data');
+  if(scriptEl) scriptEl.textContent = escapeInlineJson(payload);
+
+  if(name === 'index.html'){
+    fillIndexStaticContent(doc, payload);
+  } else if(name === 'purchase.html'){
+    const grid = doc.getElementById('products-dynamic-grid');
+    if(grid) grid.innerHTML = renderStaticProducts(payload.products || []);
+  } else if(name === 'awards.html'){
+    const list = doc.getElementById('awards-dynamic-list');
+    if(list) list.innerHTML = renderStaticAwards(payload.awards || []);
+  }
+  return '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+}
 async function writeStaticPagePayloads(payloads){
   if(!rootH) return false;
   const results = await Promise.all(Object.entries(payloads).map(async ([name,payload])=>{
     const html = await readFileText(name);
     if(!html) return false;
-    const replaced = replaceStaticDataBlock(html, payload);
+    const replaced = buildStaticHtml(name, payload, html);
     return saveFile(name, replaced);
   }));
   return results.every(Boolean);
-}
-function replaceStaticDataBlock(html, payload){
-  const nextBlock = `<script id="static-site-data" type="application/json">${escapeInlineJson(payload)}</script>`;
-  const pattern = /<script id="static-site-data" type="application\/json">[\s\S]*?<\/script>/;
-  return pattern.test(html) ? html.replace(pattern, nextBlock) : html;
 }
 function escapeInlineJson(payload){
   return JSON.stringify(payload, null, 2)
     .replace(/</g, '\\u003c')
     .replace(/>/g, '\\u003e');
+}
+function fillIndexStaticContent(doc, payload){
+  const events = payload.events || [];
+  const breweries = payload.breweries || {};
+  const products = payload.products || [];
+  const heroImages = payload.heroImages || [];
+  const pagePhotos = payload.pagePhotos || {};
+
+  const slides = doc.getElementById('nsSlides');
+  const dots = doc.getElementById('nssDots');
+  const controls = doc.getElementById('heroControls');
+  const heroImgs = heroImages.filter(img=>img.file);
+  if(slides && heroImgs.length){
+    slides.innerHTML = heroImgs.map((img, i) => `
+      <div class="nss-slide${i === 0 ? ' active' : ''}">
+        <div class="nss-slide-img" style="background-image:url('images/${E(img.file)}');background-size:cover;background-position:center;"></div>
+        <div class="nss-slide-sub">長野県松本市の地酒</div>
+        <div class="nss-content">
+          <div class="nss-quote-wrap">
+            <p class="nss-quote-main">「一杯の酒に、<br><em>山と里の物語</em>が宿る」</p>
+            <p class="nss-quote-attr">— 信州松本の地酒職人より —</p>
+          </div>
+        </div>
+      </div>`).join('');
+  }
+  if(dots) dots.innerHTML = heroImgs.length > 1 ? heroImgs.map((_, i) => `<div class="nss-dot${i === 0 ? ' active' : ''}" data-idx="${i}"></div>`).join('') : '';
+  if(controls) controls.style.display = heroImgs.length > 1 ? '' : 'none';
+
+  const banners = doc.getElementById('event-banners-wrap');
+  if(banners) banners.innerHTML = renderStaticEventBanners(events);
+
+  const regionMap = {
+    matsumoto: { id: 'grid-matsumoto', label: 'Matsumoto' },
+    shiojiri: { id: 'grid-shiojiri', label: 'Shiojiri' },
+    azumino: { id: 'grid-azumino', label: 'Azumino' }
+  };
+  Object.entries(regionMap).forEach(([key, cfg]) => {
+    const el = doc.getElementById(cfg.id);
+    if(el) el.innerHTML = renderStaticBreweries(breweries[key] || [], cfg.label);
+  });
+
+  const marquee = doc.querySelector('.marquee-track');
+  if(marquee) marquee.innerHTML = renderStaticMarquee(breweries);
+
+  const carousel = doc.getElementById('carousel-track');
+  if(carousel){
+    carousel.innerHTML = renderStaticCarousel(products);
+    carousel.style.animationDuration = `${Math.max(30, products.length * 5)}s`;
+  }
+
+  const upcomingBlock = doc.getElementById('event-upcoming-block');
+  if(upcomingBlock) upcomingBlock.innerHTML = renderStaticUpcomingEvents(events);
+  const booth = doc.getElementById('sake-booth-sections');
+  if(booth) booth.innerHTML = renderStaticSakeBooths(events);
+  const archive = doc.getElementById('event-archive-grid');
+  if(archive) archive.innerHTML = renderStaticArchiveEvents(events);
+
+  const r0 = doc.getElementById('research-photos-0');
+  if(r0) fillStaticPhotoGrid(r0, pagePhotos.research_0 || [], '研究会');
+  const r1 = doc.getElementById('research-photos-1');
+  if(r1) fillStaticPhotoGrid(r1, pagePhotos.research_1 || [], '研究会');
+
+  const shrineHero = doc.getElementById('shrineHeroImg');
+  const shrinePlaceholder = doc.getElementById('shrineHeroPlaceholder');
+  const shrineGrid = doc.getElementById('shrine-photos');
+  const shrinePhotos = (pagePhotos.shrine || []).filter(p=>p.file);
+  if(shrineHero){
+    shrineHero.querySelectorAll('img').forEach(img=>img.remove());
+    if(shrinePhotos[0]){
+      if(shrinePlaceholder) shrinePlaceholder.style.display = 'none';
+      const img = doc.createElement('img');
+      img.src = `images/${E(shrinePhotos[0].file)}`;
+      img.alt = shrinePhotos[0].alt || '松尾神社';
+      shrineHero.appendChild(img);
+    } else if(shrinePlaceholder) {
+      shrinePlaceholder.style.display = '';
+    }
+  }
+  if(shrineGrid){
+    const gridPhotos = shrinePhotos.slice(1);
+    shrineGrid.innerHTML = gridPhotos.map(p=>`<div class="page-photo-item reveal"><img src="images/${E(p.file)}" alt="${E(p.alt||'松尾神社')}"></div>`).join('');
+    shrineGrid.style.display = gridPhotos.length ? '' : 'none';
+  }
+}
+function renderStaticEventBanners(events){
+  const upcoming = (events || []).filter(e=>e.status==='upcoming');
+  return upcoming.map(ev => {
+    const dateLabel = eventDateLabel(ev);
+    const posterHtml = ev.image
+      ? `<img src="images/${E(ev.image)}" alt="${E(ev.title)}" class="event-poster-photo">`
+      : `<div class="event-poster-inner"><div class="event-poster-year">${E(dateLabel.slice(0,4))} — Event</div><div class="event-poster-main">${E(ev.title)}</div><div class="event-poster-date">${E(dateLabel)}</div></div><div class="event-poster-border"></div>`;
+    return `<div class="event-banner-item"><div class="event-inner"><div><div class="event-badge"><span class="event-badge-dot"></span>Upcoming Event</div><h2 class="event-title">${E(ev.title)}</h2><div class="event-meta"><div class="event-meta-item"><span class="event-meta-icon">📅</span><span>${E(dateLabel)}</span></div>${ev.time1?`<div class="event-meta-item"><span class="event-meta-icon">🕐</span><span>1部 ${E(ev.time1)} ／ 2部 ${E(ev.time2)}</span></div>`:''}${ev.venue?`<div class="event-meta-item"><span class="event-meta-icon">📍</span><span>${E(ev.venue)}</span></div>`:''}${ev.fee?`<div class="event-meta-item"><span class="event-meta-icon">💴</span><span>会費 ${E(ev.fee)}（前売り ${E(ev.feeAdvance||'')}）</span></div>`:''}</div>${ev.desc?`<p class="event-desc">${E(ev.desc)}</p>`:''}<a href="index.html?page=page-event" data-page="page-event" class="btn-primary">詳細・チケット情報</a></div><div class="event-poster"><div class="event-poster-img">${posterHtml}</div></div></div></div>`;
+  }).join('');
+}
+function renderStaticBreweries(items, label){
+  return items.map((b, i) => {
+    const emailHtml = b.email ? `<a href="mailto:${E(b.email)}">${E(b.email)}</a>` : '';
+    const faxHtml = b.fax ? ` ／ FAX：${E(b.fax)}` : '';
+    const bgHtml = b.image ? `<img class="brewery-card-bg" src="images/${E(b.image)}" alt="">` : '';
+    return `<div class="brewery-card" data-num="${String(i+1).padStart(2,'0')}">${bgHtml}<div class="bc-region">${E(label)}</div><div class="bc-name">${E(b.name)}</div><div class="bc-maker">${E(b.maker)}</div><div class="bc-info">〒${E(b.zip)} ${E(b.address)}<br>TEL：${E(b.tel)}${faxHtml}<br>${emailHtml}</div><span class="bc-arrow">詳しく見る →</span></div>`;
+  }).join('');
+}
+function renderStaticMarquee(breweries){
+  const names = [...(breweries.matsumoto||[]), ...(breweries.shiojiri||[]), ...(breweries.azumino||[])].map(b=>b.name);
+  return [...names, ...names].map(n=>`<span>${E(n)}</span><span>·</span>`).join('');
+}
+function renderStaticCarousel(products){
+  const items = [...products, ...products];
+  return items.map(p => {
+    const imgHtml = p.image ? `<img src="images/${E(p.image)}" alt="${E(p.name)}">` : '酒';
+    return `<a class="carousel-item" href="purchase.html" data-page="page-purchase"><div class="carousel-img">${imgHtml}</div><div class="carousel-item-brewery">${E(p.brewery)}</div><div class="carousel-item-name">${E(p.name)}</div><div class="carousel-item-price">${E(p.price)}円（税込）</div></a>`;
+  }).join('');
+}
+function renderStaticUpcomingEvents(events){
+  return (events || []).filter(e=>e.status==='upcoming').map(ev => {
+    const dateLabel = eventDateLabel(ev);
+    const imgHtml = ev.image ? `<div class="ev-img-wrap"><img src="images/${E(ev.image)}" alt="${E(ev.title)}" class="ev-detail-img"></div>` : '';
+    return `<div class="ev-detail-card reveal"><div class="ev-detail-badge"><span style="width:6px;height:6px;border-radius:50%;background:var(--amber);animation:blink 1.4s ease infinite;display:inline-block;flex-shrink:0;"></span><span>Upcoming Event</span></div>${imgHtml}<h2 class="ev-detail-title">${E(ev.title)}</h2><div class="ev-detail-body"><dl class="ev-detail-dl"><div class="ev-dl-row"><dt>日時</dt><dd>${E(dateLabel)}${ev.time1?` / 1部 ${E(ev.time1)} / 2部 ${E(ev.time2)}`:''}</dd></div><div class="ev-dl-row"><dt>会場</dt><dd>${E(ev.venue||'')}</dd></div>${ev.fee?`<div class="ev-dl-row"><dt>会費</dt><dd>当日 ${E(ev.fee)} / 前売り <span style="color:var(--amber);">${E(ev.feeAdvance||'')}</span></dd></div>`:''}${ev.ticketShops?`<div class="ev-dl-row"><dt>前売店</dt><dd style="font-size:.82rem;">${E(ev.ticketShops)}</dd></div>`:''}</dl><div class="ev-detail-desc"><p>${E(ev.desc||'')}</p><a href="purchase.html" data-page="page-purchase" class="btn-primary">お問い合わせ・申込み</a></div></div></div>`;
+  }).join('');
+}
+function renderStaticSakeBooths(events){
+  return (events || []).filter(ev=>Array.isArray(ev.sakes) && ev.sakes.length).map(event => {
+    const grouped = {};
+    event.sakes.forEach(sake => {
+      if(!grouped[sake.brewery]) grouped[sake.brewery] = [];
+      grouped[sake.brewery].push(sake);
+    });
+    return `<section style="margin:4rem 0 0;"><h3 style="font-family:var(--serif);font-size:1.4rem;letter-spacing:.1em;margin:0 0 .75rem;" class="reveal">★ 蔵ブースのお酒 ★</h3><p style="font-size:.82rem;letter-spacing:.18em;color:var(--amber);margin:0 0 1.25rem;">${E(event.title)}</p><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5px;background:var(--border);border:1.5px solid var(--border);">${Object.entries(grouped).map(([brewery, items]) => `<div style="background:var(--ink);padding:2rem;"><div style="font-size:.62rem;letter-spacing:.4em;color:var(--amber);margin-bottom:.6rem;">${E(brewery)}</div>${items.map(s=>`<div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">${E(s.name)}</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">${E(s.desc)}</p></div>`).join('')}</div>`).join('')}</div></section>`;
+  }).join('');
+}
+function renderStaticArchiveEvents(events){
+  const ended = (events || []).filter(e=>e.status==='ended');
+  if(!ended.length) return '<p style="opacity:.4;font-size:.85rem;">過去のイベント記録はまだありません</p>';
+  return ended.map(e => {
+    const imgHtml = e.image ? `<div class="event-archive-img"><img src="images/${E(e.image)}" alt="${E(e.title)}"></div>` : `<div class="event-archive-img">${E((e.title||'').slice(0,4))}</div>`;
+    return `<div class="event-archive-card">${imgHtml}<div class="event-archive-title">${E(e.title)}</div><div class="event-archive-date">${E(eventDateLabel(e))}</div>${e.desc?`<p style="font-size:.78rem;opacity:.5;margin-top:.5rem;line-height:1.8;">${E(e.desc)}</p>`:''}</div>`;
+  }).join('');
+}
+function renderStaticAwards(awards){
+  const badgeClass = {'金賞':'badge-gold','最優秀賞':'badge-best','優秀賞':'badge-excellent','入賞':'badge-entry'};
+  return (awards || []).map(a => {
+    const category = awardCategoryOf(a);
+    return `<div class="award-year-block" data-type="${category}"><div class="award-year-heading">${E(a.year)}</div><div class="award-year-meta"><div class="award-year-sub">${E(a.competition)}</div><div class="award-category-chip">${E(awardCategoryLabel(category))}</div></div>${a.note ? `<p style="margin:0 0 1rem;font-size:.82rem;line-height:1.8;color:var(--amber-lt);">${E(a.note)}</p>` : ''}<table class="award-table"><thead><tr><th>賞</th><th>銘柄</th><th>製造者</th><th>部門</th></tr></thead><tbody>${(a.entries || []).map(e=>`<tr><td><span class="award-badge ${badgeClass[e.award]||'badge-entry'}">${E(e.award)}</span></td><td>${E(e.brand)}</td><td>${E(e.maker)}</td><td>${E(e.division||'—')}</td></tr>`).join('')}</tbody></table></div>`;
+  }).join('');
+}
+function renderStaticProducts(products){
+  return (products || []).map(p => {
+    const imgHtml = p.image ? `<div class="product-img-wrap"><img src="images/${E(p.image)}" alt="${E(p.name)}"></div>` : `<div class="product-img-wrap"><div class="product-img-placeholder">酒</div></div>`;
+    return `<div class="product-card"><div class="product-num">${E(p.num)}</div>${imgHtml}<div class="product-card-body"><div class="product-brewery">${E(p.brewery)}</div><div class="product-name">${E(p.name)}</div><div class="product-type">${E(p.type)}</div><p class="product-desc">${E(p.desc)}</p><div class="product-meta"><div class="product-meta-item">AL <span>${E(p.al)}%</span></div><div class="product-meta-item">容量 <span>${E(p.volume)}ml</span></div><div class="product-meta-item">価格 <span>${E(p.price)}円（税込）</span></div></div></div></div>`;
+  }).join('');
+}
+function fillStaticPhotoGrid(el, photos, fallbackAlt){
+  const filled = (photos || []).filter(p=>p.file);
+  el.innerHTML = filled.map(p=>`<div class="page-photo-item reveal"><img src="images/${E(p.file)}" alt="${E(p.alt||fallbackAlt)}"></div>`).join('');
+  el.style.display = filled.length ? '' : 'none';
 }
 
 // ── UTILS ──────────────────────────────────────────────────

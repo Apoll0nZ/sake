@@ -21,6 +21,7 @@ const staticPriorityAssetsByPage = {
 document.addEventListener('DOMContentLoaded', async () => {
   const dataPromise = fetchSiteData();
   const criticalAssetPromise = warmCriticalAssets();
+  const isStaticRendered = document.body?.dataset.staticRendered === '1';
 
   /* ① ローダー・UI を即時初期化（data.json 待ちしない） */
   initLoader({ dataPromise, criticalAssetPromise });
@@ -38,17 +39,24 @@ document.addEventListener('DOMContentLoaded', async () => {
   /* ③ 取得できたらレンダリング */
   if (d) {
     warmProductAssets(d.products);
-    renderHeroBg(d.images);
-    renderNavCarousel(d.events, d.products, d.heroImages);
-    renderEventBanners(d.events);
-    renderBreweries(d.breweries);
-    renderMarquee(d.breweries);
-    renderCarousel(d.products);
     normalizeEventSakes(d);
-    renderEventPage(d.events);
-    renderAwardsPage(d.awards);
-    renderProductsPage(d.products);
-    renderPagePhotos(d.pagePhotos);
+    awardsViewState.items = (d.awards || []).map((a, index) => ({
+      ...a,
+      category: normalizeAwardCategory(a),
+      _index: index
+    }));
+    if (!isStaticRendered) {
+      renderHeroBg(d.images);
+      renderNavCarousel(d.events, d.products, d.heroImages);
+      renderEventBanners(d.events);
+      renderBreweries(d.breweries);
+      renderMarquee(d.breweries);
+      renderCarousel(d.products);
+      renderEventPage(d.events);
+      renderAwardsPage(d.awards);
+      renderProductsPage(d.products);
+      renderPagePhotos(d.pagePhotos);
+    }
   }
 
   /* ④ 描画完了後に RevealObserver 起動 */
