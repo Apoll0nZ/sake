@@ -1,22 +1,6 @@
 {
   "events": [
     {
-      "id": "ev-1774087215909",
-      "status": "upcoming",
-      "title": "テスト",
-      "date": "2026-05-27",
-      "dateLabel": "2026年5月27日（水）",
-      "time1": "１１１１１",
-      "time2": "１１１１１",
-      "venue": "１１１１１",
-      "fee": "１１１１１",
-      "feeAdvance": "１１１１１１",
-      "ticketShops": "あああああああああ",
-      "desc": "ああああああああああ",
-      "image": "",
-      "sakes": []
-    },
-    {
       "id": "2026-spring",
       "status": "upcoming",
       "title": "松本平の地酒を味わう会",
@@ -171,7 +155,8 @@
           "name": "酔園 純米吟醸 ワイン酵母仕込み",
           "desc": "新商品！白ワインを思わせるような純米吟醸です。"
         }
-      ]
+      ],
+      "endDate": ""
     },
     {
       "id": "2025-kanko",
@@ -285,7 +270,7 @@
       "desc": "長野県産美山錦49%精米使用",
       "al": "15",
       "volume": "720",
-      "price": "1,650",
+      "price": "1,870",
       "image": "sake7.webp"
     },
     {
@@ -296,7 +281,7 @@
       "desc": "おしゃれなコルクラベル",
       "al": "15",
       "volume": "720",
-      "price": "1,600",
+      "price": "1,760",
       "image": "sake8.webp"
     }
   ],
@@ -308,7 +293,7 @@
         "region": "Matsumoto",
         "zip": "390-0811",
         "address": "松本市中央2-1-20",
-        "tel": "0263(32)0734",
+        "tel": "0263(32)0517",
         "fax": "",
         "email": "yoikana@po.mcci.or.jp"
       },
@@ -402,7 +387,7 @@
         "region": "Azumino",
         "zip": "399-8204",
         "address": "安曇野市豊科高家1090-1",
-        "tel": "0263(72)2828",
+        "tel": "0263(72)3011",
         "fax": "",
         "email": "mail@suien.co.jp"
       }
