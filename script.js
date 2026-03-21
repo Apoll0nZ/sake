@@ -6,6 +6,14 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const awardsViewState = { items: [], filter: 'all' };
 const awardCategoryLabels = { national: '全国新酒鑑評会', kanto: '関東信越国税局' };
+const pageHrefMap = {
+  'page-main': 'index.html',
+  'page-event': 'index.html?page=page-event',
+  'page-awards': 'index.html?page=page-awards',
+  'page-research': 'index.html?page=page-research',
+  'page-shrine': 'index.html?page=page-shrine',
+  'page-purchase': 'purchase.html'
+};
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -210,7 +218,7 @@ function renderEventBanners(events) {
             ${ev.fee?`<div class="event-meta-item"><span class="event-meta-icon">💴</span><span>会費 ${esc(ev.fee)}（前売り ${esc(ev.feeAdvance||'')}）</span></div>`:''}
           </div>
           ${ev.desc?`<p class="event-desc">${esc(ev.desc)}</p>`:''}
-          <a href="#" data-page="page-event" class="btn-primary">詳細・チケット情報</a>
+          <a href="${pageHref('page-event')}" data-page="page-event" class="btn-primary">詳細・チケット情報</a>
         </div>
         <div class="event-poster">
           <div class="event-poster-img">${posterHtml}</div>
@@ -263,7 +271,7 @@ function renderCarousel(products) {
   const items = [...products,...products];
   track.innerHTML = items.map(p => {
     const imgHtml = p.image ? `<img src="images/${esc(p.image)}" alt="${esc(p.name)}">` : `酒`;
-    return `<a class="carousel-item" data-page="page-purchase">
+    return `<a class="carousel-item" href="${pageHref('page-purchase')}" data-page="page-purchase">
       <div class="carousel-img">${imgHtml}</div>
       <div class="carousel-item-brewery">${esc(p.brewery)}</div>
       <div class="carousel-item-name">${esc(p.name)}</div>
@@ -302,7 +310,7 @@ function renderEventPage(events, sakes) {
           </dl>
           <div class="ev-detail-desc">
             <p>${esc(ev.desc||'')}</p>
-            <a href="#" data-page="page-purchase" class="btn-primary">お問い合わせ・申込み</a>
+            <a href="${pageHref('page-purchase')}" data-page="page-purchase" class="btn-primary">お問い合わせ・申込み</a>
           </div>
         </div>
       </div>`;
@@ -485,7 +493,7 @@ function initNavbar() {
 
 /* ── PAGE SYSTEM ────────────────────────────────────────────── */
 function initPageSystem() {
-  let _currentPage = 'page-main';
+  let _currentPage = document.querySelector('.page.active')?.id || document.querySelector('.page')?.id || 'page-main';
   function showPage(id) {
     const isSame = (id === _currentPage);
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -501,11 +509,19 @@ function initPageSystem() {
   document.addEventListener('click', e => {
     const link=e.target.closest('[data-page]');
     if (!link) return;
+    const target = $(link.dataset.page);
+    if (!target) return;
     e.preventDefault();
     showPage(link.dataset.page);
     $('navHamburger')?.classList.remove('open');
     $('navMobile')?.classList.remove('open');
   });
+  const requestedPage = new URLSearchParams(window.location.search).get('page');
+  if (requestedPage && $(requestedPage)) showPage(requestedPage);
+}
+
+function pageHref(id) {
+  return pageHrefMap[id] || '#';
 }
 
 /* ── PARTICLES ──────────────────────────────────────────────── */
