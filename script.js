@@ -136,6 +136,8 @@ function preloadImage(href, highPriority = false) {
 function initLoader({ dataPromise, criticalAssetPromise } = {}) {
   const loader = $('loader');
   if (!loader) return;
+  const minLoaderMs = 1500;
+  const startedAt = performance.now();
   const loaderSeenKey = 'sake_loader_seen';
   try {
     if (sessionStorage.getItem(loaderSeenKey) === '1') {
@@ -167,7 +169,10 @@ function initLoader({ dataPromise, criticalAssetPromise } = {}) {
   Promise.allSettled([
     dataPromise || Promise.resolve(),
     criticalAssetPromise || Promise.resolve()
-  ]).then(hideLoader);
+  ]).then(() => {
+    const remaining = Math.max(0, minLoaderMs - (performance.now() - startedAt));
+    setTimeout(hideLoader, remaining);
+  });
   setTimeout(hideLoader, 6000);
 }
 
