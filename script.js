@@ -6,6 +6,7 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const awardsViewState = { items: [], filter: 'all' };
 const awardCategoryLabels = { national: '全国新酒鑑評会', kanto: '関東信越国税局' };
+const loaderSkipParam = 'skipLoader';
 const pageHrefMap = {
   'page-main': 'index.html',
   'page-event': 'index.html?page=page-event',
@@ -59,6 +60,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 function initLoader() {
   const loader = $('loader');
   if (!loader) return;
+  const url = new URL(window.location.href);
+  if (url.searchParams.get(loaderSkipParam) === '1') {
+    loader.classList.add('hide');
+    url.searchParams.delete(loaderSkipParam);
+    history.replaceState(null, '', url.pathname + (url.search ? url.search : '') + url.hash);
+    return;
+  }
   const loaderSeenKey = 'sake_loader_seen';
   try {
     if (sessionStorage.getItem(loaderSeenKey) === '1') {
@@ -533,7 +541,14 @@ function initPageSystem() {
 }
 
 function pageHref(id) {
-  return pageHrefMap[id] || '#';
+  const href = pageHrefMap[id];
+  if (!href) return '#';
+  return appendLoaderSkipParam(href);
+}
+
+function appendLoaderSkipParam(href) {
+  const glue = href.includes('?') ? '&' : '?';
+  return `${href}${glue}${loaderSkipParam}=1`;
 }
 
 /* ── PARTICLES ──────────────────────────────────────────────── */
