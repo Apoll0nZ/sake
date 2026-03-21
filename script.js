@@ -56,9 +56,25 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 async function fetchSiteData() {
+  const storageKey = 'sake_site_data_v1';
   try {
-    const res = await fetch('data.json', { cache: 'no-store' });
-    if (res.ok) return await res.json();
+    const cached = sessionStorage.getItem(storageKey);
+    if (cached) return JSON.parse(cached);
+  } catch (_) {
+    // sessionStorage が使えない場合はそのまま取得
+  }
+
+  try {
+    const res = await fetch('data.json', { cache: 'default' });
+    if (res.ok) {
+      const data = await res.json();
+      try {
+        sessionStorage.setItem(storageKey, JSON.stringify(data));
+      } catch (_) {
+        // 保存できない場合も取得データはそのまま使う
+      }
+      return data;
+    }
     throw new Error('HTTP ' + res.status);
   } catch (e) {
     console.error('data.json の読み込みに失敗しました:', e);
