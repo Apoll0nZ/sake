@@ -1552,15 +1552,20 @@ footer {
     margin: 0 auto;
   }
   #event-banners-wrap .event-poster-img {
-    aspect-ratio: 3/4;
-    max-height: 78vh;
+    aspect-ratio: auto;
+    min-height: 0;
+    max-height: none;
+    display: block;
     background: rgba(255,255,255,0.96);
   }
   #event-banners-wrap .event-poster-photo,
   #event-banners-wrap .event-poster-img img {
-    max-height: 78vh;
+    width: 100%;
+    height: auto;
+    max-height: none;
     object-fit: contain;
     object-position: center;
+    display: block;
   }
   #event-banners-wrap .event-inner > .event-poster   { order: 1; }
   #event-banners-wrap .event-inner > div:first-child { order: 2; }
