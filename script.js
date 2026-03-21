@@ -19,11 +19,11 @@ const staticPriorityAssetsByPage = {
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
+  const dataPromise = fetchSiteData();
 
   /* ① ローダー・UI を即時初期化（data.json 待ちしない） */
   initLoader();
   warmCriticalAssets();
-  const dataPromise = fetchSiteData();
   initNavbar();
   initPageSystem();
   initParticles();
