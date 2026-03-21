@@ -85,13 +85,6 @@ hr.div{border:none;border-top:1px solid var(--bd);margin:1.5rem 0;}
 /* toast */
 #toast{position:fixed;bottom:2rem;right:2rem;padding:.9rem 1.6rem;background:var(--ok);color:#fff;font-size:.95rem;font-weight:bold;z-index:9999;transform:translateY(100px);opacity:0;transition:all .35s ease;pointer-events:none;}
 #toast.show{transform:translateY(0);opacity:1;}#toast.err{background:var(--ng);}
-/* image registered badge */
-.img-badge{display:inline-flex;align-items:center;gap:.3rem;font-size:.65rem;letter-spacing:.18em;padding:.15rem .55rem;background:rgba(200,146,42,.2);color:var(--amber-lt);border:1px solid rgba(200,146,42,.35);margin-left:.5rem;vertical-align:middle;}
-.img-badge::before{content:'🖼';font-size:.75rem;}
-.lin .img-badge{font-size:.6rem;}
-/* list item image indicator */
-.li .img-dot{width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0;box-shadow:0 0 4px rgba(200,146,42,.6);}
-.li .img-dot.none{background:rgba(255,255,255,.15);box-shadow:none;}
 @media(max-width:700px){#sidebar{display:none;}#main{padding:1.5rem;}.g2,.g3{grid-template-columns:1fr;}.ar{grid-template-columns:1fr 1fr;}}
 /* 起動時フォルダ選択オーバーレイ */
 #startup-overlay {
@@ -276,54 +269,17 @@ hr.div{border:none;border-top:1px solid var(--bd);margin:1.5rem 0;}
 <div id="toast"></div>
 
 <script>
-// ── IndexedDB: FileSystemDirectoryHandle の永続化 ─────────
-const IDB_NAME = 'sake-admin', IDB_STORE = 'handles', IDB_KEY = 'rootDir';
-
-function idbOpen() {
-  return new Promise((res, rej) => {
-    const req = indexedDB.open(IDB_NAME, 1);
-    req.onupgradeneeded = e => e.target.result.createObjectStore(IDB_STORE);
-    req.onsuccess = e => res(e.target.result);
-    req.onerror = e => rej(e.target.error);
-  });
-}
-async function idbSave(handle) {
-  try {
-    const db = await idbOpen();
-    return new Promise((res, rej) => {
-      const tx = db.transaction(IDB_STORE, 'readwrite');
-      tx.objectStore(IDB_STORE).put(handle, IDB_KEY);
-      tx.oncomplete = () => res();
-      tx.onerror = e => rej(e.target.error);
-    });
-  } catch(e) { console.warn('idbSave failed', e); }
-}
-async function idbLoad() {
-  try {
-    const db = await idbOpen();
-    return new Promise((res, rej) => {
-      const tx = db.transaction(IDB_STORE, 'readonly');
-      const req = tx.objectStore(IDB_STORE).get(IDB_KEY);
-      req.onsuccess = e => res(e.target.result || null);
-      req.onerror = e => rej(e.target.error);
-    });
-  } catch(e) { console.warn('idbLoad failed', e); return null; }
-}
-
 // ── File System Access API ─────────────────────────────────
 let rootH=null, imgH=null;
 
 async function selRoot(){
   try {
-    // 前回保存したハンドルをIndexedDBから取得 → startIn に渡す
-    const prevHandle = await idbLoad();
-    const opts = { mode: 'readwrite', id: 'sake-site' };
-    if (prevHandle) {
-      try { opts.startIn = prevHandle; } catch(_) {}
-    }
-    rootH = await window.showDirectoryPicker(opts);
-    // 今回選択したハンドルをIndexedDBに保存
-    await idbSave(rootH);
+    // id:'sake-site' でChromeが前回選択したフォルダを記憶する
+    rootH=await window.showDirectoryPicker({
+      mode:'readwrite',
+      id:'sake-site',
+    });
+    // 選択したフォルダ名をlocalStorageに保存（案内用）
     try{ localStorage.setItem('sake_last_folder', rootH.name); }catch(_){}
     imgH=await rootH.getDirectoryHandle('images',{create:true});
     document.getElementById('setup').classList.add('ok');
@@ -383,9 +339,9 @@ async function loadImgPreviews(){
     const lb=document.getElementById('plb-'+i);
     if(th){th.src=url;th.classList.add('show');}
     if(lb){lb.textContent='✓ '+p.image;lb.classList.add('named');}
+    // ipickにhasクラス
     const wrap=th?.closest('.ipick');
     if(wrap) wrap.classList.add('has');
-    updateImgBadge('prod-badge-'+i, true);
   }
 
   // イベント画像
@@ -398,7 +354,6 @@ async function loadImgPreviews(){
     if(lb){lb.textContent='✓ '+ev.image;lb.classList.add('named');}
     const wrap=th?.closest('.ipick');
     if(wrap) wrap.classList.add('has');
-    updateImgBadge('ev-badge-'+i, true);
   }
 
   // ヒーロー画像
@@ -411,22 +366,6 @@ async function loadImgPreviews(){
     if(lb){lb.textContent='✓ '+img.file;lb.classList.add('named');}
     const wrap=th?.closest('.ipick');
     if(wrap) wrap.classList.add('has');
-  }
-
-  // 蔵元画像
-  for(const region of ['matsumoto','shiojiri','azumino']){
-    const list = (S.breweries||{})[region]||[];
-    for(let i=0;i<list.length;i++){
-      const b=list[i]; if(!b.image) continue;
-      const url=await getUrl(b.image); if(!url) continue;
-      const th=document.getElementById('brth-'+region+'-'+i);
-      const lb=document.getElementById('brlb-'+region+'-'+i);
-      if(th){th.src=url;th.classList.add('show');}
-      if(lb){lb.textContent='✓ '+b.image;lb.classList.add('named');}
-      const wrap=th?.closest('.ipick');
-      if(wrap) wrap.classList.add('has');
-      updateImgBadge('br-badge-'+region+'-'+i, true);
-    }
   }
 
   // 研究会画像
@@ -550,9 +489,6 @@ async function pickImg(input,thumbId,lblId,role){
     if(th){th.src=e.target.result;th.classList.add('show');}
     const lb=document.getElementById(lblId);
     if(lb){lb.textContent='✓ '+file.name;lb.classList.add('named');}
-    // ipick に has クラスを付与
-    const wrap=th?.closest('.ipick');
-    if(wrap) wrap.classList.add('has');
   };
   reader.readAsDataURL(file);
   // images/へ保存
@@ -562,51 +498,18 @@ async function pickImg(input,thumbId,lblId,role){
   if(role==='hero') {
     S.images.hero=file.name;
   } else if(!isNaN(numRole) && S.products[numRole]) {
+    // 数値・数値文字列どちらでも対応
     S.products[numRole].image=file.name;
-    // 商品カードヘッダーのバッジを更新
-    updateImgBadge('prod-badge-'+numRole, true);
   } else if(typeof role==='string'&&role.startsWith('ev:')){
     const idx=parseInt(role.slice(3));
-    if(S.events[idx]) {
-      S.events[idx].image=file.name;
-      // イベントカードヘッダーのバッジを更新
-      updateImgBadge('ev-badge-'+idx, true);
-    }
+    if(S.events[idx]) S.events[idx].image=file.name;
   } else if(typeof role==='string'&&role.startsWith('br:')){
     const [,reg,idx]=role.split(':');
-    if(S.breweries[reg]&&S.breweries[reg][parseInt(idx)]) {
-      S.breweries[reg][parseInt(idx)].image=file.name;
-      updateImgBadge('br-badge-'+reg+'-'+idx, true);
-    }
+    if(S.breweries[reg]&&S.breweries[reg][parseInt(idx)]) S.breweries[reg][parseInt(idx)].image=file.name;
   }
-  if(ok) {
-    toast('✓ images/'+file.name+' に保存しました');
-    await autoSaveJSON();
-  } else if(imgH) toast('画像保存に失敗しました',true);
+  if(ok) toast('✓ images/'+file.name+' に保存しました');
+  else if(imgH) toast('画像保存に失敗しました',true);
   else toast(file.name+'を記録。imagesフォルダに手動で置いてください');
-}
-
-// data.json 自動保存（画像選択時に呼び出す）
-async function autoSaveJSON(){
-  if(!rootH) return;
-  try {
-    const str = JSON.stringify(S, null, 2);
-    const ok = await saveJSON(str);
-    if(ok) console.log('data.json 自動保存完了');
-  } catch(e) { console.warn('autoSaveJSON failed', e); }
-}
-
-// バッジを動的に表示/非表示切り替え
-function updateImgBadge(badgeId, hasImage) {
-  const el = document.getElementById(badgeId);
-  if (!el) return;
-  if (hasImage) {
-    el.style.display = '';
-    el.className = 'img-badge';
-    el.textContent = '画像あり';
-  } else {
-    el.style.display = 'none';
-  }
 }
 
 // ── イベント ───────────────────────────────────────────────
@@ -618,7 +521,7 @@ function renderEvents(){
     return `<div class="ev-item">
       <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;">
         <span class="ev-status-badge ${isUp?'upcoming':'ended'}">${isUp?'▶ 直近イベント':'✓ 終了済み'}</span>
-        <strong style="flex:1;font-size:1rem;">${E(ev.title||'（未入力）')}<span id="ev-badge-${i}" class="img-badge" style="${ev.image?'':'display:none'}">画像あり</span></strong>
+        <strong style="flex:1;font-size:1rem;">${E(ev.title||'（未入力）')}</strong>
         ${isUp
           ?`<button class="btn bd bsm ev-move-btn" onclick="moveToArchive(${i})" title="終了済みに移動">アーカイブへ移動 →</button>`
           :`<button class="btn bg bsm ev-move-btn" onclick="moveToUpcoming(${i})" title="直近イベントに戻す">← 直近に戻す</button>`
@@ -669,7 +572,7 @@ function renderProducts(){
     return `<div class="card" style="margin-bottom:1rem;">
       <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
         <span style="font-size:1.4rem;font-family:serif;color:var(--amber);opacity:.5;">No.${p.num}</span>
-        <div style="font-size:1rem;font-weight:bold;">${E(p.name||'（未設定）')}<span id="prod-badge-${i}" class="img-badge" style="${p.image?'':'display:none'}">画像あり</span></div>
+        <div style="font-size:1rem;font-weight:bold;">${E(p.name||'（未設定）')}</div>
         <div style="margin-left:auto;"><button class="btn bd bsm" onclick="delProd(${i})">削除</button></div>
       </div>
       <div class="g2">
@@ -687,6 +590,7 @@ function renderProducts(){
       </div>
       <div class="f">
         <label>商品画像</label>
+        <div class="hint" style="margin-bottom:.4rem;">推奨サイズ：<strong>400 × 1500 px</strong> 前後の縦長PNG（瓶全体が写るもの）。背景は黒または白。</div>
         <div class="ipick ${p.image?'has':''}" onclick="document.getElementById('pi-${i}').click()">
           <input type="file" id="pi-${i}" accept="image/*" onclick="event.stopPropagation()" onchange="pickImg(this,'pth-${i}','plb-${i}',${i})">
           <img id="pth-${i}" class="ith ${p.image?'show':''}" alt="" ${imgSrc?`src="${imgSrc}"`:''}>
@@ -726,7 +630,7 @@ function renderBreweries(){
     el.innerHTML=(S.breweries[region]||[]).map((b,i)=>{
       const imgSrc=b.image?`images/${E(b.image)}`:'';
       return `<div class="card" style="margin-bottom:1rem;">
-        <div class="ctitle">${E(b.name)} ／ ${E(b.maker)}<span id="br-badge-${region}-${i}" class="img-badge" style="${b.image?'':'display:none'}">画像あり</span></div>
+        <div class="ctitle">${E(b.name)} ／ ${E(b.maker)}</div>
         <div class="g2">
           <div class="f"><label>銘柄名</label><input type="text" value="${E(b.name||'')}" oninput="S.breweries['${region}'][${i}].name=this.value"></div>
           <div class="f"><label>製造場名</label><input type="text" value="${E(b.maker||'')}" oninput="S.breweries['${region}'][${i}].maker=this.value"></div>
@@ -885,12 +789,8 @@ async function pickPagePhoto(input, key, idx){
   if(!S.pagePhotos[key]) S.pagePhotos[key]=[];
   if(!S.pagePhotos[key][idx]) S.pagePhotos[key][idx]={file:'',alt:''};
   S.pagePhotos[key][idx].file=file.name;
-  // 再描画して削除ボタンを表示
-  renderPagePhotosAdmin();
-  if(ok) {
-    toast('✓ images/'+file.name+' に保存しました');
-    await autoSaveJSON();
-  } else toast(file.name+' を記録。imagesフォルダに手動で置いてください');
+  if(ok) toast('✓ images/'+file.name+' に保存しました');
+  else toast(file.name+' を記録。imagesフォルダに手動で置いてください');
 }
 
 function clearPagePhoto(key, idx){
@@ -920,7 +820,6 @@ function renderHeroImages(){
       <div style="flex:1;display:flex;flex-direction:column;gap:.6rem;">
         <div style="display:flex;align-items:center;gap:.5rem;">
           <span style="font-size:.75rem;color:var(--amber);font-weight:700;min-width:2rem;">No.${i+1}</span>
-          ${img.file?'<span class="img-badge">登録済み</span>':'<span style="font-size:.65rem;color:rgba(255,255,255,.25);">未登録</span>'}
           <div class="f" style="flex:1;margin:0;">
             <input type="text" placeholder="alt テキスト（省略可）" value="${E(img.alt||'')}"
               oninput="S.heroImages[${i}].alt=this.value"
@@ -950,10 +849,8 @@ async function pickHeroImg(input,idx){
   const ok=imgH?await saveImg(file,file.name):false;
   if(!S.heroImages[idx]) S.heroImages[idx]={file:'',alt:''};
   S.heroImages[idx].file=file.name;
-  if(ok) {
-    toast('✓ images/'+file.name+' に保存しました');
-    await autoSaveJSON();
-  } else toast(file.name+' を記録。imagesフォルダに手動で置いてください');
+  if(ok) toast('✓ images/'+file.name+' に保存しました');
+  else toast(file.name+' を記録。imagesフォルダに手動で置いてください');
 }
 
 function addHeroImageSlot(){
@@ -977,54 +874,25 @@ function moveHeroImg(idx,dir){
   renderHeroImages();
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
-
+document.addEventListener('DOMContentLoaded',()=>{
   if(!('showDirectoryPicker' in window)){
     document.getElementById('sst').innerHTML='<strong>⚠ このブラウザは非対応です</strong>Chrome または Edge をご使用ください。';
     document.querySelector('#setup button').disabled=true;
     renderAll();
     return;
   }
-
-  // まず空のstateでDOMを生成
+  // 起動時オーバーレイを表示
+  showStartupOverlay();
   renderAll();
-
-  // IndexedDBから前回のハンドルを取得し、パーミッションが残っていれば自動接続
-  const prevHandle = await idbLoad();
-  if (prevHandle) {
-    try {
-      const perm = await prevHandle.queryPermission({ mode: 'readwrite' });
-      if (perm === 'granted') {
-        rootH = prevHandle;
-        imgH = await rootH.getDirectoryHandle('images', { create: true });
-        document.getElementById('setup').classList.add('ok');
-        document.getElementById('sst').innerHTML = `<strong>✓ フォルダ接続済み: ${rootH.name}</strong>　前回のフォルダを自動で再接続しました。`;
-        // data.json をファイルシステムから読み込み → renderAll → loadImgPreviews
-        await loadJSON();
-        toast('前回のフォルダを自動接続しました: ' + rootH.name);
-        return;
-      }
-    } catch(_) {}
-  }
-
-  // 自動接続できなかった場合はオーバーレイ表示
-  showStartupOverlay(prevHandle);
 });
 
-async function showStartupOverlay(prevHandle){
+function showStartupOverlay(){
   const last = (() => { try{ return localStorage.getItem('sake_last_folder'); }catch(_){ return null; } })();
-
-  // 前回ハンドルがあれば「前回の場所から再開」ボタンを用意
-  const prevHint = (prevHandle && last)
-    ? `<div style="font-size:.8rem;background:rgba(200,146,42,.15);border:1px solid rgba(200,146,42,.3);padding:.6rem 1rem;border-radius:3px;margin-bottom:1rem;color:rgba(255,220,120,.9);">
+  const hint = last
+    ? `<div style="font-size:.8rem;background:rgba(200,146,42,.15);border:1px solid rgba(200,146,42,.3);padding:.6rem 1rem;border-radius:3px;margin-bottom:1.2rem;color:rgba(255,220,120,.9);">
         前回: <strong>${last}</strong> を選択していました
-       </div>
-       <button id="startup-btn-prev" onclick="startupSelectPrev()"
-         style="width:100%;padding:.8rem;background:rgba(200,146,42,.18);border:1px solid rgba(200,146,42,.5);color:var(--amber-lt);font-size:.92rem;font-weight:600;cursor:pointer;letter-spacing:.04em;margin-bottom:.6rem;border-radius:2px;">
-         📂 前回と同じフォルダを開く（${last}）
-       </button>`
-    : (last ? `<div style="font-size:.8rem;background:rgba(200,146,42,.1);border:1px solid rgba(200,146,42,.25);padding:.5rem 1rem;border-radius:3px;margin-bottom:1rem;color:rgba(255,220,120,.7);">前回: <strong>${last}</strong></div>` : '');
-
+       </div>`
+    : '';
   const overlay = document.createElement('div');
   overlay.id = 'startup-overlay';
   overlay.innerHTML = `
@@ -1035,10 +903,8 @@ async function showStartupOverlay(prevHandle){
         index.html が入っているフォルダを選択してください。<br>
         data.json の読み込みと画像の自動保存が有効になります。
       </div>
-      ${prevHint}
-      <button id="startup-btn" onclick="startupSelect()" style="width:100%;padding:.9rem 2.5rem;background:var(--amber);color:#fff;border:none;font-size:1rem;font-weight:600;letter-spacing:.08em;cursor:pointer;border-radius:2px;transition:opacity .2s;">
-        ${prevHandle ? '別のフォルダを選択' : 'フォルダを選択して開始'}
-      </button>
+      ${hint}
+      <button id="startup-btn" onclick="startupSelect()">フォルダを選択して開始</button>
       <div style="margin-top:1rem;">
         <button onclick="document.getElementById('startup-overlay').remove();renderAll();"
           style="background:none;border:none;color:rgba(255,255,255,.35);font-size:.8rem;cursor:pointer;text-decoration:underline;">
@@ -1054,35 +920,6 @@ async function startupSelect(){
   if(btn){ btn.disabled=true; btn.textContent='選択中...'; }
   try {
     await selRoot();
-  } finally {
-    const overlay = document.getElementById('startup-overlay');
-    if(overlay) overlay.remove();
-  }
-}
-
-// 前回と同じハンドルでパーミッション再リクエスト
-async function startupSelectPrev(){
-  const btn = document.getElementById('startup-btn-prev');
-  if(btn){ btn.disabled=true; btn.textContent='接続中...'; }
-  try {
-    const prevHandle = await idbLoad();
-    if (!prevHandle) { await startupSelect(); return; }
-    const perm = await prevHandle.requestPermission({ mode: 'readwrite' });
-    if (perm === 'granted') {
-      rootH = prevHandle;
-      imgH = await rootH.getDirectoryHandle('images', { create: true });
-      document.getElementById('setup').classList.add('ok');
-      document.getElementById('sst').innerHTML = `<strong>✓ フォルダ接続済み: ${rootH.name}</strong>画像はimages/へ自動保存、data.jsonも直接書き出せます。`;
-      await loadJSON();
-      toast('フォルダを接続しました: ' + rootH.name);
-    } else {
-      // パーミッション拒否 → 通常のフォルダ選択へ
-      await startupSelect();
-      return;
-    }
-  } catch(e) {
-    await startupSelect();
-    return;
   } finally {
     const overlay = document.getElementById('startup-overlay');
     if(overlay) overlay.remove();
