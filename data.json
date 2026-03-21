@@ -13,11 +13,12 @@
       "feeAdvance": "１１１１１１",
       "ticketShops": "あああああああああ",
       "desc": "ああああああああああ",
-      "image": ""
+      "image": "",
+      "sakes": []
     },
     {
       "id": "2026-spring",
-      "status": "ended",
+      "status": "upcoming",
       "title": "松本平の地酒を味わう会",
       "date": "2026-04-11",
       "dateLabel": "2026年4月11日（土）",
@@ -178,7 +179,8 @@
       "title": "信州の観光と物産展",
       "dateLabel": "2025年秋",
       "desc": "",
-      "image": ""
+      "image": "",
+      "sakes": []
     },
     {
       "id": "2025-marche",
@@ -186,7 +188,8 @@
       "title": "美ケ原温泉マルシェ",
       "dateLabel": "2025年",
       "desc": "",
-      "image": ""
+      "image": "",
+      "sakes": []
     },
     {
       "id": "2025-kikou",
@@ -194,7 +197,8 @@
       "title": "美ケ原温泉 松本平地酒紀行",
       "dateLabel": "2025年",
       "desc": "",
-      "image": ""
+      "image": "",
+      "sakes": []
     },
     {
       "id": "2025-kabuki",
@@ -202,7 +206,8 @@
       "title": "信州松本大歌舞伎",
       "dateLabel": "2025年",
       "desc": "",
-      "image": ""
+      "image": "",
+      "sakes": []
     }
   ],
   "products": [
