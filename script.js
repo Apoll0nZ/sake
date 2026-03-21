@@ -547,14 +547,6 @@ function initParallax(){
     riverVideo.addEventListener('loadedmetadata', () => { riverVideo.playbackRate = 0.333; });
     riverVideo.addEventListener('play', () => { riverVideo.playbackRate = 0.333; });
   }
-
-  // saketitle動画（washi）の再生速度も 1/3 に設定
-  const washiVideo = document.querySelector('.washi-video-bg');
-  if (washiVideo) {
-    washiVideo.playbackRate = 0.333;
-    washiVideo.addEventListener('loadedmetadata', () => { washiVideo.playbackRate = 0.333; });
-    washiVideo.addEventListener('play', () => { washiVideo.playbackRate = 0.333; });
-  }
 }
 
 /* ── REGION TABS ────────────────────────────────────────────── */

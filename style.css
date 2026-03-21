@@ -1483,7 +1483,7 @@ footer {
 }
 
 /* 動画：position:absolute で親全体を埋める */
-.washi-video-bg {
+.washi-visual-bg {
   position: absolute;
   inset: 0;
   width: 100%;
