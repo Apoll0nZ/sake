@@ -1,30 +1,18 @@
 /* ============================================================
    松本地酒家 — script.js
-   fetch('data.json') でデータを取得してレンダリングする
+   静的書き出し済みページ用の最小初期化
    ============================================================ */
 const $ = id => document.getElementById(id);
-const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-const awardsViewState = { items: [], filter: 'all' };
-const awardCategoryLabels = { national: '全国新酒鑑評会', kanto: '関東信越国税局' };
-const pageHrefMap = {
-  'page-main': 'index.html',
-  'page-event': 'index.html?page=page-event',
-  'page-awards': 'awards.html',
-  'page-research': 'index.html?page=page-research',
-  'page-shrine': 'index.html?page=page-shrine',
-  'page-purchase': 'purchase.html'
-};
+const awardsViewState = { filter: 'all' };
 const staticPriorityAssetsByPage = {
   main: ['header.webp']
 };
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const dataPromise = fetchSiteData();
+document.addEventListener('DOMContentLoaded', () => {
   const criticalAssetPromise = warmCriticalAssets();
-  const isStaticRendered = document.body?.dataset.staticRendered === '1';
 
-  /* ① ローダー・UI を即時初期化（data.json 待ちしない） */
-  initLoader({ dataPromise, criticalAssetPromise });
+  /* ① ローダー・UI を即時初期化 */
+  initLoader({ criticalAssetPromise });
   initNavbar();
   initPageSystem();
   initParticles();
@@ -32,86 +20,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   initRegionTabs();
   initAwardsFilter();
   initForm();
-
-  /* ② data.json を fetch で取得 */
-  const d = await dataPromise;
-
-  /* ③ 取得できたらレンダリング */
-  if (d) {
-    warmProductAssets(d.products);
-    normalizeEventSakes(d);
-    awardsViewState.items = (d.awards || []).map((a, index) => ({
-      ...a,
-      category: normalizeAwardCategory(a),
-      _index: index
-    }));
-    if (!isStaticRendered) {
-      renderHeroBg(d.images);
-      renderNavCarousel(d.events, d.products, d.heroImages);
-      renderEventBanners(d.events);
-      renderBreweries(d.breweries);
-      renderMarquee(d.breweries);
-      renderCarousel(d.products);
-      renderEventPage(d.events);
-      renderAwardsPage(d.awards);
-      renderProductsPage(d.products);
-      renderPagePhotos(d.pagePhotos);
-    } else {
-      initStaticHeroCarousel();
-    }
-  }
-
-  /* ④ 描画完了後に RevealObserver 起動 */
+  initStaticHeroCarousel();
   initRevealObserver();
 });
-
-async function fetchSiteData() {
-  const storageKey = 'sake_site_data_data.json';
-  const inlineData = readInlineSiteData();
-  if (inlineData) {
-    try {
-      sessionStorage.setItem(storageKey, JSON.stringify(inlineData));
-    } catch (_) {
-      // 保存できない場合もそのまま使う
-    }
-    return inlineData;
-  }
-  try {
-    const cached = sessionStorage.getItem(storageKey);
-    if (cached) return JSON.parse(cached);
-  } catch (_) {
-    // sessionStorage が使えない場合はそのまま取得
-  }
-
-  try {
-    const res = await fetch('data.json', { cache: 'default' });
-    if (res.ok) {
-      const data = await res.json();
-      try {
-        sessionStorage.setItem(storageKey, JSON.stringify(data));
-      } catch (_) {
-        // 保存できない場合も取得データはそのまま使う
-      }
-      return data;
-    }
-    throw new Error('HTTP ' + res.status);
-  } catch (e) {
-    console.error('data.json の読み込みに失敗しました:', e);
-    return null;
-  }
-}
-
-function readInlineSiteData() {
-  const el = document.getElementById('static-site-data');
-  if (!el) return null;
-  const raw = el.textContent?.trim();
-  if (!raw || raw === '{}' || raw === 'null') return null;
-  try {
-    return JSON.parse(raw);
-  } catch (_) {
-    return null;
-  }
-}
 
 function getCurrentPageKey() {
   const path = location.pathname.toLowerCase();
@@ -129,16 +40,6 @@ function warmCriticalAssets() {
   return Promise.all(
     assets.map((file, index) => preloadImage(`images/${file}`, index === 0))
   );
-}
-
-function warmProductAssets(products) {
-  const pageKey = getCurrentPageKey();
-  if (pageKey !== 'main' && pageKey !== 'purchase') return;
-
-  (products || [])
-    .filter(product => product?.image)
-    .slice(0, 4)
-    .forEach((product, index) => preloadImage(`images/${product.image}`, index === 0));
 }
 
 function preloadImage(href, highPriority = false) {
@@ -164,7 +65,7 @@ function preloadImage(href, highPriority = false) {
 }
 
 /* ── LOADER ────────────────────────────────────────────────── */
-function initLoader({ dataPromise, criticalAssetPromise } = {}) {
+function initLoader({ criticalAssetPromise } = {}) {
   const loader = $('loader');
   if (!loader) return;
   const minLoaderMs = 2500;
@@ -197,76 +98,11 @@ function initLoader({ dataPromise, criticalAssetPromise } = {}) {
   };
   lockScroll();
   const hideLoader = () => { loader.classList.add('hide'); unlockScroll(); };
-  Promise.allSettled([
-    dataPromise || Promise.resolve(),
-    criticalAssetPromise || Promise.resolve()
-  ]).then(() => {
+  Promise.allSettled([criticalAssetPromise || Promise.resolve()]).then(() => {
     const remaining = Math.max(0, minLoaderMs - (performance.now() - startedAt));
     setTimeout(hideLoader, remaining);
   });
   setTimeout(hideLoader, 6000);
-}
-
-/* ── ヒーロー背景 ───────────────────────────────────────────── */
-function renderHeroBg(images) {
-  if (!images?.hero) return;
-  const bg = $('heroBg');
-  if (bg) bg.style.backgroundImage = `url('images/${esc(images.hero)}')`;
-}
-
-/* ── ナビスライドショー ─────────────────────────────────────── */
-function renderNavCarousel(events, products, heroImages) {
-  const ss = $('nav-slideshow');
-
-  // ── heroImages が登録されていれば複数スライドを生成 ──
-  const imgs = (heroImages || []).filter(h => h.file);
-  const slidesWrap = $('nsSlides');
-  const controls   = $('heroControls');
-  const dotsWrap   = $('nssDots');
-
-  if (imgs.length > 0 && slidesWrap) {
-    // スライドをDOMに生成（テキストは全スライド共通）
-    slidesWrap.innerHTML = imgs.map((img, i) => `
-      <div class="nss-slide${i === 0 ? ' active' : ''}">
-        <div class="nss-slide-img" style="background-image:url('images/${esc(img.file)}');background-size:cover;background-position:center;">
-        </div>
-        <div class="nss-slide-sub">長野県松本市の地酒</div>
-        <div class="nss-content">
-          <div class="nss-quote-wrap">
-            <p class="nss-quote-main">「一杯の酒に、<br><em>山と里の物語</em>が宿る」</p>
-            <p class="nss-quote-attr">— 信州松本の地酒職人より —</p>
-          </div>
-        </div>
-      </div>`).join('');
-
-    // 複数枚ならコントロール表示＋スライドショー起動
-    if (imgs.length > 1) {
-      if (controls) controls.style.display = '';
-      if (dotsWrap) {
-        dotsWrap.innerHTML = imgs.map((_, i) =>
-          `<div class="nss-dot${i === 0 ? ' active' : ''}" data-idx="${i}"></div>`
-        ).join('');
-        dotsWrap.querySelectorAll('.nss-dot').forEach(dot => {
-          dot.addEventListener('click', () => {
-            clearTimeout(window._heroTimer);
-            heroGoTo(parseInt(dot.dataset.idx));
-            heroSchedule(imgs.length);
-          });
-        });
-      }
-      heroSchedule(imgs.length);
-    }
-  }
-
-  // プログレスバー追加
-  if (ss && !$('nssProgress')) {
-    const bar = document.createElement('div');
-    bar.id = 'nssProgress'; bar.className = 'nss-progress';
-    ss.appendChild(bar);
-  }
-
-  // ヒーローは1枚固定なのでスライドショー制御は不要
-  // initSlideshow(1); ← 不要
 }
 
 function initStaticHeroCarousel() {
@@ -347,335 +183,14 @@ document.addEventListener('click', e => {
   }
 });
 
-
-/* ── イベントバナー（複数対応） ─────────────────────────────── */
-function renderEventBanners(events) {
-  const wrap = $('event-banners-wrap');
-  if (!wrap) return;
-  const upcoming = events?.filter(e => e.status === 'upcoming') || [];
-  if (!upcoming.length) { wrap.style.display = 'none'; return; }
-
-  wrap.innerHTML = upcoming.map(ev => {
-    const dateLabel = getEventDateLabel(ev);
-    const posterHtml = ev.image
-      ? `<img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" class="event-poster-photo">`
-      : `<div class="event-poster-inner">
-           <div class="event-poster-year">${esc(dateLabel.slice(0,4))} — Event</div>
-           <div class="event-poster-main">${esc(ev.title)}</div>
-           <div class="event-poster-date">${esc(dateLabel)}</div>
-         </div>
-         <div class="event-poster-border"></div>`;
-    return `<div class="event-banner-item">
-      <div class="event-inner">
-        <div>
-          <div class="event-badge"><span class="event-badge-dot"></span>Upcoming Event</div>
-          <h2 class="event-title">${esc(ev.title)}</h2>
-          <div class="event-meta">
-            <div class="event-meta-item"><span class="event-meta-icon">📅</span><span>${esc(dateLabel)}</span></div>
-            ${ev.time1?`<div class="event-meta-item"><span class="event-meta-icon">🕐</span><span>1部 ${esc(ev.time1)} ／ 2部 ${esc(ev.time2)}</span></div>`:''}
-            ${ev.venue?`<div class="event-meta-item"><span class="event-meta-icon">📍</span><span>${esc(ev.venue)}</span></div>`:''}
-            ${ev.fee?`<div class="event-meta-item"><span class="event-meta-icon">💴</span><span>会費 ${esc(ev.fee)}（前売り ${esc(ev.feeAdvance||'')}）</span></div>`:''}
-          </div>
-          ${ev.desc?`<p class="event-desc">${esc(ev.desc)}</p>`:''}
-          <a href="${pageHref('page-event')}" data-page="page-event" class="btn-primary">詳細・チケット情報</a>
-        </div>
-        <div class="event-poster">
-          <div class="event-poster-img">${posterHtml}</div>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-/* ── 蔵元グリッド ───────────────────────────────────────────── */
-function renderBreweries(breweries) {
-  if (!breweries) return;
-  const regions = {
-    matsumoto: { gridId:'grid-matsumoto', label:'Matsumoto' },
-    shiojiri:  { gridId:'grid-shiojiri',  label:'Shiojiri'  },
-    azumino:   { gridId:'grid-azumino',   label:'Azumino'   },
-  };
-  Object.entries(regions).forEach(([key, cfg]) => {
-    const grid = $(cfg.gridId);
-    if (!grid || !breweries[key]?.length) return;
-    grid.innerHTML = breweries[key].map((b, i) => {
-      const emailHtml = b.email ? `<a href="mailto:${esc(b.email)}">${esc(b.email)}</a>` : '';
-      const faxHtml   = b.fax   ? ` ／ FAX：${esc(b.fax)}` : '';
-      const bgHtml    = b.image ? `<img class="brewery-card-bg" src="images/${esc(b.image)}" alt="">` : '';
-      return `<div class="brewery-card" data-num="${String(i+1).padStart(2,'0')}">
-        ${bgHtml}
-        <div class="bc-region">${esc(cfg.label)}</div>
-        <div class="bc-name">${esc(b.name)}</div>
-        <div class="bc-maker">${esc(b.maker)}</div>
-        <div class="bc-info">〒${esc(b.zip)} ${esc(b.address)}<br>TEL：${esc(b.tel)}${faxHtml}<br>${emailHtml}</div>
-        <span class="bc-arrow">詳しく見る →</span>
-      </div>`;
-    }).join('');
-  });
-}
-
-/* ── マーキー ───────────────────────────────────────────────── */
-function renderMarquee(breweries) {
-  const track = document.querySelector('.marquee-track');
-  if (!track || !breweries) return;
-  const names = [...(breweries.matsumoto||[]),...(breweries.shiojiri||[]),...(breweries.azumino||[])].map(b=>b.name);
-  if (!names.length) return;
-  track.innerHTML = [...names,...names].map(n=>`<span>${esc(n)}</span><span>·</span>`).join('');
-}
-
-/* ── 商品カルーセル ─────────────────────────────────────────── */
-function renderCarousel(products) {
-  const track = $('carousel-track');
-  if (!track || !products?.length) return;
-  const items = [...products,...products];
-  track.innerHTML = items.map(p => {
-    const imgHtml = p.image ? `<img src="images/${esc(p.image)}" alt="${esc(p.name)}">` : `酒`;
-    return `<a class="carousel-item" href="${pageHref('page-purchase')}" data-page="page-purchase">
-      <div class="carousel-img">${imgHtml}</div>
-      <div class="carousel-item-brewery">${esc(p.brewery)}</div>
-      <div class="carousel-item-name">${esc(p.name)}</div>
-      <div class="carousel-item-price">${esc(p.price)}円（税込）</div>
-    </a>`;
-  }).join('');
-  track.style.animationDuration = Math.max(30, products.length * 5) + 's';
-}
-
-function normalizeEventSakes(data) {
-  if (!data || !Array.isArray(data.events)) return;
-  data.events.forEach(event => {
-    if (!Array.isArray(event.sakes)) event.sakes = [];
-  });
-  if (Array.isArray(data.sakes) && data.sakes.length && !data.events.some(event => event.sakes.length)) {
-    const target = data.events.find(event => event.status === 'upcoming') || data.events[0];
-    if (target) target.sakes = data.sakes.map(sake => ({ ...sake }));
-  }
-}
-
-function getEventDateLabel(event) {
-  if (!event) return '';
-  if (event.date) {
-    if (event.endDate && event.endDate !== event.date) {
-      return `${formatDate(event.date)} - ${formatDate(event.endDate)}`;
-    }
-    return formatDate(event.date);
-  }
-  return event.dateLabel || '';
-}
-
-/* ── イベントページ ─────────────────────────────────────────── */
-function renderEventPage(events) {
-  if (!events?.length) return;
-  const upcoming = events.filter(e => e.status === 'upcoming');
-  const ended    = events.filter(e => e.status === 'ended');
-
-  const upBlock = $('event-upcoming-block');
-  if (upBlock) {
-    upBlock.innerHTML = upcoming.map(ev => {
-      const dateLabel = getEventDateLabel(ev);
-      const imgHtml = ev.image
-        ? `<div class="ev-img-wrap"><img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" class="ev-detail-img"></div>`
-        : '';
-      return `<div class="ev-detail-card reveal">
-        <div class="ev-detail-badge">
-          <span style="width:6px;height:6px;border-radius:50%;background:var(--amber);animation:blink 1.4s ease infinite;display:inline-block;flex-shrink:0;"></span>
-          <span>Upcoming Event</span>
-        </div>
-        ${imgHtml}
-        <h2 class="ev-detail-title">${esc(ev.title)}</h2>
-        <div class="ev-detail-body">
-          <dl class="ev-detail-dl">
-            <div class="ev-dl-row"><dt>日時</dt><dd>${esc(dateLabel)}${ev.time1?` / 1部 ${esc(ev.time1)} / 2部 ${esc(ev.time2)}`:''}</dd></div>
-            <div class="ev-dl-row"><dt>会場</dt><dd>${esc(ev.venue||'')}</dd></div>
-            ${ev.fee?`<div class="ev-dl-row"><dt>会費</dt><dd>当日 ${esc(ev.fee)} / 前売り <span style="color:var(--amber);">${esc(ev.feeAdvance||'')}</span></dd></div>`:''}
-            ${ev.ticketShops?`<div class="ev-dl-row"><dt>前売店</dt><dd style="font-size:.82rem;">${esc(ev.ticketShops)}</dd></div>`:''}
-          </dl>
-          <div class="ev-detail-desc">
-            <p>${esc(ev.desc||'')}</p>
-            <a href="${pageHref('page-purchase')}" data-page="page-purchase" class="btn-primary">お問い合わせ・申込み</a>
-          </div>
-        </div>
-      </div>`;
-    }).join('');
-  }
-
-  // 出品酒グリッド
-  const sections = $('sake-booth-sections');
-  if (sections) {
-    const eventsWithSakes = events.filter(event => event.sakes?.length);
-    sections.innerHTML = eventsWithSakes.map(event => {
-      const grouped = {};
-      event.sakes.forEach(sake => {
-        if (!grouped[sake.brewery]) grouped[sake.brewery] = [];
-        grouped[sake.brewery].push(sake);
-      });
-      return `
-        <section style="margin:4rem 0 0;">
-          <h3 style="font-family:var(--serif);font-size:1.4rem;letter-spacing:.1em;margin:0 0 .75rem;" class="reveal">★ 蔵ブースのお酒 ★</h3>
-          <p style="font-size:.82rem;letter-spacing:.18em;color:var(--amber);margin:0 0 1.25rem;">${esc(event.title)}</p>
-          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5px;background:var(--border);border:1.5px solid var(--border);">
-            ${Object.entries(grouped).map(([brewery, items]) => `
-              <div style="background:var(--ink);padding:2rem;">
-                <div style="font-size:.62rem;letter-spacing:.4em;color:var(--amber);margin-bottom:.6rem;">${esc(brewery)}</div>
-                ${items.map(s=>`
-                  <div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);">
-                    <div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">${esc(s.name)}</div>
-                    <p style="font-size:.78rem;opacity:.65;line-height:1.85;">${esc(s.desc)}</p>
-                  </div>
-                `).join('')}
-              </div>
-            `).join('')}
-          </div>
-        </section>`;
-    }).join('');
-  }
-
-  // アーカイブ
-  const archiveGrid = $('event-archive-grid');
-  if (archiveGrid) {
-    if (ended.length) {
-      archiveGrid.innerHTML = ended.map(e => {
-        const imgHtml = e.image
-          ? `<div class="event-archive-img"><img src="images/${esc(e.image)}" alt="${esc(e.title)}"></div>`
-          : `<div class="event-archive-img">${esc(e.title.slice(0,4))}</div>`;
-        return `<div class="event-archive-card">
-          ${imgHtml}
-          <div class="event-archive-title">${esc(e.title)}</div>
-          <div class="event-archive-date">${esc(getEventDateLabel(e))}</div>
-          ${e.desc?`<p style="font-size:.78rem;opacity:.5;margin-top:.5rem;line-height:1.8;">${esc(e.desc)}</p>`:''}
-        </div>`;
-      }).join('');
-    } else {
-      archiveGrid.innerHTML = '<p style="opacity:.4;font-size:.85rem;">過去のイベント記録はまだありません</p>';
-    }
-  }
-}
-
 /* ── 酒類鑑評会ページ ───────────────────────────────────────── */
-function renderAwardsPage(awards) {
+function updateAwardsFilter() {
   const container = $('awards-dynamic-list');
   if (!container) return;
-  if (awards) {
-    awardsViewState.items = awards.map((a, index) => ({
-      ...a,
-      category: normalizeAwardCategory(a),
-      _index: index
-    }));
-  }
-  if (!awardsViewState.items.length) {
-    container.innerHTML = '';
-    return;
-  }
-  const badgeClass = {'金賞':'badge-gold','最優秀賞':'badge-best','優秀賞':'badge-excellent','入賞':'badge-entry'};
-  const visibleAwards = awardsViewState.items
-    .filter(a => awardsViewState.filter === 'all' || a.category === awardsViewState.filter);
-  container.innerHTML = visibleAwards.map(a => `
-    <div class="award-year-block" data-type="${a.category}">
-      <div class="award-year-heading">${esc(a.year)}</div>
-      <div class="award-year-meta">
-        <div class="award-year-sub">${esc(a.competition)}</div>
-        <div class="award-category-chip">${esc(awardCategoryLabels[a.category] || a.category)}</div>
-      </div>
-      ${a.note ? `<p style="margin:0 0 1rem;font-size:.82rem;line-height:1.8;color:var(--amber-lt);">${esc(a.note)}</p>` : ''}
-      <table class="award-table">
-        <thead><tr><th>賞</th><th>銘柄</th><th>製造者</th><th>部門</th></tr></thead>
-        <tbody>${a.entries.map(e=>`<tr>
-          <td><span class="award-badge ${badgeClass[e.award]||'badge-entry'}">${esc(e.award)}</span></td>
-          <td>${esc(e.brand)}</td><td>${esc(e.maker)}</td><td>${esc(e.division||'—')}</td>
-        </tr>`).join('')}</tbody>
-      </table>
-    </div>`).join('');
-}
-
-function normalizeAwardCategory(award) {
-  if (award?.category === 'national' || award?.category === 'kanto') return award.category;
-  return award?.competition?.includes('全国') ? 'national' : 'kanto';
-}
-
-/* ── 商品ページ ─────────────────────────────────────────────── */
-function renderProductsPage(products) {
-  const grid = $('products-dynamic-grid');
-  if (!grid || !products?.length) return;
-  grid.innerHTML = products.map(p => {
-    const imgHtml = p.image
-      ? `<div class="product-img-wrap"><img src="images/${esc(p.image)}" alt="${esc(p.name)}"></div>`
-      : `<div class="product-img-wrap"><div class="product-img-placeholder">酒</div></div>`;
-    return `<div class="product-card">
-      <div class="product-num">${esc(p.num)}</div>
-      ${imgHtml}
-      <div class="product-card-body">
-        <div class="product-brewery">${esc(p.brewery)}</div>
-        <div class="product-name">${esc(p.name)}</div>
-        <div class="product-type">${esc(p.type)}</div>
-        <p class="product-desc">${esc(p.desc)}</p>
-        <div class="product-meta">
-          <div class="product-meta-item">AL <span>${esc(p.al)}%</span></div>
-          <div class="product-meta-item">容量 <span>${esc(p.volume)}ml</span></div>
-          <div class="product-meta-item">価格 <span>${esc(p.price)}円（税込）</span></div>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-  const sel = $('fProduct');
-  if (sel) {
-    sel.innerHTML = '<option value="">指定なし／おすすめをお任せ</option>' +
-      products.map(p=>`<option>No.${p.num} ${p.name} — ${p.price}円</option>`).join('');
-  }
-}
-
-/* ── 研究会・神社 写真レンダリング ─────────────────────────── */
-function renderPagePhotos(pagePhotos) {
-  if (!pagePhotos) return;
-
-  // 研究会（新酒研究会・初のみきり研究会 各2枚）
-  ['0','1'].forEach(idx => {
-    const el = $(`research-photos-${idx}`);
-    if (!el) return;
-    const photos = pagePhotos[`research_${idx}`] || [];
-    const filled = photos.filter(p => p.file);
-    if (!filled.length) { el.style.display = 'none'; return; }
-    el.style.display = '';
-    el.innerHTML = filled.map(p =>
-      `<div class="page-photo-item reveal">
-        <img src="images/${esc(p.file)}" alt="${esc(p.alt||'研究会')}">
-      </div>`
-    ).join('');
+  container.querySelectorAll('.award-year-block').forEach(block => {
+    const type = block.dataset.type || 'all';
+    block.style.display = awardsViewState.filter === 'all' || type === awardsViewState.filter ? '' : 'none';
   });
-
-  // 松尾神社（ヒーロー画像 + 3枚グリッド）
-  const shrineEl = $('shrine-photos');
-  const shrineHero = $('shrineHeroImg');
-  const shrineHeroPlaceholder = $('shrineHeroPlaceholder');
-  const photos = (pagePhotos.shrine || []).filter(p => p.file);
-
-  // 1枚目をヒーロー画像として表示
-  if (shrineHero && photos.length > 0) {
-    if (shrineHeroPlaceholder) shrineHeroPlaceholder.style.display = 'none';
-    const heroImg = document.createElement('img');
-    heroImg.src = `images/${esc(photos[0].file)}`;
-    heroImg.alt = photos[0].alt || '松尾神社';
-    shrineHero.appendChild(heroImg);
-  }
-
-  // 2枚目以降をグリッドに表示
-  if (shrineEl) {
-    const gridPhotos = photos.slice(1);
-    if (!gridPhotos.length) { shrineEl.style.display = 'none'; }
-    else {
-      shrineEl.style.display = '';
-      shrineEl.innerHTML = gridPhotos.map(p =>
-        `<div class="page-photo-item reveal">
-          <img src="images/${esc(p.file)}" alt="${esc(p.alt||'松尾神社')}">
-        </div>`
-      ).join('');
-    }
-  }
-}
-
-/* ── HELPERS ────────────────────────────────────────────────── */
-function formatDate(iso) {
-  if (!iso) return '';
-  const [y,m,d]=iso.split('-');
-  return `${y}年${parseInt(m)}月${parseInt(d)}日（${'日月火水木金土'[new Date(iso).getDay()]}）`;
 }
 
 /* ── NAVBAR ─────────────────────────────────────────────────── */
@@ -713,10 +228,6 @@ function initPageSystem() {
   });
   const requestedPage = new URLSearchParams(window.location.search).get('page');
   if (requestedPage && $(requestedPage)) showPage(requestedPage);
-}
-
-function pageHref(id) {
-  return pageHrefMap[id] || '#';
 }
 
 /* ── PARTICLES ──────────────────────────────────────────────── */
@@ -779,9 +290,10 @@ function initAwardsFilter(){
       document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
       awardsViewState.filter = btn.dataset.filter;
-      renderAwardsPage();
+      updateAwardsFilter();
     });
   });
+  updateAwardsFilter();
 }
 
 /* ── FORM ───────────────────────────────────────────────────── */
