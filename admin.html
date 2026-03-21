@@ -533,7 +533,11 @@ function renderEvents(){
       </div>
       <div class="g2">
         <div class="f"><label>イベント名</label><input type="text" value="${E(ev.title||'')}" oninput="S.events[${i}].title=this.value;S.events[${i}].id='ev-'+Date.now()"></div>
-        <div class="f"><label>開催日</label><input type="date" value="${E(ev.date||'')}" oninput="S.events[${i}].date=this.value;S.events[${i}].dateLabel=fmtDate(this.value)"></div>
+        <div class="f"><label>開始日</label><input type="date" value="${E(ev.date||'')}" oninput="updateEventDates(${i}, this.value, S.events[${i}].endDate||'')"></div>
+      </div>
+      <div class="g2">
+        <div class="f"><label>終了日</label><input type="date" value="${E(ev.endDate||'')}" oninput="updateEventDates(${i}, S.events[${i}].date||'', this.value)"></div>
+        <div class="f"><label>日付表示</label><input type="text" value="${E(eventDateLabel(ev))}" readonly></div>
       </div>
       ${isUp?`
       <div class="g2">
@@ -566,7 +570,7 @@ function renderEvents(){
 }
 
 function addEvent(){
-  S.events.unshift({id:'ev-'+Date.now(),status:'upcoming',title:'',date:'',dateLabel:'',time1:'',time2:'',venue:'',fee:'',feeAdvance:'',ticketShops:'',desc:'',image:'',sakes:[]});
+  S.events.unshift({id:'ev-'+Date.now(),status:'upcoming',title:'',date:'',endDate:'',dateLabel:'',time1:'',time2:'',venue:'',fee:'',feeAdvance:'',ticketShops:'',desc:'',image:'',sakes:[]});
   renderEvents(); document.getElementById('event-items').firstElementChild?.scrollIntoView({behavior:'smooth'});
 }
 function deleteEvent(i){ if(!confirm('削除しますか？')) return; S.events.splice(i,1); renderEvents(); }
@@ -769,6 +773,22 @@ function fmtDate(iso){
   const [y,m,d]=iso.split('-');
   return `${y}年${parseInt(m)}月${parseInt(d)}日（${'日月火水木金土'[new Date(iso).getDay()]}）`;
 }
+function fmtDateRange(start,end){
+  if(!start) return '';
+  if(end && end!==start) return `${fmtDate(start)} - ${fmtDate(end)}`;
+  return fmtDate(start);
+}
+function eventDateLabel(ev){
+  if(ev?.date) return fmtDateRange(ev.date, ev.endDate||'');
+  return ev?.dateLabel || '';
+}
+function updateEventDates(index,start,end){
+  if(!S.events[index]) return;
+  S.events[index].date=start||'';
+  S.events[index].endDate=end||'';
+  S.events[index].dateLabel=eventDateLabel(S.events[index]);
+  renderEvents();
+}
 function toast(msg,isErr=false){
   const el=document.getElementById('toast');
   el.textContent=msg; el.classList.remove('show','err');
@@ -787,7 +807,7 @@ function ST(id,btn){
   btn.closest('.panel').querySelectorAll('[id^="t"]').forEach(p=>{if(['tm','ts','ta'].includes(p.id))p.style.display='none';});
   btn.classList.add('active'); document.getElementById(id).style.display='block';
 }
-function renderAll(){ normalizeAwards(); normalizeEventSakesState(); renderEvents(); renderProducts(); renderBreweries(); renderAwardList(); renderHeroImages(); renderPagePhotosAdmin(); upPrev(); }
+function renderAll(){ normalizeAwards(); normalizeEventSakesState(); normalizeEventDatesState(); renderEvents(); renderProducts(); renderBreweries(); renderAwardList(); renderHeroImages(); renderPagePhotosAdmin(); upPrev(); }
 function normalizeEventSakesState(){
   if(!Array.isArray(S.events)) S.events=[];
   S.events.forEach(event=>{ if(!Array.isArray(event.sakes)) event.sakes=[]; });
@@ -796,6 +816,14 @@ function normalizeEventSakesState(){
     if(target) target.sakes=S.sakes.map(sake=>({...sake}));
   }
   delete S.sakes;
+}
+function normalizeEventDatesState(){
+  if(!Array.isArray(S.events)) return;
+  S.events.forEach(event=>{
+    if(!event.date) return;
+    if(!event.endDate) event.endDate='';
+    event.dateLabel=eventDateLabel(event);
+  });
 }
 
 // ── ページ写真（研究会・神社）管理 ───────────────────────────

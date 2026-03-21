@@ -260,7 +260,7 @@ function renderEventBanners(events) {
   if (!upcoming.length) { wrap.style.display = 'none'; return; }
 
   wrap.innerHTML = upcoming.map(ev => {
-    const dateLabel = ev.dateLabel || (ev.date ? formatDate(ev.date) : '');
+    const dateLabel = getEventDateLabel(ev);
     const posterHtml = ev.image
       ? `<img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" class="event-poster-photo">`
       : `<div class="event-poster-inner">
@@ -355,6 +355,17 @@ function normalizeEventSakes(data) {
   }
 }
 
+function getEventDateLabel(event) {
+  if (!event) return '';
+  if (event.date) {
+    if (event.endDate && event.endDate !== event.date) {
+      return `${formatDate(event.date)} - ${formatDate(event.endDate)}`;
+    }
+    return formatDate(event.date);
+  }
+  return event.dateLabel || '';
+}
+
 /* ── イベントページ ─────────────────────────────────────────── */
 function renderEventPage(events) {
   if (!events?.length) return;
@@ -364,7 +375,7 @@ function renderEventPage(events) {
   const upBlock = $('event-upcoming-block');
   if (upBlock) {
     upBlock.innerHTML = upcoming.map(ev => {
-      const dateLabel = ev.dateLabel || (ev.date ? formatDate(ev.date) : '');
+      const dateLabel = getEventDateLabel(ev);
       const imgHtml = ev.image
         ? `<div class="ev-img-wrap"><img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" class="ev-detail-img"></div>`
         : '';
@@ -433,7 +444,7 @@ function renderEventPage(events) {
         return `<div class="event-archive-card">
           ${imgHtml}
           <div class="event-archive-title">${esc(e.title)}</div>
-          <div class="event-archive-date">${esc(e.dateLabel||'')}</div>
+          <div class="event-archive-date">${esc(getEventDateLabel(e))}</div>
           ${e.desc?`<p style="font-size:.78rem;opacity:.5;margin-top:.5rem;line-height:1.8;">${esc(e.desc)}</p>`:''}
         </div>`;
       }).join('');
