@@ -54,6 +54,7 @@ ul { list-style: none; }
   color: #FFFFFF;
   opacity: 0;
   letter-spacing: 0.2em;
+  white-space: nowrap;
   animation: fadeUp 1.6s ease forwards 0.3s;
 }
 .loader-en {
@@ -98,6 +99,7 @@ ul { list-style: none; }
   letter-spacing: 0.22em;
   color: #1A3A5C;
   font-weight: 700;
+  white-space: nowrap;
 }
 .nav-logo-sub {
   font-size: 0.62rem;
@@ -1073,6 +1075,14 @@ footer {
   .award-table { font-size: 0.78rem; }
 }
 @media (max-width: 600px) {
+  .loader-kanji {
+    font-size: clamp(2.2rem, 11vw, 3.2rem);
+    letter-spacing: 0.08em;
+  }
+  .nav-logo-main {
+    font-size: 1.02rem;
+    letter-spacing: 0.08em;
+  }
   .footer-top { grid-template-columns: 1fr; }
   .footer-instagram { justify-content: center; }
   .season-card { flex: 0 0 220px; }
