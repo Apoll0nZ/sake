@@ -47,46 +47,30 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 /* ── LOADER ────────────────────────────────────────────────── */
 function initLoader() {
-  // ── スクロールロック（全ブラウザ対応）──
-  // position:fixed で現在のスクロール位置を保持したまま完全にロック
-  let scrollY = 0;
-
+  let _done = false;
   const lockScroll = () => {
-    scrollY = window.scrollY;
-    document.body.style.position   = 'fixed';
-    document.body.style.top        = `-${scrollY}px`;
-    document.body.style.left       = '0';
-    document.body.style.right      = '0';
-    document.body.style.overflowY  = 'scroll'; // スクロールバー幅を確保
+    document.body.dataset.lockedY = window.scrollY;
+    document.body.style.position  = 'fixed';
+    document.body.style.top       = `-${window.scrollY}px`;
+    document.body.style.left      = '0';
+    document.body.style.right     = '0';
+    document.body.style.overflowY = 'scroll';
   };
-
   const unlockScroll = () => {
+    if (_done) return;
+    _done = true;
+    const y = parseInt(document.body.dataset.lockedY || '0', 10);
     document.body.style.position  = '';
     document.body.style.top       = '';
     document.body.style.left      = '';
     document.body.style.right     = '';
     document.body.style.overflowY = '';
-    // ロック前の位置に戻す（常に最上部）
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    window.scrollTo({ top: y, behavior: 'instant' });
   };
-
   lockScroll();
-
-  const hide = () => setTimeout(() => {
-    const l = $('loader');
-    if (l) l.classList.add('hide');
-    unlockScroll();
-  }, 2000);
-
-  if (document.readyState === 'complete') hide();
-  else window.addEventListener('load', hide, { once: true });
-
-  // 最大4.5秒で強制解除
-  setTimeout(() => {
-    const l = $('loader');
-    if (l) l.classList.add('hide');
-    unlockScroll();
-  }, 4500);
+  const hideLoader = () => { const l=$('loader'); if(l) l.classList.add('hide'); unlockScroll(); };
+  window.addEventListener('load', () => setTimeout(hideLoader, 1500), { once: true });
+  setTimeout(hideLoader, 5000);
 }
 
 /* ── ヒーロー背景 ───────────────────────────────────────────── */
@@ -230,7 +214,7 @@ function renderEventBanners(events) {
           ${ev.desc?`<p class="event-desc">${esc(ev.desc)}</p>`:''}
           <a href="#" data-page="page-event" class="btn-primary">詳細・チケット情報</a>
         </div>
-        <div class="event-poster">
+        <div class="event-poster" style="order:2;">
           <div class="event-poster-img">${posterHtml}</div>
         </div>
       </div>
@@ -301,41 +285,31 @@ function renderEventPage(events, sakes) {
   if (upBlock) {
     upBlock.innerHTML = upcoming.map(ev => {
       const dateLabel = ev.dateLabel || (ev.date ? formatDate(ev.date) : '');
-      // PC: 本文上部に画像表示
       const imgHtml = ev.image
         ? `<img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" style="width:100%;max-height:360px;object-fit:cover;margin-bottom:2rem;">`
         : '';
-      // スマホ: イベント情報の上にリンク付き画像バナーを表示
-      const mobileImgHtml = ev.image
-        ? `<a href="#" data-page="page-event" class="event-mobile-img-wrap">
-            <img src="images/${esc(ev.image)}" alt="${esc(ev.title)}" class="event-mobile-img">
-           </a>`
-        : '';
-      return `<div class="event-upcoming-item reveal">
-        ${mobileImgHtml}
-        <div style="background:var(--deep);border:1px solid var(--border);padding:3.5rem;margin-bottom:2rem;">
-          <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:1.5rem;">
-            <span style="width:6px;height:6px;border-radius:50%;background:var(--amber);animation:blink 1.4s ease infinite;display:inline-block;"></span>
-            <span style="font-size:.68rem;letter-spacing:.5em;color:var(--amber);text-transform:uppercase;">Upcoming</span>
-          </div>
-          ${imgHtml}
-          <h2 style="font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:1.5rem;line-height:1.3;">${esc(ev.title)}</h2>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;">
-            <table style="font-size:.88rem;width:100%;border-collapse:collapse;">
-              <tr style="border-bottom:1px solid rgba(245,240,232,.07);"><td style="padding:.8rem 1rem .8rem 0;opacity:.4;width:80px;vertical-align:top;">日時</td>
-                <td style="padding:.8rem 0;line-height:2;">${esc(dateLabel)}
-                  ${ev.time1?`<br>1部 ${esc(ev.time1)}<br>2部 ${esc(ev.time2)}<br><span style="font-size:.75rem;opacity:.5;">※各部開始15分前から受付</span>`:''}
-                </td></tr>
-              <tr style="border-bottom:1px solid rgba(245,240,232,.07);"><td style="padding:.8rem 1rem .8rem 0;opacity:.4;">会場</td><td style="padding:.8rem 0;">${esc(ev.venue||'')}</td></tr>
-              <tr style="border-bottom:1px solid rgba(245,240,232,.07);"><td style="padding:.8rem 1rem .8rem 0;opacity:.4;">会費</td>
-                <td style="padding:.8rem 0;">${ev.fee?`当日 ${esc(ev.fee)}<br><span style="color:var(--amber-lt);">前売り ${esc(ev.feeAdvance||'')}</span>`:''}</td></tr>
-              <tr><td style="padding:.8rem 1rem .8rem 0;opacity:.4;vertical-align:top;">前売り<br>販売店</td>
-                <td style="padding:.8rem 0;font-size:.82rem;line-height:2;opacity:.6;">${esc(ev.ticketShops||'')}</td></tr>
-            </table>
-            <div>
-              <p style="font-size:.85rem;line-height:2.1;opacity:.6;margin-bottom:1.5rem;">${esc(ev.desc||'')}</p>
-              <a href="#" data-page="page-event" class="btn-primary" style="font-size:.78rem;">詳細・チケット情報</a>
-            </div>
+      return `<div style="background:var(--deep);border:1px solid var(--border);padding:3.5rem;margin-bottom:2rem;" class="reveal">
+        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:1.5rem;">
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--amber);animation:blink 1.4s ease infinite;display:inline-block;"></span>
+          <span style="font-size:.68rem;letter-spacing:.5em;color:var(--amber);text-transform:uppercase;">Upcoming</span>
+        </div>
+        ${imgHtml}
+        <h2 style="font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:1.5rem;line-height:1.3;">${esc(ev.title)}</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;">
+          <table style="font-size:.88rem;width:100%;border-collapse:collapse;">
+            <tr style="border-bottom:1px solid rgba(245,240,232,.07);"><td style="padding:.8rem 1rem .8rem 0;opacity:.4;width:80px;vertical-align:top;">日時</td>
+              <td style="padding:.8rem 0;line-height:2;">${esc(dateLabel)}
+                ${ev.time1?`<br>1部 ${esc(ev.time1)}<br>2部 ${esc(ev.time2)}<br><span style="font-size:.75rem;opacity:.5;">※各部開始15分前から受付</span>`:''}
+              </td></tr>
+            <tr style="border-bottom:1px solid rgba(245,240,232,.07);"><td style="padding:.8rem 1rem .8rem 0;opacity:.4;">会場</td><td style="padding:.8rem 0;">${esc(ev.venue||'')}</td></tr>
+            <tr style="border-bottom:1px solid rgba(245,240,232,.07);"><td style="padding:.8rem 1rem .8rem 0;opacity:.4;">会費</td>
+              <td style="padding:.8rem 0;">${ev.fee?`当日 ${esc(ev.fee)}<br><span style="color:var(--amber-lt);">前売り ${esc(ev.feeAdvance||'')}</span>`:''}</td></tr>
+            <tr><td style="padding:.8rem 1rem .8rem 0;opacity:.4;vertical-align:top;">前売り<br>販売店</td>
+              <td style="padding:.8rem 0;font-size:.82rem;line-height:2;opacity:.6;">${esc(ev.ticketShops||'')}</td></tr>
+          </table>
+          <div>
+            <p style="font-size:.85rem;line-height:2.1;opacity:.6;margin-bottom:1.5rem;">${esc(ev.desc||'')}</p>
+            <a href="#" data-page="page-purchase" class="btn-primary" style="font-size:.78rem;">お問い合わせ・申込み</a>
           </div>
         </div>
       </div>`;
@@ -401,7 +375,7 @@ function renderProductsPage(products) {
   if (!grid || !products?.length) return;
   grid.innerHTML = products.map(p => {
     const imgHtml = p.image
-      ? `<div class="product-img-wrap"><img src="images/${esc(p.image)}" alt="${esc(p.name)}" style="max-width:85%;max-height:100%;width:auto;height:auto;object-fit:contain;display:block;"></div>`
+      ? `<div class="product-img-wrap"><img src="images/${esc(p.image)}" alt="${esc(p.name)}"></div>`
       : `<div class="product-img-wrap"><div class="product-img-placeholder">酒</div></div>`;
     return `<div class="product-card">
       <div class="product-num">${esc(p.num)}</div>
@@ -492,13 +466,15 @@ function initNavbar() {
 
 /* ── PAGE SYSTEM ────────────────────────────────────────────── */
 function initPageSystem() {
+  let _currentPage = 'page-main';
   function showPage(id) {
+    const isSame = (id === _currentPage);
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     const target=$(id);
     if (!target) return;
     target.classList.add('active');
-    // smoothだとスクロール中に干渉するため instant に変更
-    window.scrollTo({top:0,behavior:'instant'});
+    _currentPage = id;
+    if (!isSame) window.scrollTo({top:0,behavior:'instant'});
     setTimeout(()=>{
       target.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stat-item').forEach(el=>revealObs?.observe(el));
     },80);

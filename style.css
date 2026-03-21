@@ -141,12 +141,19 @@ ul { list-style: none; }
 
 .nav-mobile {
   display: none; position: fixed; inset: 0; z-index: 190;
-  background: rgba(14,11,8,0.97);
-  flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+  background: rgba(26,58,92,0.97);
+  flex-direction: column; align-items: center; justify-content: flex-start;
+  gap: 0; padding-top: 80px; overflow-y: auto;
   backdrop-filter: blur(16px);
 }
 .nav-mobile.open { display: flex; }
-.nav-mobile a { font-family: var(--serif); font-size: 1.8rem; letter-spacing: 0.2em; color: #fff; }
+.nav-mobile a {
+  font-family: var(--serif); font-size: 1.6rem; letter-spacing: 0.2em;
+  color: #ffffff; width: 100%; text-align: center;
+  padding: 1.1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.nav-mobile a:first-child { border-top: 1px solid rgba(255,255,255,0.1); }
+.nav-mobile a:hover { background: rgba(255,255,255,0.08); color: var(--amber-lt); }
 
 /* ── HERO ──────────────────────────────────────────────────── */
 #hero {
@@ -925,12 +932,19 @@ footer {
   .hero-ribbon { display: none; }
 
   /* ── イベントバナー ── */
-  .event-inner { grid-template-columns: 1fr; gap: 2rem; }
-  .event-poster { max-width: 100%; }
-  .event-banner-item { padding: 2.5rem 1.4rem; }
-  .event-title { font-size: clamp(1.4rem, 5vw, 2.2rem); }
-  .event-meta { gap: 1rem; }
-  .event-meta-item { font-size: 0.88rem; }
+  /* メインページ event-banner: 画像を上・情報を下に縦並び */
+  .event-inner { grid-template-columns: 1fr; gap: 0; }
+  .event-poster {
+    max-width: 100%; order: -1; /* 画像を先頭に */
+    aspect-ratio: 16/9; margin-bottom: 1.5rem;
+  }
+  .event-poster-img { aspect-ratio: 16/9; }
+  .event-banner-item { padding: 0 0 2rem; }
+  .event-banner-item > .event-inner > div:first-child { padding: 1.5rem 1.2rem 0; }
+  .event-title { font-size: clamp(1.3rem, 5vw, 2rem); }
+  .event-meta { gap: 0.7rem; }
+  .event-meta-item { font-size: 0.82rem; }
+  .event-desc { font-size: 0.82rem; margin-bottom: 1.2rem; }
 
   /* ── 蔵元グリッド ── */
   .brewery-grid { grid-template-columns: 1fr; gap: 0; }
@@ -1489,23 +1503,17 @@ footer {
   }
 }
 
-/* ── Event: スマホ時イベント情報上部に画像バナー ──────────────── */
-.event-mobile-img {
-  display: none;
-}
+/* ── イベントページ スマホ最適化 ─────────────────────────────── */
 @media (max-width: 768px) {
-  .event-mobile-img {
-    display: block;
-    width: 100%;
-    max-height: 220px;
-    object-fit: cover;
-    margin-bottom: 0;
-    cursor: pointer;
+  #page-event > div > div {
+    padding: 3rem 1.2rem !important;
   }
-  .event-mobile-img-wrap {
-    display: block;
-    width: 100%;
-    overflow: hidden;
-    margin-bottom: 0;
+  .event-upcoming-item > div {
+    padding: 1.5rem !important;
   }
+  .event-upcoming-item > div > div[style*="grid-template-columns:1fr 1fr"] {
+    display: block !important;
+  }
+  /* event-mobileimg を非表示（イベントページでは不要） */
+  #page-event .event-mobile-img-wrap { display: none; }
 }
