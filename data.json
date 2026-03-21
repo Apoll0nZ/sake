@@ -393,138 +393,568 @@
       "competition": "関東信越国税局酒類鑑評会",
       "year": "第96回（令和7年11月）",
       "entries": [
-        {
-          "award": "優秀賞",
-          "brand": "アルプス正宗",
-          "maker": "（株）亀田屋酒造店",
-          "division": "純米吟醸の部"
-        },
-        {
-          "award": "優秀賞",
-          "brand": "アルプス正宗",
-          "maker": "（株）亀田屋酒造店",
-          "division": "純米の部"
-        }
+        {"award": "優秀賞", "brand": "アルプス正宗", "maker": "（株）亀田屋酒造店", "division": "純米吟醸の部"},
+        {"award": "優秀賞", "brand": "アルプス正宗", "maker": "（株）亀田屋酒造店", "division": "純米の部"}
       ]
     },
     {
       "competition": "全国新酒鑑評会",
       "year": "令和6酒造年度（令和7年5月）",
       "entries": [
-        {
-          "award": "金賞",
-          "brand": "アルプス正宗",
-          "maker": "（株）亀田屋酒造店",
-          "division": ""
-        },
-        {
-          "award": "入賞",
-          "brand": "美寿々",
-          "maker": "美寿々酒造（株）",
-          "division": ""
-        },
-        {
-          "award": "入賞",
-          "brand": "大信州",
-          "maker": "大信州酒造（株）",
-          "division": ""
-        }
+        {"award": "金賞", "brand": "アルプス正宗", "maker": "（株）亀田屋酒造店", "division": ""},
+        {"award": "入賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""}
       ]
     },
     {
       "competition": "関東信越国税局酒類鑑評会",
       "year": "第95回（令和6年11月）",
       "entries": [
-        {
-          "award": "優秀賞",
-          "brand": "大信州",
-          "maker": "大信州酒造（株）",
-          "division": "純米吟醸の部"
-        },
-        {
-          "award": "優秀賞",
-          "brand": "アルプス正宗",
-          "maker": "（株）亀田屋酒造店",
-          "division": "純米吟醸の部"
-        },
-        {
-          "award": "優秀賞",
-          "brand": "大信州",
-          "maker": "大信州酒造（株）",
-          "division": "純米の部"
-        }
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": "純米吟醸の部"},
+        {"award": "優秀賞", "brand": "アルプス正宗", "maker": "（株）亀田屋酒造店", "division": "純米吟醸の部"},
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": "純米の部"}
       ]
     },
     {
       "competition": "全国新酒鑑評会",
       "year": "令和5酒造年度（令和6年5月）",
       "entries": [
-        {
-          "award": "金賞",
-          "brand": "女鳥羽の泉",
-          "maker": "善哉酒造（株）",
-          "division": ""
-        }
+        {"award": "金賞", "brand": "女鳥羽の泉", "maker": "善哉酒造（株）", "division": ""}
       ]
     },
     {
       "competition": "関東信越国税局酒類鑑評会",
-      "year": "第94回（令和5年11月）★亀田屋酒造店が最優秀賞★",
+      "year": "第94回（令和5年11月）",
+      "note": "★ 株式会社亀田屋酒造店が純米吟醸の部で最優秀賞に選ばれました ★",
       "entries": [
-        {
-          "award": "優秀賞",
-          "brand": "亀乃世",
-          "maker": "（株）亀田屋酒造店",
-          "division": "吟醸酒の部"
-        },
-        {
-          "award": "優秀賞",
-          "brand": "大信州",
-          "maker": "大信州酒造（株）",
-          "division": "純米吟醸の部"
-        },
-        {
-          "award": "最優秀賞",
-          "brand": "アルプス正宗",
-          "maker": "（株）亀田屋酒造店",
-          "division": "純米吟醸の部"
-        },
-        {
-          "award": "優秀賞",
-          "brand": "大信州",
-          "maker": "大信州酒造（株）",
-          "division": "純米の部"
-        }
+        {"award": "優秀賞", "brand": "亀乃世", "maker": "（株）亀田屋酒造店", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": "純米吟醸の部"},
+        {"award": "最優秀賞", "brand": "アルプス正宗", "maker": "（株）亀田屋酒造店", "division": "純米吟醸の部"},
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": "純米の部"}
       ]
     },
     {
       "competition": "全国新酒鑑評会",
       "year": "令和4酒造年度（令和5年5月）",
       "entries": [
-        {
-          "award": "金賞",
-          "brand": "アルプス正宗",
-          "maker": "（株）亀田屋酒造店",
-          "division": ""
-        },
-        {
-          "award": "金賞",
-          "brand": "大信州",
-          "maker": "大信州酒造（株）",
-          "division": ""
-        },
-        {
-          "award": "入賞",
-          "brand": "高波",
-          "maker": "（資）丸永酒造場",
-          "division": ""
-        },
-        {
-          "award": "入賞",
-          "brand": "美寿々",
-          "maker": "美寿々酒造（株）",
-          "division": ""
-        }
+        {"award": "金賞", "brand": "アルプス正宗", "maker": "（株）亀田屋酒造店", "division": ""},
+        {"award": "金賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": ""},
+        {"award": "入賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第93回（令和4年11月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "アルプス正宗", "maker": "（株）亀田屋酒造店", "division": "純米吟醸の部"}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "令和3酒造年度（令和4年5月）",
+      "entries": [
+        {"award": "金賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""},
+        {"award": "金賞", "brand": "酔園", "maker": "EH酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "アルプス正宗", "maker": "（株）亀田屋酒造店", "division": ""},
+        {"award": "入賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第92回（令和3年11月）",
+      "note": "★ 株式会社亀田屋酒造店が純米吟醸の部で最優秀賞に選ばれました ★",
+      "entries": [
+        {"award": "優秀賞", "brand": "亀乃世", "maker": "（株）亀田屋酒造店", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "女鳥羽の泉", "maker": "善哉酒造（株）", "division": "純米吟醸の部"},
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": "純米吟醸の部"},
+        {"award": "最優秀賞", "brand": "アルプス正宗", "maker": "（株）亀田屋酒造店", "division": "純米吟醸の部"},
+        {"award": "優秀賞", "brand": "髙波", "maker": "（資）丸永酒造場", "division": "純米吟醸の部"}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "令和2酒造年度（令和3年5月）",
+      "entries": [
+        {"award": "金賞", "brand": "髙波", "maker": "（資）丸永酒造場", "division": ""},
+        {"award": "金賞", "brand": "アルプス正宗", "maker": "（株）亀田屋酒造店", "division": ""},
+        {"award": "入賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第91回（令和2年11月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "亀乃世", "maker": "（株）亀田屋酒造店", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "髙波", "maker": "（資）丸永酒造場", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": "純米吟醸の部"},
+        {"award": "優秀賞", "brand": "アルプス正宗", "maker": "（株）亀田屋酒造店", "division": "純米吟醸の部"},
+        {"award": "優秀賞", "brand": "髙波", "maker": "（資）丸永酒造場", "division": "純米吟醸の部"},
+        {"award": "優秀賞", "brand": "アルプス正宗", "maker": "（株）亀田屋酒造店", "division": "純米の部"}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "令和元酒造年度（令和2年5月）",
+      "note": "※ 金賞酒は、決審中止に伴い選定がありませんでした。",
+      "entries": [
+        {"award": "入賞", "brand": "女鳥羽の泉", "maker": "善哉酒造株式会社", "division": ""},
+        {"award": "入賞", "brand": "岩波", "maker": "岩波酒造合資会社", "division": ""},
+        {"award": "入賞", "brand": "大信州", "maker": "大信州酒造株式会社", "division": ""},
+        {"award": "入賞", "brand": "アルプス正宗", "maker": "株式会社亀田屋酒造店", "division": ""},
+        {"award": "入賞", "brand": "髙波", "maker": "合資会社丸永酒造場", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第90回（令和元年11月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "アルプス正宗", "maker": "（株）亀田屋酒造店", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "髙波", "maker": "（資）丸永酒造場", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "女鳥羽の泉", "maker": "善哉酒造（株）", "division": "純米吟醸の部"},
+        {"award": "優秀賞", "brand": "アルプス正宗", "maker": "（株）亀田屋酒造店", "division": "純米吟醸の部"},
+        {"award": "優秀賞", "brand": "髙波", "maker": "（資）丸永酒造場", "division": "純米吟醸の部"}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "平成30酒造年度（令和元年5月）",
+      "entries": [
+        {"award": "金賞", "brand": "髙波", "maker": "（資）丸永酒造場", "division": ""},
+        {"award": "金賞", "brand": "酔園", "maker": "EH酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "女鳥羽の泉", "maker": "善哉酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "秀峰 アルプス正宗", "maker": "（株）亀田屋酒造店", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第89回（平成30年11月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "秀峰 アルプス正宗", "maker": "（株）亀田屋酒造店", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "髙波", "maker": "（資）丸永酒造場", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": "純米吟醸の部"},
+        {"award": "優秀賞", "brand": "髙波", "maker": "（資）丸永酒造場", "division": "純米吟醸の部"},
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": "純米酒の部"}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "平成29酒造年度（平成30年5月）",
+      "entries": [
+        {"award": "入賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": ""},
+        {"award": "入賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "髙波", "maker": "（資）丸永酒造場", "division": ""},
+        {"award": "入賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第88回（平成29年11月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "秀峰 アルプス正宗", "maker": "（名）亀田屋酒造店", "division": "吟醸の部"},
+        {"award": "優秀賞", "brand": "女鳥羽の泉", "maker": "善哉酒造（株）", "division": "吟醸の部"},
+        {"award": "優秀賞", "brand": "髙波", "maker": "（資）丸永酒造場", "division": "純米吟醸の部"}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "平成28酒造年度（平成29年5月）",
+      "entries": [
+        {"award": "金賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": ""},
+        {"award": "金賞", "brand": "秀峰 アルプス正宗", "maker": "（名）亀田屋酒造店", "division": ""},
+        {"award": "入賞", "brand": "女鳥羽の泉", "maker": "善哉酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第87回（平成28年11月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "秀峰 アルプス正宗", "maker": "（名）亀田屋酒造店", "division": "吟醸の部"},
+        {"award": "優秀賞", "brand": "髙波", "maker": "（資）丸永酒造場", "division": "吟醸の部"}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "平成27酒造年度（平成28年5月）",
+      "entries": [
+        {"award": "金賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "秀峰アルプス正宗", "maker": "（名）亀田屋酒造店", "division": ""},
+        {"award": "入賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第86回（平成27年11月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": "吟醸の部"},
+        {"award": "優秀賞", "brand": "秀峰 アルプス正宗", "maker": "（名）亀田屋酒造店", "division": "吟醸の部"},
+        {"award": "優秀賞", "brand": "髙波", "maker": "（資）丸永酒造場", "division": "吟醸の部"}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "平成26酒造年度（平成27年5月）",
+      "entries": [
+        {"award": "金賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": ""},
+        {"award": "入賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": ""},
+        {"award": "入賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第85回（平成26年11月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": "吟醸の部"},
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": "吟醸の部"},
+        {"award": "優秀賞", "brand": "秀峰 アルプス正宗", "maker": "（名）亀田屋酒造店", "division": "吟醸の部"},
+        {"award": "優秀賞", "brand": "髙波", "maker": "（資）丸永酒造場", "division": "吟醸の部"},
+        {"award": "優秀賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": "吟醸の部"}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "平成25酒造年度（平成26年5月）",
+      "entries": [
+        {"award": "金賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "金賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": ""},
+        {"award": "入賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": ""},
+        {"award": "入賞", "brand": "秀峰アルプス正宗", "maker": "（名）亀田屋酒造店", "division": ""},
+        {"award": "入賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "鬼かん", "maker": "EH酒造（株）", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第84回（平成25年11月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": "吟醸の部"},
+        {"award": "優秀賞", "brand": "秀峰アルプス正宗", "maker": "（名）亀田屋酒造店", "division": "吟醸の部"},
+        {"award": "優秀賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": "吟醸の部"},
+        {"award": "優秀賞", "brand": "鬼かん", "maker": "EH酒造（株）", "division": "吟醸の部"}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "平成24酒造年度（平成25年5月）",
+      "entries": [
+        {"award": "金賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "金賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": ""},
+        {"award": "金賞", "brand": "鬼かん", "maker": "EH酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "秀峰アルプス正宗", "maker": "（名）亀田屋酒造店", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第83回（平成24年11月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "女鳥羽の泉", "maker": "善哉酒造（株）", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "鬼かん", "maker": "EH酒造（株）", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "高波", "maker": "丸永酒造場", "division": "純米酒の部"}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "平成23酒造年度（平成24年5月）",
+      "entries": [
+        {"award": "金賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "金賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": ""},
+        {"award": "金賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "女鳥羽の泉", "maker": "善哉酒造（株）", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第82回（平成23年11月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "秀峰アルプス正宗", "maker": "（名）亀田屋酒造店", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "高波", "maker": "丸永酒造場", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": "純米酒の部"},
+        {"award": "優秀賞", "brand": "高波", "maker": "丸永酒造場", "division": "純米酒の部"}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "平成22酒造年度（平成23年5月）",
+      "entries": [
+        {"award": "金賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "金賞", "brand": "秀峰アルプス正宗", "maker": "（名）亀田屋酒造店", "division": ""},
+        {"award": "金賞", "brand": "山清", "maker": "山清酒造（株）", "division": ""},
+        {"award": "金賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": ""},
+        {"award": "金賞", "brand": "鬼かん", "maker": "EH酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": ""},
+        {"award": "入賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第81回（平成22年11月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "秀峰アルプス正宗", "maker": "（名）亀田屋酒造店", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": "純米酒の部"},
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": "純米酒の部"},
+        {"award": "優秀賞", "brand": "笹の誉", "maker": "笹井酒造（株）", "division": "純米酒の部"}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "平成21酒造年度（平成22年5月）",
+      "entries": [
+        {"award": "金賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": ""},
+        {"award": "金賞", "brand": "秀峰アルプス正宗", "maker": "（名）亀田屋酒造店", "division": ""},
+        {"award": "金賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "女鳥羽の泉", "maker": "善哉酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": ""},
+        {"award": "入賞", "brand": "鬼かん", "maker": "EH酒造（株）", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第80回（平成21年11月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "鬼かん", "maker": "EH酒造（株）", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "秀峰アルプス正宗", "maker": "（名）亀田屋酒造店", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": "燗酒の部"},
+        {"award": "優秀賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": "燗酒の部"},
+        {"award": "優秀賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": "燗酒の部"}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "平成20酒造年度（平成21年5月）",
+      "entries": [
+        {"award": "金賞", "brand": "女鳥羽の泉", "maker": "善哉酒造（株）", "division": ""},
+        {"award": "金賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""},
+        {"award": "金賞", "brand": "鬼かん", "maker": "EH酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第79回（平成20年11月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": "吟醸酒の部"},
+        {"award": "優秀賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": "燗酒の部"},
+        {"award": "優秀賞", "brand": "笹の譽", "maker": "笹井酒造（株）", "division": "燗酒の部"},
+        {"award": "優秀賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": "燗酒の部"},
+        {"award": "優秀賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": "燗酒の部"}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "平成19酒造年度（平成20年5月）",
+      "entries": [
+        {"award": "金賞", "brand": "秀峰 アルプス正宗", "maker": "（名）亀田屋酒造店", "division": ""},
+        {"award": "金賞", "brand": "酔園", "maker": "EH酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "笹の譽", "maker": "笹井酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第78回（平成19年11月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": "常温審査の部"},
+        {"award": "優秀賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": "常温審査の部"},
+        {"award": "優秀賞", "brand": "山清", "maker": "山清酒造（株）", "division": "常温審査の部"},
+        {"award": "優秀賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": "常温審査の部"},
+        {"award": "優秀賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": "常温審査の部"},
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": "燗審査の部"},
+        {"award": "優秀賞", "brand": "笹の譽", "maker": "笹井酒造（株）", "division": "燗審査の部"},
+        {"award": "優秀賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": "燗審査の部"}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "平成18酒造年度（平成19年5月）",
+      "entries": [
+        {"award": "金賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": ""},
+        {"award": "入賞", "brand": "山清", "maker": "山清酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第77回（平成18年11月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": "常温審査の部"},
+        {"award": "優秀賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": "常温審査の部"},
+        {"award": "優秀賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": "燗審査の部"},
+        {"award": "優秀賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": "燗審査の部"}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "平成17酒造年度（平成18年5月）",
+      "entries": [
+        {"award": "金賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": ""},
+        {"award": "金賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "善哉", "maker": "善哉酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "笹の譽", "maker": "笹井酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "秀峰アルプス正宗", "maker": "（名）亀田屋酒造店", "division": ""},
+        {"award": "入賞", "brand": "笑亀", "maker": "笑亀酒造株式会社", "division": ""},
+        {"award": "入賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "酔園", "maker": "EH酒造（株）", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第76回（平成17年11月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": ""},
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "優秀賞", "brand": "山清", "maker": "（資）山崎酒造店", "division": ""},
+        {"award": "優秀賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": ""},
+        {"award": "優秀賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "平成16酒造年度（平成17年5月）",
+      "entries": [
+        {"award": "入賞", "brand": "笑亀", "maker": "笑亀酒造株式会社", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第75回（平成16年11月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": ""},
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "優秀賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""},
+        {"award": "優秀賞", "brand": "酔園", "maker": "EH酒造（株）", "division": ""}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "平成15酒造年度（平成16年5月）",
+      "entries": [
+        {"award": "金賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "善哉", "maker": "善哉酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": ""},
+        {"award": "入賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第74回（平成15年11月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": ""},
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "優秀賞", "brand": "秀峰アルプス正宗", "maker": "（名）亀田屋酒造店", "division": ""},
+        {"award": "優秀賞", "brand": "山清", "maker": "（資）山崎酒造店", "division": ""}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "平成14酒造年度（平成15年5月）",
+      "entries": [
+        {"award": "金賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "金賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "善哉", "maker": "善哉酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": ""},
+        {"award": "入賞", "brand": "秀峰 アルプス正宗", "maker": "（名）亀田屋酒造店", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第73回（平成14年11月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "善哉", "maker": "善哉酒造（株）", "division": ""},
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "優秀賞", "brand": "廣田泉", "maker": "明科酒造（資）", "division": ""},
+        {"award": "優秀賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": ""},
+        {"award": "優秀賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""},
+        {"award": "優秀賞", "brand": "酔園", "maker": "酔園銘醸（株）", "division": ""}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "平成13酒造年度（平成14年5月）",
+      "entries": [
+        {"award": "金賞", "brand": "善哉", "maker": "善哉酒造（株）", "division": ""},
+        {"award": "金賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "金賞", "brand": "山清正宗", "maker": "（資）山崎酒造店", "division": ""},
+        {"award": "金賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": ""},
+        {"award": "入賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": ""},
+        {"award": "入賞", "brand": "秀峰 アルプス正宗", "maker": "（名）亀田屋酒造店", "division": ""},
+        {"award": "入賞", "brand": "廣田泉", "maker": "明科酒造（資）", "division": ""},
+        {"award": "入賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第72回（平成13年11月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "優秀賞", "brand": "秀峰 アルプス正宗", "maker": "（名）亀田屋酒造店", "division": ""},
+        {"award": "優秀賞", "brand": "廣田泉", "maker": "明科酒造（資）", "division": ""},
+        {"award": "優秀賞", "brand": "笑亀", "maker": "笑亀酒造（株）", "division": ""},
+        {"award": "優秀賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""},
+        {"award": "優秀賞", "brand": "酔園", "maker": "酔園銘醸（株）", "division": ""}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "平成12酒造年度（平成13年5月）",
+      "entries": [
+        {"award": "金賞", "brand": "善哉", "maker": "善哉酒造（株）", "division": ""},
+        {"award": "金賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "金賞", "brand": "廣田泉", "maker": "明科酒造（資）", "division": ""},
+        {"award": "金賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""},
+        {"award": "金賞", "brand": "酔園", "maker": "酔園銘醸（株）", "division": ""},
+        {"award": "入賞", "brand": "秀峰 アルプス正宗", "maker": "（名）亀田屋酒造店", "division": ""},
+        {"award": "入賞", "brand": "笑亀", "maker": "笑亀酒造（株）", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第71回（平成13年4月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "大信州", "maker": "大信州酒造（株）", "division": ""},
+        {"award": "優秀賞", "brand": "秀峰アルプス正宗", "maker": "（名）亀田屋酒造店", "division": ""},
+        {"award": "優秀賞", "brand": "山清正宗", "maker": "（資）山崎酒造店", "division": ""},
+        {"award": "優秀賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""},
+        {"award": "優秀賞", "brand": "酔園", "maker": "酔園銘醸（株）", "division": ""}
+      ]
+    },
+    {
+      "competition": "全国新酒鑑評会",
+      "year": "平成11酒造年度（平成12年5月）",
+      "entries": [
+        {"award": "金賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": ""},
+        {"award": "金賞", "brand": "笑亀", "maker": "笑亀酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "善哉", "maker": "善哉酒造（株）", "division": ""},
+        {"award": "入賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""}
+      ]
+    },
+    {
+      "competition": "関東信越国税局酒類鑑評会",
+      "year": "第70回（平成12年4月）",
+      "entries": [
+        {"award": "優秀賞", "brand": "岩波", "maker": "岩波酒造（資）", "division": ""},
+        {"award": "優秀賞", "brand": "広田泉", "maker": "明科酒造（資）", "division": ""},
+        {"award": "優秀賞", "brand": "高波", "maker": "（資）丸永酒造場", "division": ""},
+        {"award": "優秀賞", "brand": "笑亀", "maker": "笑亀酒造（株）", "division": ""},
+        {"award": "優秀賞", "brand": "美寿々", "maker": "美寿々酒造（株）", "division": ""}
       ]
     }
   ],

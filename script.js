@@ -354,6 +354,7 @@ function renderAwardsPage(awards) {
     <div class="award-year-block" data-type="${a.competition.includes('全国')?'national':'kanto'}">
       <div class="award-year-heading">${esc(a.year)}</div>
       <div class="award-year-sub">${esc(a.competition)}</div>
+      ${a.note ? `<p style="margin:0 0 1rem;font-size:.82rem;line-height:1.8;color:var(--amber-lt);">${esc(a.note)}</p>` : ''}
       <table class="award-table">
         <thead><tr><th>賞</th><th>銘柄</th><th>製造者</th><th>部門</th></tr></thead>
         <tbody>${a.entries.map(e=>`<tr>
