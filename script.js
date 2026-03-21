@@ -64,6 +64,15 @@ async function fetchSiteData() {
   const pageKey = getCurrentPageKey();
   const dataFile = pageDataFiles[pageKey] || 'site-index.json';
   const storageKey = `sake_site_data_${dataFile}`;
+  const inlineData = readInlineSiteData();
+  if (inlineData) {
+    try {
+      sessionStorage.setItem(storageKey, JSON.stringify(inlineData));
+    } catch (_) {
+      // 保存できない場合もそのまま使う
+    }
+    return inlineData;
+  }
   try {
     const cached = sessionStorage.getItem(storageKey);
     if (cached) return JSON.parse(cached);
@@ -88,6 +97,18 @@ async function fetchSiteData() {
     throw new Error('HTTP ' + res.status);
   } catch (e) {
     console.error('data.json の読み込みに失敗しました:', e);
+    return null;
+  }
+}
+
+function readInlineSiteData() {
+  const el = document.getElementById('static-site-data');
+  if (!el) return null;
+  const raw = el.textContent?.trim();
+  if (!raw || raw === '{}' || raw === 'null') return null;
+  try {
+    return JSON.parse(raw);
+  } catch (_) {
     return null;
   }
 }

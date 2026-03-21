@@ -418,6 +418,13 @@ async function saveFile(name,str){
     await w.write(str); await w.close(); return true;
   }catch(e){ return false; }
 }
+async function readFileText(name){
+  if(!rootH) return null;
+  try{
+    const fh=await rootH.getFileHandle(name);
+    return await (await fh.getFile()).text();
+  }catch(e){ return null; }
+}
 
 // ── STATE ──────────────────────────────────────────────────
 const S={
@@ -767,7 +774,8 @@ async function exportData(){
   upPrev();
   if(rootH){
     const results = await Promise.all(Object.entries(files).map(([name,content]) => saveFile(name, content)));
-    if(results.every(Boolean)){toast('✓ data.json と公開用データを保存しました');return;}
+    const htmlOk = await writeStaticPagePayloads(buildInlinePayloads(out));
+    if(results.every(Boolean) && htmlOk){toast('✓ data.json と公開用HTMLを保存しました');return;}
   }
   Object.entries(files).forEach(([name,content])=>{
     const a=document.createElement('a');
@@ -795,6 +803,44 @@ function buildPublicPayloads(data){
       awards: data.awards || []
     }, null, 2)
   };
+}
+function buildInlinePayloads(data){
+  return {
+    'index.html': {
+      events: data.events || [],
+      breweries: data.breweries || {},
+      products: data.products || [],
+      images: data.images || {},
+      heroImages: data.heroImages || [],
+      pagePhotos: data.pagePhotos || {}
+    },
+    'purchase.html': {
+      products: data.products || []
+    },
+    'awards.html': {
+      awards: data.awards || []
+    }
+  };
+}
+async function writeStaticPagePayloads(payloads){
+  if(!rootH) return false;
+  const results = await Promise.all(Object.entries(payloads).map(async ([name,payload])=>{
+    const html = await readFileText(name);
+    if(!html) return false;
+    const replaced = replaceStaticDataBlock(html, payload);
+    return saveFile(name, replaced);
+  }));
+  return results.every(Boolean);
+}
+function replaceStaticDataBlock(html, payload){
+  const nextBlock = `<script id="static-site-data" type="application/json">${escapeInlineJson(payload)}</script>`;
+  const pattern = /<script id="static-site-data" type="application\/json">[\s\S]*?<\/script>/;
+  return pattern.test(html) ? html.replace(pattern, nextBlock) : html;
+}
+function escapeInlineJson(payload){
+  return JSON.stringify(payload, null, 2)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e');
 }
 
 // ── UTILS ──────────────────────────────────────────────────
