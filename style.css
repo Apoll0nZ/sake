@@ -940,11 +940,12 @@ footer {
   .event-meta-item { font-size: 0.88rem; }
 
   /* ── 蔵元グリッド ── */
-  .brewery-grid { grid-template-columns: 1fr; gap: 0; }
-  .brewery-card { padding: 2rem 1.4rem; }
-  .bc-name { font-size: 1.5rem; }
-  .bc-info { font-size: 0.82rem; line-height: 2; }
-  .region-tab { font-size: clamp(0.9rem, 3.5vw, 1.2rem); padding: 1.1rem 0.5rem; }
+  .brewery-grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .brewery-card { padding: 1.2rem 1rem; }
+  .bc-name { font-size: 1.15rem; }
+  .bc-info { font-size: 0.75rem; line-height: 1.8; }
+  .bc-arrow { display: none; }
+  .region-tab { font-size: clamp(0.85rem, 3vw, 1.1rem); padding: 0.9rem 0.4rem; }
 
   .about-grid { grid-template-columns: 1fr; gap: 3rem; }
   .about-visual { max-width: 320px; }
@@ -980,10 +981,12 @@ footer {
   .btn-primary { padding: 0.8rem 1.8rem; font-size: 0.78rem; }
 
   /* ── 蔵元カード さらに小さい ── */
-  .brewery-card { padding: 1.6rem 1.2rem; }
-  .bc-name { font-size: 1.35rem; }
-  .region-tab { font-size: 0.88rem; padding: 1rem 0.4rem; letter-spacing: 0.04em; }
-  .region-tabs { margin-bottom: 2rem; }
+  .brewery-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .brewery-card { padding: 0.9rem 0.8rem; }
+  .bc-name { font-size: 1rem; }
+  .bc-info { font-size: 0.72rem; line-height: 1.7; }
+  .region-tab { font-size: 0.82rem; padding: 0.8rem 0.3rem; letter-spacing: 0.03em; }
+  .region-tabs { margin-bottom: 1.5rem; }
 
   /* ── セクション共通 ── */
   section { padding: 4.5rem 1.2rem; }
@@ -1539,14 +1542,32 @@ footer {
 
 /* スマホ */
 @media (max-width: 768px) {
-  .ev-detail-card { padding: 1.2rem; }
+  .ev-detail-card { padding: 1rem; }
   .ev-detail-body {
     grid-template-columns: 1fr; gap: 1.2rem;
   }
   .ev-dl-row {
     grid-template-columns: 3.2rem 1fr;
-    font-size: .83rem; padding: .5rem 0;
+    font-size: .85rem; padding: .55rem 0;
   }
-  .ev-detail-title { font-size: 1.3rem; margin-bottom: 1rem; }
-  .ev-img-wrap { margin-bottom: 1.2rem; }
+  .ev-detail-title { font-size: 1.25rem; margin-bottom: 1rem; }
+  .ev-img-wrap { margin-bottom: 1.2rem; overflow: hidden; }
+  /* スマホでは画像を枠内に収める */
+  .ev-detail-img {
+    max-width: 100%;
+    max-height: none;
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+/* ── イベントページ本体余白 ──────────────────────────────────── */
+.event-page-body {
+  padding: 6rem 4rem;
+  background: var(--ink);
+}
+@media (max-width: 768px) {
+  .event-page-body {
+    padding: 2.5rem 1rem;
+  }
 }
