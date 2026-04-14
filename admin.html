@@ -761,7 +761,7 @@ function renderAwardList(){
 function delAward(i){ if(!confirm('削除しますか？')) return; S.awards.splice(i,1); renderAwardList(); }
 
 // ── 保存・書き出し ─────────────────────────────────────────
-function saveAll(){ normalizeEventSakesState(); upPrev(); toast('保存しました ✓'); }
+function saveAll(){ exportData(); }
 async function exportData(){
   normalizeEventSakesState();
   normalizeEventDatesState();
@@ -955,7 +955,7 @@ function renderStaticUpcomingEvents(events){
   }).join('');
 }
 function renderStaticSakeBooths(events){
-  return (events || []).filter(ev=>Array.isArray(ev.sakes) && ev.sakes.length).map(event => {
+  return (events || []).filter(ev=>ev.status==='upcoming' && Array.isArray(ev.sakes) && ev.sakes.length).map(event => {
     const grouped = {};
     event.sakes.forEach(sake => {
       if(!grouped[sake.brewery]) grouped[sake.brewery] = [];
