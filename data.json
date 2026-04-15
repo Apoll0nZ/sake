@@ -295,7 +295,7 @@
         "address": "松本市中央2-1-20",
         "tel": "0263(32)0517",
         "fax": "",
-        "email": "yoikana@po.mcci.or.jp"
+        "email": ""
       },
       {
         "name": "善哉",
@@ -2281,12 +2281,12 @@
   "pagePhotos": {
     "research_0": [
       {
-        "file": "",
-        "alt": ""
+        "file": "shinsyu.jpg",
+        "alt": "新酒研究会"
       },
       {
         "file": "",
-        "alt": "新酒研究会"
+        "alt": ""
       }
     ],
     "research_1": [
@@ -2295,8 +2295,8 @@
         "alt": "初のみきり研究会"
       },
       {
-        "file": "nomi02.jpeg",
-        "alt": "初のみきり研究会"
+        "file": "",
+        "alt": ""
       }
     ],
     "shrine": [
