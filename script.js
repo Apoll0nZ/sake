@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initParticles();
   initParallax();
   initRegionTabs();
+  initBreweryCardLinks();
   initAwardsFilter();
   initForm();
   initStaticHeroCarousel();
@@ -298,6 +299,38 @@ function initRegionTabs(){
   });
 }
 
+function initBreweryCardLinks() {
+  document.querySelectorAll('.brewery-card').forEach(card => {
+    const primaryLink = card.querySelector('.bc-arrow[href]');
+    if (!primaryLink) return;
+
+    card.classList.add('brewery-card-link');
+    card.tabIndex = 0;
+    card.setAttribute('role', 'link');
+    if (!card.getAttribute('aria-label')) {
+      const name = card.querySelector('.bc-name')?.textContent?.trim();
+      if (name) card.setAttribute('aria-label', `${name}の公式サイトを開く`);
+    }
+
+    const openCardLink = () => {
+      window.open(primaryLink.href, primaryLink.target || '_self', primaryLink.target === '_blank' ? 'noopener,noreferrer' : undefined);
+    };
+
+    card.addEventListener('click', event => {
+      const nestedLink = event.target.closest('a');
+      if (nestedLink && nestedLink !== primaryLink) return;
+      if (nestedLink === primaryLink) return;
+      openCardLink();
+    });
+
+    card.addEventListener('keydown', event => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      openCardLink();
+    });
+  });
+}
+
 /* ── AWARDS FILTER ──────────────────────────────────────────── */
 function initAwardsFilter(){
   document.querySelectorAll('.filter-btn').forEach(btn=>{
@@ -349,4 +382,3 @@ function initVideoLazyLoad() {
     container.appendChild(video);
   }, { once: true });
 }
-

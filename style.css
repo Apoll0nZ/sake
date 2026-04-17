@@ -522,11 +522,16 @@ section { padding: 9rem 4rem; }
 }
 .brewery-card {
   background: #FFFFFF; padding: 3rem 2.5rem;
-  position: relative; overflow: hidden; cursor: pointer;
+  position: relative; overflow: hidden; cursor: default;
   transition: background 0.2s, box-shadow 0.2s;
   box-shadow: none;
 }
+.brewery-card-link { cursor: pointer; }
 .brewery-card:hover { background: #F0F7FF; box-shadow: inset 0 0 0 2px var(--amber); }
+.brewery-card-link:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+}
 .brewery-card::before {
   content: attr(data-num); position: absolute;
   top: 1.5rem; right: 2rem;
