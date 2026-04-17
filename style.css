@@ -549,6 +549,12 @@ section { padding: 9rem 4rem; }
   transition: opacity 0.3s, transform 0.3s; text-transform: uppercase;
 }
 .brewery-card:hover .bc-arrow { opacity: 1; transform: translateX(0); }
+@media (hover: none), (pointer: coarse) {
+  .bc-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 
 /* ── SEASONS ───────────────────────────────────────────────── */
 #seasons { background: var(--ink); padding-left: 0; padding-right: 0; }
@@ -1087,7 +1093,12 @@ footer {
   .brewery-card { padding: 1.2rem 1rem; }
   .bc-name { font-size: 1.1rem; }
   .bc-info { font-size: 0.75rem; line-height: 1.8; }
-  .bc-arrow { display: none; }
+  .bc-arrow {
+    display: inline-flex;
+    opacity: 1;
+    transform: translateX(0);
+    margin-top: 1rem;
+  }
   .region-tab { font-size: clamp(0.85rem, 3vw, 1.1rem); padding: 0.9rem 0.4rem; }
 
   .about-grid { grid-template-columns: 1fr; gap: 3rem; }
@@ -1665,7 +1676,14 @@ footer {
   .bc-maker  { font-size: 0.72rem; }
   .bc-info   { font-size: 0.7rem; line-height: 1.7; }
   .bc-region { font-size: 0.6rem; }
-  .bc-arrow  { display: none; }
+  .bc-arrow  {
+    display: inline-flex;
+    opacity: 1;
+    transform: translateX(0);
+    margin-top: 0.85rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+  }
 
   /* タブを等幅・文字小さく */
   .region-tabs { margin-bottom: 1.2rem; }
