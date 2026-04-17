@@ -296,7 +296,8 @@
         "tel": "0263(32)0517",
         "fax": "",
         "email": "",
-        "website": ""
+        "website": "",
+        "image": "深志鶴.webp"
       },
       {
         "name": "善哉",
@@ -307,7 +308,8 @@
         "tel": "0263(32)0734",
         "fax": "",
         "email": "yoikana@po.mcci.or.jp",
-        "website": "https://yoikanasyuzou.jimdosite.com/"
+        "website": "https://yoikanasyuzou.jimdosite.com/",
+        "image": "善哉.webp"
       },
       {
         "name": "岩波",
@@ -318,7 +320,8 @@
         "tel": "0263(25)1300",
         "fax": "",
         "email": "iwanami@po.mcci.or.jp",
-        "website": "https://iwanami-sake.com/"
+        "website": "https://iwanami-sake.com/",
+        "image": "岩波.webp"
       },
       {
         "name": "笹の誉",
@@ -329,7 +332,8 @@
         "tel": "0263(47)0762",
         "fax": "",
         "email": "sake@sasanohomare.co.jp",
-        "website": "http://www.sasanohomare.co.jp/"
+        "website": "http://www.sasanohomare.co.jp/",
+        "image": "笹井.webp"
       },
       {
         "name": "大信州",
@@ -340,7 +344,8 @@
         "tel": "0263(47)0895",
         "fax": "",
         "email": "info@daishinsyu.com",
-        "website": "https://www.daishinsyu.com/"
+        "website": "https://www.daishinsyu.com/",
+        "image": "大信州.webp"
       },
       {
         "name": "アルプス正宗",
@@ -351,7 +356,8 @@
         "tel": "0263(47)1320",
         "fax": "",
         "email": "kametaya@chive.ocn.ne.jp",
-        "website": "https://www.kametaya.co.jp/"
+        "website": "https://www.kametaya.co.jp/",
+        "image": "亀田屋.webp"
       }
     ],
     "shiojiri": [
@@ -364,7 +370,8 @@
         "tel": "0263(52)2633",
         "fax": "",
         "email": "mail@takanami-sake.co.jp",
-        "website": "https://www.takanami-sake.com/"
+        "website": "https://www.takanami-sake.com/",
+        "image": "岩波.webp"
       },
       {
         "name": "和饗",
@@ -375,7 +382,8 @@
         "tel": "0263(52)0302",
         "fax": "",
         "email": "",
-        "website": "https://wakyo-shuzo.com/"
+        "website": "https://wakyo-shuzo.com/",
+        "image": "和饗.webp"
       },
       {
         "name": "美寿々",
@@ -386,7 +394,8 @@
         "tel": "0263(52)0013",
         "fax": "",
         "email": "info@misuzushuzo.com",
-        "website": "http://www.appale.ne.jp/~misuzu/"
+        "website": "http://www.appale.ne.jp/~misuzu/",
+        "image": "美寿々.webp"
       }
     ],
     "azumino": [
@@ -399,7 +408,8 @@
         "tel": "0263(72)3011",
         "fax": "",
         "email": "mail@suien.co.jp",
-        "website": "https://suien-sake.com/"
+        "website": "https://suien-sake.com/",
+        "image": "酔園.webp"
       }
     ]
   },
