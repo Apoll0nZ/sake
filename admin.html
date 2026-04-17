@@ -459,20 +459,20 @@ const S={
   ],
   breweries:{
     matsumoto:[
-      {name:'深志鶴',maker:'（名）奥沢商会',zip:'390-0811',address:'松本市中央2-1-20',tel:'0263(32)0734',fax:'0263(32)9054',email:'yoikana@po.mcci.or.jp',image:''},
-      {name:'善哉',maker:'善哉酒造（株）',zip:'390-0874',address:'松本市大手5-4-24',tel:'0263(32)0734',fax:'0263(32)9054',email:'yoikana@po.mcci.or.jp',image:''},
-      {name:'岩波',maker:'岩波酒造（資）',zip:'390-0221',address:'松本市里山辺5159',tel:'0263(25)1300',fax:'0263(25)6300',email:'iwanami@po.mcci.or.jp',image:''},
-      {name:'笹の誉',maker:'笹井酒造（株）',zip:'390-0851',address:'松本市島内3682',tel:'0263(47)0762',fax:'0263(47)1421',email:'sake@sasanohomare.co.jp',image:''},
-      {name:'大信州',maker:'大信州酒造（株）',zip:'390-0852',address:'松本市島立2380',tel:'0263(47)0895',fax:'0263(47)8007',email:'info@daishinsyu.com',image:''},
-      {name:'アルプス正宗',maker:'（株）亀田屋酒造店',zip:'390-0852',address:'松本市島立2748',tel:'0263(47)1320',fax:'0263(47)7056',email:'kametaya@chive.ocn.ne.jp',image:''},
+      {name:'深志鶴',maker:'（名）奥沢商会',zip:'390-0811',address:'松本市中央2-1-20',tel:'0263(32)0734',fax:'0263(32)9054',email:'yoikana@po.mcci.or.jp',website:'',image:''},
+      {name:'善哉',maker:'善哉酒造（株）',zip:'390-0874',address:'松本市大手5-4-24',tel:'0263(32)0734',fax:'0263(32)9054',email:'yoikana@po.mcci.or.jp',website:'https://yoikanasyuzou.jimdosite.com/',image:''},
+      {name:'岩波',maker:'岩波酒造（資）',zip:'390-0221',address:'松本市里山辺5159',tel:'0263(25)1300',fax:'0263(25)6300',email:'iwanami@po.mcci.or.jp',website:'https://iwanami-sake.com/',image:''},
+      {name:'笹の誉',maker:'笹井酒造（株）',zip:'390-0851',address:'松本市島内3682',tel:'0263(47)0762',fax:'0263(47)1421',email:'sake@sasanohomare.co.jp',website:'http://www.sasanohomare.co.jp/',image:''},
+      {name:'大信州',maker:'大信州酒造（株）',zip:'390-0852',address:'松本市島立2380',tel:'0263(47)0895',fax:'0263(47)8007',email:'info@daishinsyu.com',website:'https://www.daishinsyu.com/',image:''},
+      {name:'アルプス正宗',maker:'（株）亀田屋酒造店',zip:'390-0852',address:'松本市島立2748',tel:'0263(47)1320',fax:'0263(47)7056',email:'kametaya@chive.ocn.ne.jp',website:'https://www.kametaya.co.jp/',image:''},
     ],
     shiojiri:[
-      {name:'高波',maker:'（資）丸永酒造場',zip:'399-0703',address:'塩尻市広丘高出840',tel:'0263(52)2633',fax:'0263(54)4749',email:'mail@takanami-sake.co.jp',image:''},
-      {name:'和饗',maker:'和饗酒造（株）',zip:'399-0700',address:'塩尻市塩尻町140',tel:'0263(52)0302',fax:'0263(52)3410',email:'',image:''},
-      {name:'美寿々',maker:'美寿々酒造（株）',zip:'399-6462',address:'塩尻市洗馬2402',tel:'0263(52)0013',fax:'0263(54)3581',email:'info@misuzushuzo.com',image:''},
+      {name:'高波',maker:'（資）丸永酒造場',zip:'399-0703',address:'塩尻市広丘高出840',tel:'0263(52)2633',fax:'0263(54)4749',email:'mail@takanami-sake.co.jp',website:'https://www.takanami-sake.com/',image:''},
+      {name:'和饗',maker:'和饗酒造（株）',zip:'399-0700',address:'塩尻市塩尻町140',tel:'0263(52)0302',fax:'0263(52)3410',email:'',website:'https://wakyo-shuzo.com/',image:''},
+      {name:'美寿々',maker:'美寿々酒造（株）',zip:'399-6462',address:'塩尻市洗馬2402',tel:'0263(52)0013',fax:'0263(54)3581',email:'info@misuzushuzo.com',website:'http://www.appale.ne.jp/~misuzu/',image:''},
     ],
     azumino:[
-      {name:'酔園',maker:'ＥＨ酒造（株）',zip:'399-8204',address:'安曇野市豊科高家1090-1',tel:'0263(72)2828',fax:'0263(72)6268',email:'mail@suien.co.jp',image:''},
+      {name:'酔園',maker:'ＥＨ酒造（株）',zip:'399-8204',address:'安曇野市豊科高家1090-1',tel:'0263(72)2828',fax:'0263(72)6268',email:'mail@suien.co.jp',website:'https://suien-sake.com/',image:''},
     ],
   },
   awards:[
@@ -695,7 +695,11 @@ function renderBreweries(){
           <div class="f"><label>電話番号</label><input type="tel" value="${E(b.tel||'')}" oninput="S.breweries['${region}'][${i}].tel=this.value"></div>
           <div class="f"><label>FAX</label><input type="tel" value="${E(b.fax||'')}" oninput="S.breweries['${region}'][${i}].fax=this.value"></div>
         </div>
-        <div class="f"><label>メールアドレス</label><input type="email" value="${E(b.email||'')}" oninput="S.breweries['${region}'][${i}].email=this.value"></div>
+        <div class="g2">
+          <div class="f"><label>メールアドレス</label><input type="email" value="${E(b.email||'')}" oninput="S.breweries['${region}'][${i}].email=this.value"></div>
+          <div class="f"><label>公式サイトURL</label><input type="url" value="${E(b.website||'')}" placeholder="https://example.com/" oninput="S.breweries['${region}'][${i}].website=this.value"></div>
+        </div>
+        <div class="hint" style="margin-top:-.5rem;margin-bottom:1rem;">URLを入れると公開ページの「詳しく見る →」から各蔵元サイトへリンクします。未入力ならリンクなしで表示されます。</div>
         <div class="f">
           <label>蔵元カード 背景画像</label>
           <div class="ipick ${b.image?'has':''}" onclick="document.getElementById('bri-${region}-${i}').click()">
@@ -765,6 +769,7 @@ function saveAll(){ exportData(); }
 async function exportData(){
   normalizeEventSakesState();
   normalizeEventDatesState();
+  normalizeBreweriesState();
   const out={...S};
   delete out.sakes;
   const files = {
@@ -918,6 +923,11 @@ function fillIndexStaticContent(doc, payload){
     shrineGrid.style.display = gridPhotos.length ? '' : 'none';
   }
 }
+function formatExternalUrl(url){
+  const value=String(url||'').trim();
+  if(!value) return '';
+  return /^(https?:)?\/\//i.test(value) ? value : `https://${value}`;
+}
 function renderStaticEventBanners(events){
   const upcoming = (events || []).filter(e=>e.status==='upcoming');
   return upcoming.map(ev => {
@@ -933,7 +943,11 @@ function renderStaticBreweries(items, label){
     const emailHtml = b.email ? `<a href="mailto:${E(b.email)}">${E(b.email)}</a>` : '';
     const faxHtml = b.fax ? ` ／ FAX：${E(b.fax)}` : '';
     const bgHtml = b.image ? `<img class="brewery-card-bg" src="images/${E(b.image)}" alt="">` : '';
-    return `<div class="brewery-card" data-num="${String(i+1).padStart(2,'0')}">${bgHtml}<div class="bc-region">${E(label)}</div><div class="bc-name">${E(b.name)}</div><div class="bc-maker">${E(b.maker)}</div><div class="bc-info">〒${E(b.zip)} ${E(b.address)}<br>TEL：${E(b.tel)}${faxHtml}<br>${emailHtml}</div><span class="bc-arrow">詳しく見る →</span></div>`;
+    const website = formatExternalUrl(b.website);
+    const detailHtml = website
+      ? `<a class="bc-arrow" href="${E(website)}" target="_blank" rel="noreferrer noopener">詳しく見る →</a>`
+      : `<span class="bc-arrow">詳しく見る →</span>`;
+    return `<div class="brewery-card" data-num="${String(i+1).padStart(2,'0')}">${bgHtml}<div class="bc-region">${E(label)}</div><div class="bc-name">${E(b.name)}</div><div class="bc-maker">${E(b.maker)}</div><div class="bc-info">〒${E(b.zip)} ${E(b.address)}<br>TEL：${E(b.tel)}${faxHtml}<br>${emailHtml}</div>${detailHtml}</div>`;
   }).join('');
 }
 function renderStaticMarquee(breweries){
@@ -1033,7 +1047,17 @@ function ST(id,btn){
   btn.closest('.panel').querySelectorAll('[id^="t"]').forEach(p=>{if(['tm','ts','ta'].includes(p.id))p.style.display='none';});
   btn.classList.add('active'); document.getElementById(id).style.display='block';
 }
-function renderAll(){ normalizeAwards(); normalizeEventSakesState(); normalizeEventDatesState(); renderEvents(); renderProducts(); renderBreweries(); renderAwardList(); renderHeroImages(); renderPagePhotosAdmin(); upPrev(); }
+function renderAll(){ normalizeAwards(); normalizeBreweriesState(); normalizeEventSakesState(); normalizeEventDatesState(); renderEvents(); renderProducts(); renderBreweries(); renderAwardList(); renderHeroImages(); renderPagePhotosAdmin(); upPrev(); }
+function normalizeBreweriesState(){
+  if(!S.breweries || typeof S.breweries!=='object') S.breweries={};
+  ['matsumoto','shiojiri','azumino'].forEach(region=>{
+    if(!Array.isArray(S.breweries[region])) S.breweries[region]=[];
+    S.breweries[region]=S.breweries[region].map(item=>({
+      ...item,
+      website:item?.website || ''
+    }));
+  });
+}
 function normalizeEventSakesState(){
   if(!Array.isArray(S.events)) S.events=[];
   S.events.forEach(event=>{ if(!Array.isArray(event.sakes)) event.sakes=[]; });

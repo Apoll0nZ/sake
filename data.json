@@ -295,7 +295,8 @@
         "address": "松本市中央2-1-20",
         "tel": "0263(32)0517",
         "fax": "",
-        "email": ""
+        "email": "",
+        "website": ""
       },
       {
         "name": "善哉",
@@ -305,7 +306,8 @@
         "address": "松本市大手5-4-24",
         "tel": "0263(32)0734",
         "fax": "",
-        "email": "yoikana@po.mcci.or.jp"
+        "email": "yoikana@po.mcci.or.jp",
+        "website": "https://yoikanasyuzou.jimdosite.com/"
       },
       {
         "name": "岩波",
@@ -315,7 +317,8 @@
         "address": "松本市里山辺5159",
         "tel": "0263(25)1300",
         "fax": "",
-        "email": "iwanami@po.mcci.or.jp"
+        "email": "iwanami@po.mcci.or.jp",
+        "website": "https://iwanami-sake.com/"
       },
       {
         "name": "笹の誉",
@@ -325,7 +328,8 @@
         "address": "松本市島内3682",
         "tel": "0263(47)0762",
         "fax": "",
-        "email": "sake@sasanohomare.co.jp"
+        "email": "sake@sasanohomare.co.jp",
+        "website": "http://www.sasanohomare.co.jp/"
       },
       {
         "name": "大信州",
@@ -335,7 +339,8 @@
         "address": "松本市島立2380",
         "tel": "0263(47)0895",
         "fax": "",
-        "email": "info@daishinsyu.com"
+        "email": "info@daishinsyu.com",
+        "website": "https://www.daishinsyu.com/"
       },
       {
         "name": "アルプス正宗",
@@ -345,7 +350,8 @@
         "address": "松本市島立2748",
         "tel": "0263(47)1320",
         "fax": "",
-        "email": "kametaya@chive.ocn.ne.jp"
+        "email": "kametaya@chive.ocn.ne.jp",
+        "website": "https://www.kametaya.co.jp/"
       }
     ],
     "shiojiri": [
@@ -357,7 +363,8 @@
         "address": "塩尻市広丘高出840",
         "tel": "0263(52)2633",
         "fax": "",
-        "email": "mail@takanami-sake.co.jp"
+        "email": "mail@takanami-sake.co.jp",
+        "website": "https://www.takanami-sake.com/"
       },
       {
         "name": "和饗",
@@ -367,7 +374,8 @@
         "address": "塩尻市塩尻町140",
         "tel": "0263(52)0302",
         "fax": "",
-        "email": ""
+        "email": "",
+        "website": "https://wakyo-shuzo.com/"
       },
       {
         "name": "美寿々",
@@ -377,7 +385,8 @@
         "address": "塩尻市洗馬2402",
         "tel": "0263(52)0013",
         "fax": "",
-        "email": "info@misuzushuzo.com"
+        "email": "info@misuzushuzo.com",
+        "website": "http://www.appale.ne.jp/~misuzu/"
       }
     ],
     "azumino": [
@@ -389,7 +398,8 @@
         "address": "安曇野市豊科高家1090-1",
         "tel": "0263(72)3011",
         "fax": "",
-        "email": "mail@suien.co.jp"
+        "email": "mail@suien.co.jp",
+        "website": "https://suien-sake.com/"
       }
     ]
   },
