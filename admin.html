@@ -946,7 +946,7 @@ function renderStaticBreweries(items, label){
     const website = formatExternalUrl(b.website);
     const detailHtml = website
       ? `<a class="bc-arrow" href="${E(website)}" target="_blank" rel="noreferrer noopener">詳しく見る →</a>`
-      : `<span class="bc-arrow">詳しく見る →</span>`;
+      : '';
     return `<div class="brewery-card" data-num="${String(i+1).padStart(2,'0')}">${bgHtml}<div class="bc-region">${E(label)}</div><div class="bc-name">${E(b.name)}</div><div class="bc-maker">${E(b.maker)}</div><div class="bc-info">〒${E(b.zip)} ${E(b.address)}<br>TEL：${E(b.tel)}${faxHtml}<br>${emailHtml}</div>${detailHtml}</div>`;
   }).join('');
 }

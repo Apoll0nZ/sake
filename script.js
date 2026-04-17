@@ -313,7 +313,7 @@ function initBreweryCardLinks() {
     }
 
     const openCardLink = () => {
-      window.open(primaryLink.href, primaryLink.target || '_self', primaryLink.target === '_blank' ? 'noopener,noreferrer' : undefined);
+      primaryLink.click();
     };
 
     card.addEventListener('click', event => {

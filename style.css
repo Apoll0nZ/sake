@@ -526,8 +526,12 @@ section { padding: 9rem 4rem; }
   transition: background 0.2s, box-shadow 0.2s;
   box-shadow: none;
 }
-.brewery-card-link { cursor: pointer; }
-.brewery-card:hover { background: #F0F7FF; box-shadow: inset 0 0 0 2px var(--amber); }
+.brewery-card-link { cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: rgba(200,146,42,0.12); }
+.brewery-card:hover,
+.brewery-card-link:active {
+  background: #F0F7FF;
+  box-shadow: inset 0 0 0 2px var(--amber);
+}
 .brewery-card-link:focus-visible {
   outline: 2px solid var(--amber);
   outline-offset: 3px;
@@ -539,7 +543,8 @@ section { padding: 9rem 4rem; }
   color: rgba(200,146,42,0.05); line-height: 1;
   transition: color 0.3s;
 }
-.brewery-card:hover::before { color: rgba(200,146,42,0.1); }
+.brewery-card:hover::before,
+.brewery-card-link:active::before { color: rgba(200,146,42,0.1); }
 .bc-region { font-size: 0.72rem; letter-spacing: 0.45em; color: var(--amber); text-transform: uppercase; margin-bottom: 0.8rem; font-weight: 600; }
 .bc-name { font-family: var(--serif); font-size: 2rem; letter-spacing: 0.08em; margin-bottom: 0.4rem; color: var(--text); font-weight: 600; }
 .bc-maker { font-size: 0.9rem; color: var(--text-sub); letter-spacing: 0.1em; margin-bottom: 1.5rem; }
@@ -553,7 +558,8 @@ section { padding: 9rem 4rem; }
   opacity: 0; transform: translateX(-8px);
   transition: opacity 0.3s, transform 0.3s; text-transform: uppercase;
 }
-.brewery-card:hover .bc-arrow { opacity: 1; transform: translateX(0); }
+.brewery-card:hover .bc-arrow,
+.brewery-card-link:active .bc-arrow { opacity: 1; transform: translateX(0); }
 @media (hover: none), (pointer: coarse) {
   .bc-arrow {
     opacity: 1;
