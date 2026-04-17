@@ -1240,12 +1240,16 @@ footer {
   line-height: 1.45;
   margin-bottom: 0.45rem;
   color: #17120c;
+  word-break: keep-all;
 }
 .carousel-item-price {
   font-size: 0.92rem;
   color: #2b241b;
   font-weight: 500;
   letter-spacing: 0.04em;
+}
+@media (max-width: 768px) {
+  .carousel-item-name { font-size: 1.05rem; }
 }
 
 /* ── EVENT ARCHIVE ─────────────────────────────────────────── */
@@ -1691,13 +1695,14 @@ footer {
   }
   .brewery-card {
     border: 1px solid var(--border);
-    padding: 0.9rem 5.2rem 0.9rem 0.8rem;
+    padding: 0.9rem 0.8rem;
   }
   .brewery-card:last-child { border-bottom: 1px solid var(--border); }
   .brewery-card-bg {
-    right: 0.55rem;
-    height: calc(100% - 0.8rem);
-    max-width: 88px;
+    right: 0.2rem;
+    height: calc(100% - 0.4rem);
+    max-width: 92px;
+    opacity: 0.1;
   }
 
   /* カード内フォント調整 */
