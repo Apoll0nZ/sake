@@ -1104,8 +1104,8 @@ footer {
   .brewery-card { padding: 1.2rem 6rem 1.2rem 1rem; }
   .brewery-card-bg {
     right: 0.7rem;
-    max-width: 92px;
-    max-height: calc(100% - 1rem);
+    height: calc(100% - 1rem);
+    max-width: 104px;
   }
   .bc-name { font-size: 1.1rem; }
   .bc-info { font-size: 0.75rem; line-height: 1.8; }
@@ -1501,9 +1501,8 @@ footer {
   top: 50%;
   right: 1.1rem;
   width: auto;
-  height: auto;
-  max-width: 126px;
-  max-height: calc(100% - 1.2rem);
+  height: calc(100% - 1.2rem);
+  max-width: 136px;
   object-fit: contain;
   object-position: center right;
   transform: translateY(-50%);
@@ -1697,8 +1696,8 @@ footer {
   .brewery-card:last-child { border-bottom: 1px solid var(--border); }
   .brewery-card-bg {
     right: 0.55rem;
-    max-width: 78px;
-    max-height: calc(100% - 0.8rem);
+    height: calc(100% - 0.8rem);
+    max-width: 88px;
   }
 
   /* カード内フォント調整 */
