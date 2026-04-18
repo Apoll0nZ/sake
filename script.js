@@ -346,26 +346,57 @@ function initAwardsFilter(){
 
 /* ── FORM ───────────────────────────────────────────────────── */
 function initForm(){
+  const markInvalid = field => {
+    if(!field) return;
+    field.style.borderColor='rgba(200,80,80,.7)';
+    setTimeout(()=>{ field.style.borderColor=''; },2200);
+  };
+  const isValidName = value => {
+    const v = value.trim();
+    // 2〜40文字、数字や記号だけの入力を除外
+    return v.length >= 2 && v.length <= 40 && /^[^\d!-/:-@[-`{-~]+$/.test(v);
+  };
+  const isValidEmail = value => {
+    const v = value.trim();
+    if(v.length > 120) return false;
+    if(v.includes('..')) return false;
+    return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(v);
+  };
+  const isValidMessage = value => {
+    const v = value.trim();
+    // 中身のある10文字以上を必須
+    return v.length >= 10 && v.length <= 2000;
+  };
+
   $('formSubmit')?.addEventListener('click',function(){
     const name=$('fName');
-    const tel=$('fTel');
-    const address=$('fAddress');
     const email=$('fEmail');
-    if(!name?.value.trim()||!tel?.value.trim()||!address?.value.trim()||!email?.value.trim()){
-      [name, tel, address, email].forEach(field=>{
-        if(!field?.value.trim()){
-          field.style.borderColor='rgba(200,80,80,.6)';
-          setTimeout(()=>{ field.style.borderColor=''; },2000);
-        }
-      });
+    const message=$('fMessage');
+    const invalidMessages = [];
+
+    if(!name?.value.trim() || !isValidName(name.value)){
+      markInvalid(name);
+      invalidMessages.push('お名前を正しく入力してください（2〜40文字）。');
+    }
+    if(!email?.value.trim() || !isValidEmail(email.value)){
+      markInvalid(email);
+      invalidMessages.push('メールアドレスの形式を確認してください。');
+    }
+    if(!message?.value.trim() || !isValidMessage(message.value)){
+      markInvalid(message);
+      invalidMessages.push('お問い合わせ内容は10文字以上で入力してください。');
+    }
+
+    if(invalidMessages.length){
+      alert(invalidMessages.join('\n'));
       return;
     }
+
     const subject = encodeURIComponent('松本地酒家 お問い合わせ');
     const body = encodeURIComponent(
       `【お名前】\n${name.value.trim()}\n\n` +
-      `【電話番号】\n${tel.value.trim()}\n\n` +
-      `【住所】\n${address.value.trim()}\n\n` +
-      `【メールアドレス】\n${email.value.trim()}\n`
+      `【メールアドレス】\n${email.value.trim()}\n\n` +
+      `【お問い合わせ内容】\n${message.value.trim()}\n`
     );
     window.location.href = `mailto:zizake@po.mcci.or.jp?subject=${subject}&body=${body}`;
     this.textContent='メール作成を開始しました ✓'; this.classList.add('sent');
