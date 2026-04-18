@@ -362,6 +362,15 @@ function initForm(){
     if(v.includes('..')) return false;
     return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(v);
   };
+  const isValidTel = value => {
+    const v = value.trim();
+    // 数字・ハイフン・カッコのみ許可（7〜20文字）
+    return /^[0-9()+-]{7,20}$/.test(v);
+  };
+  const isValidAddress = value => {
+    const v = value.trim();
+    return v.length >= 6 && v.length <= 120;
+  };
   const isValidMessage = value => {
     const v = value.trim();
     // 中身のある10文字以上を必須
@@ -371,6 +380,8 @@ function initForm(){
   $('formSubmit')?.addEventListener('click',function(){
     const name=$('fName');
     const email=$('fEmail');
+    const tel=$('fTel');
+    const address=$('fAddress');
     const message=$('fMessage');
     const invalidMessages = [];
 
@@ -381,6 +392,14 @@ function initForm(){
     if(!email?.value.trim() || !isValidEmail(email.value)){
       markInvalid(email);
       invalidMessages.push('メールアドレスの形式を確認してください。');
+    }
+    if(!tel?.value.trim() || !isValidTel(tel.value)){
+      markInvalid(tel);
+      invalidMessages.push('電話番号を正しく入力してください。');
+    }
+    if(!address?.value.trim() || !isValidAddress(address.value)){
+      markInvalid(address);
+      invalidMessages.push('住所を正しく入力してください。');
     }
     if(!message?.value.trim() || !isValidMessage(message.value)){
       markInvalid(message);
@@ -396,6 +415,8 @@ function initForm(){
     const body = encodeURIComponent(
       `【お名前】\n${name.value.trim()}\n\n` +
       `【メールアドレス】\n${email.value.trim()}\n\n` +
+      `【電話番号】\n${tel.value.trim()}\n\n` +
+      `【住所】\n${address.value.trim()}\n\n` +
       `【お問い合わせ内容】\n${message.value.trim()}\n`
     );
     window.location.href = `mailto:zizake@po.mcci.or.jp?subject=${subject}&body=${body}`;
