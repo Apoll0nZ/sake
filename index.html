@@ -30,6 +30,7 @@
     <li><a href="index.html?page=page-research" data-page="page-research">研究会</a></li>
     <li><a href="index.html?page=page-shrine" data-page="page-shrine">松尾神社</a></li>
     <li><a href="purchase.html" data-page="page-purchase">ご購入</a></li>
+    <li><a href="index.html?page=page-contact" data-page="page-contact">お問い合わせ</a></li>
   </ul>
   <div class="nav-hamburger" id="navHamburger"><span></span><span></span><span></span></div>
 </nav>
@@ -40,6 +41,7 @@
   <a href="index.html?page=page-research" data-page="page-research">研究会</a>
   <a href="index.html?page=page-shrine" data-page="page-shrine">松尾神社</a>
   <a href="purchase.html" data-page="page-purchase">ご購入</a>
+  <a href="index.html?page=page-contact" data-page="page-contact">お問い合わせ</a>
 </div>
 
 <!-- ════ PAGE: MAIN ════ -->
@@ -152,7 +154,8 @@
         <div>
           <div class="footer-brand">松本地酒家</div>
           <p class="footer-desc">信州松本平の地酒を紹介・販売する専門窓口。地元蔵元と連携し、本物の地酒文化を次代に伝えます。</p>
-          <address class="footer-address" style="font-style:normal;">松本地酒振興協同組合<br>〒390-0837 長野県松本市鎌田2-3-65 長野県酒類販売（株）1階<br>TEL：0263-24-3606 ／ FAX：0263-24-3607<br><a href="mailto:zizake@po.mcci.or.jp" style="color:var(--amber);opacity:.7;">zizake@po.mcci.or.jp</a></address>
+          <address class="footer-address" style="font-style:normal;">松本地酒振興協同組合<br>〒390-0837 長野県松本市鎌田2-3-65 長野県酒類販売（株）1階<br>TEL：0263-24-3606 ／ FAX：0263-24-3607<br>お問い合わせは専用フォームをご利用ください</address>
+          <a href="index.html?page=page-contact" data-page="page-contact" class="btn-primary" style="margin-top:1.2rem;display:inline-block;">お問い合わせフォーム</a>
         </div>
         <div class="footer-col"><div class="footer-col-title">Menu</div><ul>
           <li><a href="index.html" data-page="page-main">TOP</a></li>
@@ -160,6 +163,7 @@
           <li><a href="awards.html" data-page="page-awards">酒類鑑評会</a></li>
           <li><a href="index.html?page=page-research" data-page="page-research">研究会</a></li>
           <li><a href="index.html?page=page-shrine" data-page="page-shrine">松尾神社</a></li>
+          <li><a href="index.html?page=page-contact" data-page="page-contact">お問い合わせ</a></li>
         </ul></div>
         <div class="footer-col"><div class="footer-col-title">Purchase</div><ul>
           <li><a href="purchase.html" data-page="page-purchase">商品一覧・価格</a></li>
@@ -181,6 +185,41 @@
       </div>
     </div>
   </footer>
+</div>
+
+<!-- ════ PAGE: CONTACT ════ -->
+<div class="page" id="page-contact">
+  <div class="page-hero"><div class="page-hero-inner">
+    <p class="page-hero-tag reveal">Contact</p>
+    <h1 class="page-hero-title reveal">お問い合わせ</h1>
+    <p class="page-hero-sub reveal">必要事項をご入力のうえ送信してください</p>
+  </div></div>
+  <section style="padding:5rem 4rem;background:var(--ink);">
+    <div style="max-width:760px;margin:0 auto;">
+      <div class="contact-form reveal" style="background:#fff;border:1px solid var(--border);">
+        <h2 class="form-title" style="color:var(--text);">お問い合わせフォーム</h2>
+        <div class="form-group">
+          <label for="fName">お名前</label>
+          <input id="fName" type="text" autocomplete="name" placeholder="例）松本 花子" style="color:var(--text);border-color:var(--border);background:#fff;">
+        </div>
+        <div class="form-group">
+          <label for="fTel">電話番号</label>
+          <input id="fTel" type="tel" autocomplete="tel" placeholder="例）090-1234-5678" style="color:var(--text);border-color:var(--border);background:#fff;">
+        </div>
+        <div class="form-group">
+          <label for="fAddress">住所</label>
+          <input id="fAddress" type="text" autocomplete="street-address" placeholder="例）長野県松本市..." style="color:var(--text);border-color:var(--border);background:#fff;">
+        </div>
+        <div class="form-group">
+          <label for="fEmail">メールアドレス</label>
+          <input id="fEmail" type="email" autocomplete="email" placeholder="例）sample@example.com" style="color:var(--text);border-color:var(--border);background:#fff;">
+        </div>
+        <p class="form-note" style="color:var(--text-sub);opacity:.8;">送信ボタンでメールアプリが起動し、宛先に `zizake@po.mcci.or.jp` が自動入力されます。</p>
+        <button id="formSubmit" type="button" class="btn-submit" style="margin-top:1rem;">お問い合わせを送る</button>
+      </div>
+    </div>
+  </section>
+  <footer><div class="footer-inner"><div class="footer-bottom"><span class="footer-copy">© 松本地酒家 ／ 松本地酒振興協同組合</span><a class="footer-instagram footer-instagram-inline" href="https://www.instagram.com/zizake2025/" target="_blank" rel="noreferrer"><img src="images/instagram_logo.jpeg" alt="Instagram"><span>@zizake2025</span></a><span class="footer-age">※ 20歳未満の方への酒類の販売はいたしておりません</span></div></div></footer>
 </div>
 
 <!-- ════ PAGE: EVENT ════ -->

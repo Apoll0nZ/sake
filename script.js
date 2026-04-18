@@ -347,13 +347,29 @@ function initAwardsFilter(){
 /* ── FORM ───────────────────────────────────────────────────── */
 function initForm(){
   $('formSubmit')?.addEventListener('click',function(){
-    const name=$('fName'),email=$('fEmail');
-    if(!name?.value.trim()||!email?.value.trim()){
-      if(email){email.style.borderColor='rgba(200,80,80,.6)';setTimeout(()=>email.style.borderColor='',2000);}
+    const name=$('fName');
+    const tel=$('fTel');
+    const address=$('fAddress');
+    const email=$('fEmail');
+    if(!name?.value.trim()||!tel?.value.trim()||!address?.value.trim()||!email?.value.trim()){
+      [name, tel, address, email].forEach(field=>{
+        if(!field?.value.trim()){
+          field.style.borderColor='rgba(200,80,80,.6)';
+          setTimeout(()=>{ field.style.borderColor=''; },2000);
+        }
+      });
       return;
     }
-    this.textContent='送信しました ✓'; this.classList.add('sent');
-    setTimeout(()=>{this.textContent='送信する';this.classList.remove('sent');},4000);
+    const subject = encodeURIComponent('松本地酒家 お問い合わせ');
+    const body = encodeURIComponent(
+      `【お名前】\n${name.value.trim()}\n\n` +
+      `【電話番号】\n${tel.value.trim()}\n\n` +
+      `【住所】\n${address.value.trim()}\n\n` +
+      `【メールアドレス】\n${email.value.trim()}\n`
+    );
+    window.location.href = `mailto:zizake@po.mcci.or.jp?subject=${subject}&body=${body}`;
+    this.textContent='メール作成を開始しました ✓'; this.classList.add('sent');
+    setTimeout(()=>{this.textContent='お問い合わせを送る';this.classList.remove('sent');},4000);
   });
 }
 
