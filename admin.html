@@ -76,6 +76,13 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16
 .ev-status-badge.upcoming{background:rgba(200,146,42,.2);color:var(--amber-lt);border:1px solid var(--bd);}
 .ev-status-badge.ended{background:rgba(100,100,100,.15);color:var(--muted);border:1px solid rgba(240,235,224,.1);}
 .ev-move-btn{font-size:.75rem;padding:.35rem .8rem;}
+.sake-booth-editor{padding:0;margin-top:1rem;margin-bottom:0;overflow:hidden;}
+.sake-booth-editor summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.2rem;cursor:pointer;color:var(--amber-lt);font-weight:bold;border-bottom:1px solid transparent;}
+.sake-booth-editor summary::-webkit-details-marker{display:none;}
+.sake-booth-editor summary::after{content:'開く';font-size:.72rem;letter-spacing:.18em;color:var(--muted);font-weight:normal;}
+.sake-booth-editor[open] summary{border-bottom-color:var(--bd);}
+.sake-booth-editor[open] summary::after{content:'閉じる';}
+.sake-booth-editor-body{padding:1.2rem;}
 hr.div{border:none;border-top:1px solid var(--bd);margin:1.5rem 0;}
 /* export */
 .exbox{background:rgba(200,146,42,.05);border:1px solid var(--bd);padding:2rem;text-align:center;margin-top:2rem;}
@@ -569,11 +576,13 @@ function renderEvents(){
           <div id="ev-lb-${i}" class="ilb ${ev.image?'named':''}">${ev.image?'✓ '+E(ev.image):'クリックして画像を選択'}</div>
         </div>
       </div>
-      <div class="card" style="padding:1.2rem;margin-top:1rem;margin-bottom:0;">
-        <div class="ctitle" style="margin-bottom:1rem;padding-bottom:.6rem;">★ 蔵ブースのお酒</div>
-        <div id="event-sakes-${i}" style="display:flex;flex-direction:column;gap:.8rem;"></div>
-        <button class="btn bg bsm" type="button" onclick="addEventSake(${i})" style="margin-top:1rem;">＋ 銘柄を追加</button>
-      </div>
+      <details class="card sake-booth-editor">
+        <summary><span>★ 蔵ブースのお酒</span><span style="font-size:.78rem;color:var(--muted);font-weight:normal;">${Array.isArray(ev.sakes)?ev.sakes.length:0}件</span></summary>
+        <div class="sake-booth-editor-body">
+          <div id="event-sakes-${i}" style="display:flex;flex-direction:column;gap:.8rem;"></div>
+          <button class="btn bg bsm" type="button" onclick="addEventSake(${i})" style="margin-top:1rem;">＋ 銘柄を追加</button>
+        </div>
+      </details>
     </div>`;
   }).join('');
   S.events.forEach((_,i)=>renderEventSakeRows(i));
@@ -928,14 +937,42 @@ function formatExternalUrl(url){
   if(!value) return '';
   return /^(https?:)?\/\//i.test(value) ? value : `https://${value}`;
 }
+function hasText(value){
+  return String(value||'').trim() !== '';
+}
+function eventTimeLabel(ev, separator=' ／ '){
+  const parts = [];
+  if(hasText(ev.time1)) parts.push(`1部 ${E(ev.time1)}`);
+  if(hasText(ev.time2)) parts.push(`2部 ${E(ev.time2)}`);
+  return parts.join(separator);
+}
+function eventFeeLabel(ev, mode='banner'){
+  if(mode === 'detail'){
+    const parts = [];
+    if(hasText(ev.fee)) parts.push(`当日 ${E(ev.fee)}`);
+    if(hasText(ev.feeAdvance)) parts.push(`前売り <span style="color:var(--amber);">${E(ev.feeAdvance)}</span>`);
+    return parts.join(' / ');
+  }
+  if(hasText(ev.fee) && hasText(ev.feeAdvance)) return `会費 ${E(ev.fee)}（前売り ${E(ev.feeAdvance)}）`;
+  if(hasText(ev.fee)) return `会費 ${E(ev.fee)}`;
+  if(hasText(ev.feeAdvance)) return `前売り ${E(ev.feeAdvance)}`;
+  return '';
+}
 function renderStaticEventBanners(events){
   const upcoming = (events || []).filter(e=>e.status==='upcoming');
   return upcoming.map(ev => {
     const dateLabel = eventDateLabel(ev);
+    const metaItems = [];
+    const timeLabel = eventTimeLabel(ev);
+    const feeLabel = eventFeeLabel(ev);
+    if(hasText(dateLabel)) metaItems.push(`<div class="event-meta-item"><span class="event-meta-icon">📅</span><span>${E(dateLabel)}</span></div>`);
+    if(hasText(timeLabel)) metaItems.push(`<div class="event-meta-item"><span class="event-meta-icon">🕐</span><span>${timeLabel}</span></div>`);
+    if(hasText(ev.venue)) metaItems.push(`<div class="event-meta-item"><span class="event-meta-icon">📍</span><span>${E(ev.venue)}</span></div>`);
+    if(hasText(feeLabel)) metaItems.push(`<div class="event-meta-item"><span class="event-meta-icon">💴</span><span>${feeLabel}</span></div>`);
     const posterHtml = ev.image
       ? `<img src="images/${E(ev.image)}" alt="${E(ev.title)}" class="event-poster-photo">`
       : `<div class="event-poster-inner"><div class="event-poster-year">${E(dateLabel.slice(0,4))} — Event</div><div class="event-poster-main">${E(ev.title)}</div><div class="event-poster-date">${E(dateLabel)}</div></div><div class="event-poster-border"></div>`;
-    return `<div class="event-banner-item"><div class="event-inner"><div><div class="event-badge"><span class="event-badge-dot"></span>Upcoming Event</div><h2 class="event-title">${E(ev.title)}</h2><div class="event-meta"><div class="event-meta-item"><span class="event-meta-icon">📅</span><span>${E(dateLabel)}</span></div>${ev.time1?`<div class="event-meta-item"><span class="event-meta-icon">🕐</span><span>1部 ${E(ev.time1)} ／ 2部 ${E(ev.time2)}</span></div>`:''}${ev.venue?`<div class="event-meta-item"><span class="event-meta-icon">📍</span><span>${E(ev.venue)}</span></div>`:''}${ev.fee?`<div class="event-meta-item"><span class="event-meta-icon">💴</span><span>会費 ${E(ev.fee)}（前売り ${E(ev.feeAdvance||'')}）</span></div>`:''}</div>${ev.desc?`<p class="event-desc">${E(ev.desc)}</p>`:''}<a href="index.html?page=page-event" data-page="page-event" class="btn-primary">詳細・チケット情報</a></div><div class="event-poster"><div class="event-poster-img">${posterHtml}</div></div></div></div>`;
+    return `<div class="event-banner-item"><div class="event-inner"><div><div class="event-badge"><span class="event-badge-dot"></span>Upcoming Event</div><h2 class="event-title">${E(ev.title)}</h2>${metaItems.length?`<div class="event-meta">${metaItems.join('')}</div>`:''}${hasText(ev.desc)?`<p class="event-desc">${E(ev.desc)}</p>`:''}<a href="index.html?page=page-event" data-page="page-event" class="btn-primary">詳細・チケット情報</a></div><div class="event-poster"><div class="event-poster-img">${posterHtml}</div></div></div></div>`;
   }).join('');
 }
 function renderStaticBreweries(items, label){
@@ -964,18 +1001,28 @@ function renderStaticCarousel(products){
 function renderStaticUpcomingEvents(events){
   return (events || []).filter(e=>e.status==='upcoming').map(ev => {
     const dateLabel = eventDateLabel(ev);
+    const dateTime = [hasText(dateLabel) ? E(dateLabel) : '', eventTimeLabel(ev, ' / ')].filter(Boolean).join(' / ');
+    const feeLabel = eventFeeLabel(ev, 'detail');
+    const rows = [];
+    if(hasText(dateTime)) rows.push(`<div class="ev-dl-row"><dt>日時</dt><dd>${dateTime}</dd></div>`);
+    if(hasText(ev.venue)) rows.push(`<div class="ev-dl-row"><dt>会場</dt><dd>${E(ev.venue)}</dd></div>`);
+    if(hasText(feeLabel)) rows.push(`<div class="ev-dl-row"><dt>会費</dt><dd>${feeLabel}</dd></div>`);
+    if(hasText(ev.ticketShops)) rows.push(`<div class="ev-dl-row"><dt>前売店</dt><dd style="font-size:.82rem;">${E(ev.ticketShops)}</dd></div>`);
     const imgHtml = ev.image ? `<div class="ev-img-wrap"><img src="images/${E(ev.image)}" alt="${E(ev.title)}" class="ev-detail-img"></div>` : '';
-    return `<div class="ev-detail-card reveal"><div class="ev-detail-badge"><span style="width:6px;height:6px;border-radius:50%;background:var(--amber);animation:blink 1.4s ease infinite;display:inline-block;flex-shrink:0;"></span><span>Upcoming Event</span></div>${imgHtml}<h2 class="ev-detail-title">${E(ev.title)}</h2><div class="ev-detail-body"><dl class="ev-detail-dl"><div class="ev-dl-row"><dt>日時</dt><dd>${E(dateLabel)}${ev.time1?` / 1部 ${E(ev.time1)} / 2部 ${E(ev.time2)}`:''}</dd></div><div class="ev-dl-row"><dt>会場</dt><dd>${E(ev.venue||'')}</dd></div>${ev.fee?`<div class="ev-dl-row"><dt>会費</dt><dd>当日 ${E(ev.fee)} / 前売り <span style="color:var(--amber);">${E(ev.feeAdvance||'')}</span></dd></div>`:''}${ev.ticketShops?`<div class="ev-dl-row"><dt>前売店</dt><dd style="font-size:.82rem;">${E(ev.ticketShops)}</dd></div>`:''}</dl><div class="ev-detail-desc"><p>${E(ev.desc||'')}</p><a href="index.html?page=page-contact" data-page="page-contact" class="btn-primary">お問い合わせ</a></div></div></div>`;
+    return `<div class="ev-detail-card reveal"><div class="ev-detail-badge"><span style="width:6px;height:6px;border-radius:50%;background:var(--amber);animation:blink 1.4s ease infinite;display:inline-block;flex-shrink:0;"></span><span>Upcoming Event</span></div>${imgHtml}<h2 class="ev-detail-title">${E(ev.title)}</h2><div class="ev-detail-body">${rows.length?`<dl class="ev-detail-dl">${rows.join('')}</dl>`:''}<div class="ev-detail-desc">${hasText(ev.desc)?`<p>${E(ev.desc)}</p>`:''}<a href="index.html?page=page-contact" data-page="page-contact" class="btn-primary">お問い合わせ</a></div></div></div>`;
   }).join('');
 }
 function renderStaticSakeBooths(events){
   return (events || []).filter(ev=>ev.status==='upcoming' && Array.isArray(ev.sakes) && ev.sakes.length).map(event => {
     const grouped = {};
-    event.sakes.forEach(sake => {
-      if(!grouped[sake.brewery]) grouped[sake.brewery] = [];
-      grouped[sake.brewery].push(sake);
+    event.sakes.filter(sake=>hasText(sake.brewery) || hasText(sake.name) || hasText(sake.desc)).forEach(sake => {
+      const brewery = String(sake.brewery||'').trim();
+      if(!grouped[brewery]) grouped[brewery] = [];
+      grouped[brewery].push(sake);
     });
-    return `<section style="margin:4rem 0 0;"><h3 style="font-family:var(--serif);font-size:1.4rem;letter-spacing:.1em;margin:0 0 .75rem;" class="reveal">★ 蔵ブースのお酒 ★</h3><p style="font-size:.82rem;letter-spacing:.18em;color:var(--amber);margin:0 0 1.25rem;">${E(event.title)}</p><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5px;background:var(--border);border:1.5px solid var(--border);">${Object.entries(grouped).map(([brewery, items]) => `<div style="background:var(--ink);padding:2rem;"><div style="font-size:.62rem;letter-spacing:.4em;color:var(--amber);margin-bottom:.6rem;">${E(brewery)}</div>${items.map(s=>`<div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);"><div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">${E(s.name)}</div><p style="font-size:.78rem;opacity:.65;line-height:1.85;">${E(s.desc)}</p></div>`).join('')}</div>`).join('')}</div></section>`;
+    const groups = Object.entries(grouped);
+    if(!groups.length) return '';
+    return `<section style="margin:4rem 0 0;"><h3 style="font-family:var(--serif);font-size:1.4rem;letter-spacing:.1em;margin:0 0 .75rem;" class="reveal">★ 蔵ブースのお酒 ★</h3>${hasText(event.title)?`<p style="font-size:.82rem;letter-spacing:.18em;color:var(--amber);margin:0 0 1.25rem;">${E(event.title)}</p>`:''}<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5px;background:var(--border);border:1.5px solid var(--border);">${groups.map(([brewery, items]) => `<div style="background:var(--ink);padding:2rem;">${hasText(brewery)?`<div style="font-size:.62rem;letter-spacing:.4em;color:var(--amber);margin-bottom:.6rem;">${E(brewery)}</div>`:''}${items.map(s=>`<div style="padding:.85rem 0;border-top:1px solid rgba(245,240,232,0.08);">${hasText(s.name)?`<div style="font-family:var(--serif);font-size:.95rem;line-height:1.6;margin-bottom:.35rem;">${E(s.name)}</div>`:''}${hasText(s.desc)?`<p style="font-size:.78rem;opacity:.65;line-height:1.85;">${E(s.desc)}</p>`:''}</div>`).join('')}</div>`).join('')}</div></section>`;
   }).join('');
 }
 function renderStaticArchiveEvents(events){
